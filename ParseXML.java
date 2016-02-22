@@ -1,3 +1,22 @@
+/*
+
+    **** ReadXML2.java - read and dump contents of an XML file ****
+
+Illustrates use of JDOM to parse an XML file.
+This version will dive into XML tree structure.
+
+Usage:
+javac -cp .:jdom.jar ParseXML.java         (use ; instead of : on Windoze)
+java  -cp .:jdom.jar ParseXML file.xml     (use ; instead of : on Windoze)
+
+Based on Java example in Processing XML with Java (Elliotte Harold).
+For more info, see e.g. https://docs.oracle.com/javase/tutorial/jaxp/dom/readingXML.html
+
+JMW 160205
+
+*/
+
+
 
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
