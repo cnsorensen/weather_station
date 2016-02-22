@@ -41,38 +41,56 @@ public class ParseXML
             toPrint = pointsIterator.next();
             System.out.println( toPrint );
         }
-    
     }
     
     public static List<WeatherPoint> parseWeather( String file )
     {
-       SAXBuilder builder;
-       Document doc;
-       Element root;
-       List<WeatherPoint> toReturn = null;
-       builder = new SAXBuilder();
+        SAXBuilder builder;
+        Document doc;
+        Element root;
+        List<WeatherPoint> toReturn = null;
+        builder = new SAXBuilder();
+   
+        System.out.println( "Green" );
+ 
+        try
+        {
+            System.out.println( "Eggs" );
     
-       try
-       {
-           doc = builder.build( file );
-           root = doc.getRootElement();
-           List points = root.getChildren();
-           Iterator pointsIterator = points.iterator();
-           while( pointsIterator.hasNext() )
-           {
-               Element point = (Element) pointsIterator.next();
-               toReturn.add( addWeatherPoint( point ) );
-           }
-       }
-       catch( JDOMException e )
-       {
-           System.out.println( file + " is not well-formed." );
-           System.out.println( e.getMessage() );
-       }
-       catch( IOException e )
-       {
-           System.out.println( e );
-       }
+            doc = builder.build( file );
+            root = doc.getRootElement();
+            List points = root.getChildren();
+            Iterator pointsIterator = points.iterator();
+            
+            System.out.println( "and" );    
+        
+            while( pointsIterator.hasNext() )
+            {
+                System.out.println( "Ham" );
+
+                Element point = (Element) pointsIterator.next();
+                
+                System.out.println( "By" );
+
+                // error here
+                toReturn.add( addWeatherPoint( point ) );
+                
+                System.out.println( "Dr." );
+            }
+        }
+        catch( JDOMException e )
+        {
+            System.out.println( file + " is not well-formed." );
+            System.out.println( e.getMessage() );
+        }
+        catch( IOException e )
+        {
+            System.out.println( e );
+        }
+        catch( NullPointerException e )
+        {
+            System.out.println( e );
+        }
         
        return toReturn;
     }
