@@ -17,7 +17,6 @@ JMW 160205
 */
 
 
-
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import java.io.IOException;
@@ -31,16 +30,19 @@ public class ParseXML
     {
         if( args.length != 1 )
         {
-            System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );               
+            System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );     
         }
 
         List<WeatherPoint> weatherPoints = parseWeather( args[0] );
-        Iterator pointsIterator = weatherPoints.iterator();
+        Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
     
+        ///I'm having an error here
         //WeatherPoint toPrint = new WeatherPoint();
-        Object toPrint;
-        //WeatherPoint toPrint;
+        //Object toPrint;
+        WeatherPoint toPrint;
+        //System.out.println( "I am Sam!" );        
         
+        // print out the weather points
         while( pointsIterator.hasNext() )
         {
             toPrint = pointsIterator.next();
@@ -53,34 +55,33 @@ public class ParseXML
         SAXBuilder builder;
         Document doc;
         Element root;
-        List<WeatherPoint> toReturn = null;
+        List<WeatherPoint> toReturn = new ArrayList<WeatherPoint>();
         builder = new SAXBuilder();
    
-        System.out.println( "Green" );
+        //System.out.println( "Green" );
  
         try
         {
-            System.out.println( "Eggs" );
+            //System.out.println( "Eggs" );
     
             doc = builder.build( file );
             root = doc.getRootElement();
             List points = root.getChildren();
             Iterator pointsIterator = points.iterator();
             
-            System.out.println( "and" );    
+            //System.out.println( "and" );    
         
             while( pointsIterator.hasNext() )
             {
-                System.out.println( "Ham" );
+                //System.out.println( "Ham" );
 
                 Element point = (Element) pointsIterator.next();
                 
-                System.out.println( "By" );
+                //System.out.println( "By" );
 
-                // error here
                 toReturn.add( addWeatherPoint( point ) );
                 
-                System.out.println( "Dr." );
+                //System.out.println( "Dr." );
             }
         }
         catch( JDOMException e )
@@ -180,7 +181,10 @@ public class ParseXML
         int month = Integer.parseInt( dateTokens[0] );
         int day = Integer.parseInt( dateTokens[1] );
         int hour = Integer.parseInt( timeTokens[0] ) % 12;
-        System.out.println( timeTokens[1].substring( 2, 3 ) );
+        
+        // this is printing out a's and p's
+        //System.out.println( timeTokens[1].substring( 2, 3 ) );
+        
         int minute = Integer.parseInt( timeTokens[1].substring(0,2) );
         if( timeTokens[1].contains( "P" ) )
         {

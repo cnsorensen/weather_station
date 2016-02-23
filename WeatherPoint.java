@@ -17,7 +17,7 @@ public class WeatherPoint
     public double uvindex;
     public double rainfall;
     
-    public String weatherPointToString()
+    public String toString()
     {
         return "Date:\t\t" + dateString +
                 "\nTemperature:\t" + temperature +
