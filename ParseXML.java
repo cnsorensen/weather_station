@@ -29,6 +29,11 @@ public class ParseXML
 
     public static void main( String[] args )
     {
+        if( args.length != 1 )
+        {
+            System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );               
+        }
+
         List<WeatherPoint> weatherPoints = parseWeather( args[0] );
         Iterator pointsIterator = weatherPoints.iterator();
     
