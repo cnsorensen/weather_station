@@ -41,8 +41,8 @@ public class WeatherGraph extends ApplicationFrame
         super( applicationTitle );
         JFreeChart weatherGraph = ChartFactory.createXYLineChart(
             chartTitle,
-            "x axis",
-            "y axis",
+            "Date",
+            "Temperature",
             graphPoint(),
             PlotOrientation.VERTICAL,
             true, true, false);
@@ -65,13 +65,13 @@ public class WeatherGraph extends ApplicationFrame
 
     private XYDataset graphPoint()
     {
-        final XYSeries firefox = new XYSeries( "Firefox" );   
-        firefox.add( 1.0, 1.0 );
-        firefox.add( 2.0, 4.0 );
-        firefox.add( 3.0, 3.0 );
+        final XYSeries temperature = new XYSeries( "Temperature" );   
+        temperature.add( 1.0, 1.0 );
+        temperature.add( 2.0, 4.0 );
+        temperature.add( 3.0, 3.0 );
     
         final XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries( firefox );
+        dataset.addSeries( temperature );
 
         System.out.println( "I'm going to skin people." );
         return dataset;
@@ -80,7 +80,7 @@ public class WeatherGraph extends ApplicationFrame
     public static void main( String[] args )
     {
         System.out.println( "I'm Marcus!" );
-        WeatherGraph chart = new WeatherGraph( "Weather!!", "Yea!!" );
+        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature" );
         chart.pack();
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );
