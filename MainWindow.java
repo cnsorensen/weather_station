@@ -1,3 +1,7 @@
+
+import java.io.File;
+import javafx.stage.FileChooser;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,7 +11,7 @@
 
 /**
  *
- * @author Jason Anderson
+ * @author 7053313
  */
 public class MainWindow extends javax.swing.JFrame {
 
@@ -28,20 +32,27 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         TimeFrame = new javax.swing.ButtonGroup();
+        GraphVariables = new javax.swing.ButtonGroup();
         MeanTemperature = new javax.swing.JCheckBox();
         HighLowTemperature = new javax.swing.JCheckBox();
         MeanWindSpeed = new javax.swing.JCheckBox();
         MaximumWindSpeed = new javax.swing.JCheckBox();
         PrevailingWindDirection = new javax.swing.JCheckBox();
         Rainfall = new javax.swing.JCheckBox();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
         Daily = new javax.swing.JRadioButton();
         Weekly = new javax.swing.JRadioButton();
         Monthly = new javax.swing.JRadioButton();
         Yearly = new javax.swing.JRadioButton();
+        MenuBar = new javax.swing.JMenuBar();
+        File = new javax.swing.JMenu();
+        Open = new javax.swing.JMenuItem();
+        Seperator = new javax.swing.JPopupMenu.Separator();
+        Exit = new javax.swing.JMenuItem();
+        Edit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        GraphVariables.add(MeanTemperature);
         MeanTemperature.setText("Mean Temperature");
         MeanTemperature.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,6 +60,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        GraphVariables.add(HighLowTemperature);
         HighLowTemperature.setText("High/Low Temperature");
         HighLowTemperature.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        GraphVariables.add(MeanWindSpeed);
         MeanWindSpeed.setText("Mean Wind Speed");
         MeanWindSpeed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        GraphVariables.add(MaximumWindSpeed);
         MaximumWindSpeed.setText("Maximum Wind Speed");
         MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +84,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        GraphVariables.add(PrevailingWindDirection);
         PrevailingWindDirection.setText("Prevailing Wind Direction");
         PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +92,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        GraphVariables.add(Rainfall);
         Rainfall.setText("Rainfall");
         Rainfall.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,83 +102,67 @@ public class MainWindow extends javax.swing.JFrame {
 
         TimeFrame.add(Daily);
         Daily.setText("Daily");
-        Daily.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DailyActionPerformed(evt);
-            }
-        });
 
         TimeFrame.add(Weekly);
         Weekly.setText("Weekly");
-        Weekly.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WeeklyActionPerformed(evt);
-            }
-        });
 
         TimeFrame.add(Monthly);
         Monthly.setText("Monthly");
-        Monthly.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MonthlyActionPerformed(evt);
-            }
-        });
 
         TimeFrame.add(Yearly);
         Yearly.setText("Yearly");
-        Yearly.addActionListener(new java.awt.event.ActionListener() {
+
+        File.setText("File");
+
+        Open.setText("Open");
+        Open.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                YearlyActionPerformed(evt);
+                OpenActionPerformed(evt);
             }
         });
+        File.add(Open);
+        File.add(Seperator);
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Daily)
-                    .addComponent(Weekly)
-                    .addComponent(Monthly)
-                    .addComponent(Yearly))
-                .addGap(0, 67, Short.MAX_VALUE))
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addComponent(Daily)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Weekly)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Monthly)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Yearly))
-        );
-        jLayeredPane1.setLayer(Daily, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(Weekly, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(Monthly, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(Yearly, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+        File.add(Exit);
+
+        MenuBar.add(File);
+
+        Edit.setText("Edit");
+        MenuBar.add(Edit);
+
+        setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Rainfall)
+                    .addComponent(Daily)
+                    .addComponent(Weekly)
+                    .addComponent(Monthly)
+                    .addComponent(Yearly))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 611, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MeanTemperature)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(HighLowTemperature, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(MaximumWindSpeed)
+                        .addComponent(MeanWindSpeed))
                     .addComponent(PrevailingWindDirection)
-                    .addComponent(MaximumWindSpeed)
-                    .addComponent(MeanWindSpeed)
-                    .addComponent(HighLowTemperature)
-                    .addComponent(MeanTemperature)))
+                    .addComponent(Rainfall))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(MeanTemperature)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -171,12 +171,19 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(MeanWindSpeed)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(MaximumWindSpeed))
-                    .addComponent(jLayeredPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Daily)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Weekly)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Monthly)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Yearly)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PrevailingWindDirection)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Rainfall)
-                .addGap(0, 132, Short.MAX_VALUE))
+                .addComponent(Rainfall, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 264, Short.MAX_VALUE))
         );
 
         pack();
@@ -222,6 +229,17 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println("Yearly chosen.");
     }//GEN-LAST:event_YearlyActionPerformed
 
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
+
+    private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
+        System.out.println("Open chosen.");
+        FileChooser fileChooser = new FileChooser();
+        
+        File file = fileChooser.showOpenDialog(null);
+    }//GEN-LAST:event_OpenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -259,16 +277,22 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton Daily;
+    private javax.swing.JMenu Edit;
+    private javax.swing.JMenuItem Exit;
+    private javax.swing.JMenu File;
+    private javax.swing.ButtonGroup GraphVariables;
     private javax.swing.JCheckBox HighLowTemperature;
     private javax.swing.JCheckBox MaximumWindSpeed;
     private javax.swing.JCheckBox MeanTemperature;
     private javax.swing.JCheckBox MeanWindSpeed;
+    private javax.swing.JMenuBar MenuBar;
     private javax.swing.JRadioButton Monthly;
+    private javax.swing.JMenuItem Open;
     private javax.swing.JCheckBox PrevailingWindDirection;
     private javax.swing.JCheckBox Rainfall;
+    private javax.swing.JPopupMenu.Separator Seperator;
     private javax.swing.ButtonGroup TimeFrame;
     private javax.swing.JRadioButton Weekly;
     private javax.swing.JRadioButton Yearly;
-    private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
 }
