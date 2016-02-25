@@ -1,5 +1,4 @@
 /*
-
     **** ReadXML2.java - read and dump contents of an XML file ****
 
 Illustrates use of JDOM to parse an XML file.
@@ -23,6 +22,8 @@ import java.io.IOException;
 import java.util.*;
 import java.time.LocalDateTime;
 
+import org.jfree.ui.RefineryUtilities;
+
 public class ParseXML 
 {
 
@@ -36,18 +37,20 @@ public class ParseXML
         List<WeatherPoint> weatherPoints = parseWeather( args[0] );
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
     
-        ///I'm having an error here
-        //WeatherPoint toPrint = new WeatherPoint();
-        //Object toPrint;
         WeatherPoint toPrint;
-        //System.out.println( "I am Sam!" );        
-        
+    
         // print out the weather points
-        while( pointsIterator.hasNext() )
+        /*while( pointsIterator.hasNext() )
         {
             toPrint = pointsIterator.next();
             System.out.println( toPrint );
-        }
+        }*/
+        
+        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature", weatherPoints );
+        chart.pack();
+        RefineryUtilities.centerFrameOnScreen( chart );
+        chart.setVisible( true );
+
     }
     
     public static List<WeatherPoint> parseWeather( String file )
@@ -62,26 +65,18 @@ public class ParseXML
  
         try
         {
-            //System.out.println( "Eggs" );
-    
+
             doc = builder.build( file );
             root = doc.getRootElement();
             List points = root.getChildren();
-            Iterator pointsIterator = points.iterator();
-            
-            //System.out.println( "and" );    
+            Iterator pointsIterator = points.iterator();   
         
             while( pointsIterator.hasNext() )
             {
-                //System.out.println( "Ham" );
 
                 Element point = (Element) pointsIterator.next();
-                
-                //System.out.println( "By" );
 
                 toReturn.add( addWeatherPoint( point ) );
-                
-                //System.out.println( "Dr." );
             }
         }
         catch( JDOMException e )
