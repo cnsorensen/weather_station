@@ -65,26 +65,18 @@ public class ParseXML
  
         try
         {
-            //System.out.println( "Eggs" );
-    
+
             doc = builder.build( file );
             root = doc.getRootElement();
             List points = root.getChildren();
-            Iterator pointsIterator = points.iterator();
-            
-            //System.out.println( "and" );    
+            Iterator pointsIterator = points.iterator();   
         
             while( pointsIterator.hasNext() )
             {
-                //System.out.println( "Ham" );
 
                 Element point = (Element) pointsIterator.next();
-                
-                //System.out.println( "By" );
 
                 toReturn.add( addWeatherPoint( point ) );
-                
-                //System.out.println( "Dr." );
             }
         }
         catch( JDOMException e )

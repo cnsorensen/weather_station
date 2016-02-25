@@ -42,12 +42,13 @@ public class WeatherGraph extends ApplicationFrame
     {
         super( applicationTitle );
         ///JFreeChart weatherGraph = ChartFactory.createXYLinePlot(
-        JFreeChart weatherGraph = ChartFactory.createScatterPlot(
+        //JFreeChart weatherGraph = ChartFactory.createScatterPlot(
+        JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart( 
             chartTitle, // title of chart
             "Humidity", // x axis label
             "Temperature",  // y axis label
             graphPoints( weatherPoints ), // data
-            PlotOrientation.VERTICAL,
+            //PlotOrientation.VERTICAL,
             true,   // create legend?
             true,   // generate tooltips?
             false   // generate urls?
@@ -76,8 +77,7 @@ public class WeatherGraph extends ApplicationFrame
 
     private XYDataset graphPoints( List<WeatherPoint> weatherPoints )
     {
-        final XYSeries temperature = new XYSeries( "Temperature" );   
-        
+        final XYSeries temperature = new XYSeries( "Temperature" );    
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
         WeatherPoint toGraph;
 
@@ -87,7 +87,11 @@ public class WeatherGraph extends ApplicationFrame
             toGraph = pointsIterator.next();
  
             //temperature.add( toGraph.date, toGraph.temperature );
-            temperature.add( toGraph.temperature, toGraph.humidity );
+            //temperature.add( toGraph.temperature, toGraph.humidity );
+            //new Day( day, month, year)
+            
+
+            temperature.add( new Date( toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear() ), toGraph.temperature );
         }
 
         final XYSeriesCollection dataset = new XYSeriesCollection();
