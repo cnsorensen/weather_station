@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.BasicStroke;
 
-
 //import org.jfree.chart.*;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -29,6 +28,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 // pending librarys
 import org.jfree.data.time.TimeSeries;
 import org.jfree.chart.axis.DateAxis;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.Day;
 
 //import org.jfree.ui.*;
 import org.jfree.ui.ApplicationFrame;
@@ -77,7 +78,30 @@ public class WeatherGraph extends ApplicationFrame
 
     private XYDataset graphPoints( List<WeatherPoint> weatherPoints )
     {
-        final XYSeries temperature = new XYSeries( "Temperature" );    
+        TimeSeries pop = new TimeSeries( "Population", Day.class );
+
+        Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
+        WeatherPoint toGraph;
+
+        while( pointsIterator.hasNext() )
+        {
+            toGraph = pointsIterator.next();
+            pop.add( new Day( toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear() ), toGraph.temperature );
+
+        }
+
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        dataset.addSeries( pop );
+
+
+/*
+//        final XYSeries temperature = new XYSeries( "Temperature" );    
+        final TimeSeriesCollection dataset = new TimeSeriesCollection();
+        dataset.setDomainIsPointsInTime( true );
+
+        final TimeSeries temperature = new TimeSeries( "Srius", Day.class );
+
+        //final TimeSeriesCollection temperature = new TimeSeries( "Series1", Day.class );
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
         WeatherPoint toGraph;
 
@@ -91,11 +115,13 @@ public class WeatherGraph extends ApplicationFrame
             //new Day( day, month, year)
             
 
-            temperature.add( new Date( toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear() ), toGraph.temperature );
+            temperature.add( new Day( toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear() ), toGraph.temperature );
+
         }
 
-        final XYSeriesCollection dataset = new XYSeriesCollection();
+        ///final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries( temperature );
+*/
 
         System.out.println( "I'm going to skin people." );
         return dataset;
