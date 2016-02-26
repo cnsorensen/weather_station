@@ -33,6 +33,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         TimeFrame = new javax.swing.ButtonGroup();
         GraphVariables = new javax.swing.ButtonGroup();
+        FileChooser = new javax.swing.JFileChooser();
         MeanTemperature = new javax.swing.JCheckBox();
         HighLowTemperature = new javax.swing.JCheckBox();
         MeanWindSpeed = new javax.swing.JCheckBox();
@@ -49,6 +50,8 @@ public class MainWindow extends javax.swing.JFrame {
         Seperator = new javax.swing.JPopupMenu.Separator();
         Exit = new javax.swing.JMenuItem();
         Edit = new javax.swing.JMenu();
+
+        FileChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,8 +149,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Daily)
                     .addComponent(Weekly)
-                    .addComponent(Monthly)
-                    .addComponent(Yearly))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Monthly)
+                        .addComponent(Yearly)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 611, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(MeanTemperature)
@@ -170,7 +174,11 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(MeanWindSpeed)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(MaximumWindSpeed))
+                        .addComponent(MaximumWindSpeed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PrevailingWindDirection)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Rainfall, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Daily)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,11 +187,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(Monthly)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Yearly)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PrevailingWindDirection)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Rainfall, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 264, Short.MAX_VALUE))
+                .addGap(298, 298, 298))
         );
 
         pack();
@@ -235,9 +239,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         System.out.println("Open chosen.");
-        FileChooser fileChooser = new FileChooser();
-        
-        File file = fileChooser.showOpenDialog(null);
+        //FileChooser fileChooser = new FileChooser();
+        FileChooser.showOpenDialog(this);
+        //File file = fileChooser.showOpenDialog(null);
     }//GEN-LAST:event_OpenActionPerformed
 
     /**
@@ -280,6 +284,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu Edit;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenu File;
+    private javax.swing.JFileChooser FileChooser;
     private javax.swing.ButtonGroup GraphVariables;
     private javax.swing.JCheckBox HighLowTemperature;
     private javax.swing.JCheckBox MaximumWindSpeed;
