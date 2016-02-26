@@ -41,22 +41,62 @@ import org.jfree.ui.RefineryUtilities;
 
 public class WeatherGraph extends ApplicationFrame
 {
-    public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints )
+    public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints, String graphType )
     {
         super( applicationTitle );
-        JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart( 
-            chartTitle, // title of chart
-            "Time", // x axis label
-            "Temperature",  // y axis label
-            graphPoints( weatherPoints ), // data
-            true,   // create legend?
-            true,   // generate tooltips?
-            false   // generate urls?
-        );
 
-        ChartPanel chartPanel = new ChartPanel( weatherGraph );
-        chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-        final XYPlot plot = weatherGraph.getXYPlot();
+        //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+
+        System.out.println( graphType )
+
+
+        if( graphType.equals( "temperature" ) )
+        {
+            JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart( 
+                chartTitle, // title of chart
+                "Time", // x axis label
+                "Temperature",  // y axis label
+                graphTemperature( weatherPoints ), // data
+                true,   // create legend?
+                true,   // generate tooltips?
+                false   // generate urls?
+            );
+
+            ChartPanel chartPanel = new ChartPanel( weatherGraph );
+            chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+            final XYPlot plot = weatherGraph.getXYPlot();
+            setContentPane( chartPanel );
+            ///renderer.setSeriesPaint( 0, Color.RED );
+            ///plot.setRenderer( renderer );
+        }
+
+        if( graphType.equals( "humidityGraph" ) )
+        {
+            JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart(
+                chartTitle, // title of chart
+                "Time", // x axis label
+                "Humidity",  // y axis label
+                graphHumidity( weatherPoints ), // data
+                true,   // create legend?
+                true,   // generate tooltips?
+                false   // generate urls?
+            );
+            
+            
+
+            ChartPanel chartPanel = new ChartPanel( weatherGraph );
+            chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+            final XYPlot plot = weatherGraph.getXYPlot();
+            setContentPane( chartPanel );
+            //renderer.setSeriesPaint( 0, Color.GREEN );
+            //plot.setRenderer( renderer );
+        }
+
+
+
+///        ChartPanel chartPanel = new ChartPanel( weatherGraph );
+  ///      chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+     ///   final XYPlot plot = weatherGraph.getXYPlot();
        
         //use to make  line graph
         ///XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
@@ -67,17 +107,17 @@ public class WeatherGraph extends ApplicationFrame
         //renderer.setSeriesPaint( 2, Color.YELLOW );
         
         // set the width of the stroke
-        //renderer.setSeriesStroke( 0, new BasicStroke( 4.0f ) );
+        ///renderer.setSeriesStroke( 0, new BasicStroke( 0.02f ) );
         ///renderer.setSeriesStroke( 1, new BasicStroke( 3.0f ) );
         //renderer.setSeriesStroke( 2, new BasicStroke( 2.0f ) );
     
-        ///plot.setRenderer( renderer );
-        setContentPane( chartPanel );
+  //      plot.setRenderer( renderer );
+//        setContentPane( chartPanel );
     }
 
-    private XYDataset graphPoints( List<WeatherPoint> weatherPoints )
+    private XYDataset graphTemperature( List<WeatherPoint> weatherPoints )
     {
-        TimeSeries temperature = new TimeSeries( "Temperature" );
+        TimeSeries temperatureGraph = new TimeSeries( "Temperature" );
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
 
         // to iterate through the list of weather points
@@ -95,16 +135,44 @@ public class WeatherGraph extends ApplicationFrame
             Minute now = new Minute( toGraph.date.getMinute(), toGraph.date.getHour(), toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear());
 
             // add graphing point
-            temperature.add( now, toGraph.temperature );
+            temperatureGraph.add( now, toGraph.temperature );
 
         }
 
-        dataset.addSeries( temperature );
+        dataset.addSeries( temperatureGraph );
 
         //System.out.println( "I'm going to skin people." );
         return dataset;
     }
 
+    private XYDataset graphHumidity( List<WeatherPoint> weatherPoints )
+    {
+        TimeSeries humidityGraph = new TimeSeries( "Humidity" );
+        final TimeSeriesCollection dataset = new TimeSeriesCollection();
+
+        // to iterate through the list of weather points
+        Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
+        WeatherPoint toGraph;
+
+
+        // go through each point
+        while( pointsIterator.hasNext() )
+        {
+            // weather point to graph
+            toGraph = pointsIterator.next();
+
+             // get the value to graph
+            Minute now = new Minute( toGraph.date.getMinute(), toGraph.date.getHour(), toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear());
+
+            // add graphing point
+            humidityGraph.add( now, toGraph.temperature );
+        }
+
+        dataset.addSeries( humidityGraph );
+
+        //System.out.println( "I'm going to skin people." );
+        return dataset;
+    }
     
 /*
     public static void main( String[] args )

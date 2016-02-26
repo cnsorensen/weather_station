@@ -29,24 +29,29 @@ public class ParseXML
 
     public static void main( String[] args )
     {
-        if( args.length != 1 )
+        /*if( args.length != 1 )
         {
             System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );     
-        }
+        }*/
 
+        System.out.println( "Got any grapes?" );
+    
+        /*
         List<WeatherPoint> weatherPoints = parseWeather( args[0] );
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
     
         WeatherPoint toPrint;
     
         // print out the weather points
-        /*while( pointsIterator.hasNext() )
+       
+        while( pointsIterator.hasNext() )
         {
             toPrint = pointsIterator.next();
             System.out.println( toPrint );
-        }*/
-        
-        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature", weatherPoints );
+        }
+        */
+
+        WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args[1] );
         chart.pack();
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );

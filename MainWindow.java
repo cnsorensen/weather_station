@@ -13,12 +13,14 @@ import javafx.stage.FileChooser;
  *
  * @author 7053313
  */
-public class MainWindow extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame
+{
 
     /**
      * Creates new form MainWindow
      */
-    public MainWindow() {
+    public MainWindow()
+    {
         initComponents();
     }
 
@@ -29,7 +31,9 @@ public class MainWindow extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    
+    private void initComponents() 
+    {
 
         TimeFrame = new javax.swing.ButtonGroup();
         GraphVariables = new javax.swing.ButtonGroup();
@@ -57,48 +61,60 @@ public class MainWindow extends javax.swing.JFrame {
 
         GraphVariables.add(MeanTemperature);
         MeanTemperature.setText("Mean Temperature");
-        MeanTemperature.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MeanTemperature.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 MeanTemperatureActionPerformed(evt);
             }
         });
 
         GraphVariables.add(HighLowTemperature);
         HighLowTemperature.setText("High/Low Temperature");
-        HighLowTemperature.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        HighLowTemperature.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 HighLowTemperatureActionPerformed(evt);
             }
         });
 
         GraphVariables.add(MeanWindSpeed);
         MeanWindSpeed.setText("Mean Wind Speed");
-        MeanWindSpeed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MeanWindSpeed.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 MeanWindSpeedActionPerformed(evt);
             }
         });
 
         GraphVariables.add(MaximumWindSpeed);
         MaximumWindSpeed.setText("Maximum Wind Speed");
-        MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 MaximumWindSpeedActionPerformed(evt);
             }
         });
 
         GraphVariables.add(PrevailingWindDirection);
         PrevailingWindDirection.setText("Prevailing Wind Direction");
-        PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 PrevailingWindDirectionActionPerformed(evt);
             }
         });
 
         GraphVariables.add(Rainfall);
         Rainfall.setText("Rainfall");
-        Rainfall.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Rainfall.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 RainfallActionPerformed(evt);
             }
         });
@@ -118,8 +134,10 @@ public class MainWindow extends javax.swing.JFrame {
         File.setText("File");
 
         Open.setText("Open");
-        Open.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Open.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 OpenActionPerformed(evt);
             }
         });
@@ -127,8 +145,10 @@ public class MainWindow extends javax.swing.JFrame {
         File.add(Seperator);
 
         Exit.setText("Exit");
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Exit.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 ExitActionPerformed(evt);
             }
         });
@@ -193,51 +213,67 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void HighLowTemperatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HighLowTemperatureActionPerformed
+    private void HighLowTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_HighLowTemperatureActionPerformed
         System.out.println("High/Low Temperature chosen.");
-    }//GEN-LAST:event_HighLowTemperatureActionPerformed
+       
+        String args2[] = { "2010-01.xml", "temperature" };
+         
+        ParseXML.main( args2 );
 
-    private void MeanTemperatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MeanTemperatureActionPerformed
+    }//GEN-LAST:event_HighLowTemperatureActionPerformed
+    
+    private void MeanTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_MeanTemperatureActionPerformed
         System.out.println("Mean Temperature chosen.");
     }//GEN-LAST:event_MeanTemperatureActionPerformed
-
-    private void MeanWindSpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MeanWindSpeedActionPerformed
+    
+    private void MeanWindSpeedActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_MeanWindSpeedActionPerformed
         System.out.println("Mean Wind Speed chosen.");
     }//GEN-LAST:event_MeanWindSpeedActionPerformed
-
-    private void MaximumWindSpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaximumWindSpeedActionPerformed
+    
+    private void MaximumWindSpeedActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_MaximumWindSpeedActionPerformed
         System.out.println("Maximum Wind Speed chosen.");
     }//GEN-LAST:event_MaximumWindSpeedActionPerformed
-
-    private void PrevailingWindDirectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrevailingWindDirectionActionPerformed
+    
+    private void PrevailingWindDirectionActionPerformed(java.awt.event.ActionEvent evt)    {//GEN-FIRST:event_PrevailingWindDirectionActionPerformed
         System.out.println("Prevailing Wind Direction chosen.");
     }//GEN-LAST:event_PrevailingWindDirectionActionPerformed
-
-    private void RainfallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RainfallActionPerformed
+    
+    private void RainfallActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_RainfallActionPerformed
         System.out.println("Rainfall chosen.");
     }//GEN-LAST:event_RainfallActionPerformed
 
-    private void DailyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DailyActionPerformed
+    private void DailyActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_DailyActionPerformed
         System.out.println("Daily chosen.");
     }//GEN-LAST:event_DailyActionPerformed
 
-    private void WeeklyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeeklyActionPerformed
+    private void WeeklyActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_WeeklyActionPerformed
         System.out.println("Weekly chosen.");
     }//GEN-LAST:event_WeeklyActionPerformed
 
-    private void MonthlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonthlyActionPerformed
+    private void MonthlyActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_MonthlyActionPerformed
         System.out.println("Monthly chosen.");
     }//GEN-LAST:event_MonthlyActionPerformed
 
-    private void YearlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YearlyActionPerformed
+    private void YearlyActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_YearlyActionPerformed
         System.out.println("Yearly chosen.");
     }//GEN-LAST:event_YearlyActionPerformed
 
-    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_ExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
-    private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
+    private void OpenActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_OpenActionPerformed
         System.out.println("Open chosen.");
         //FileChooser fileChooser = new FileChooser();
         FileChooser.showOpenDialog(this);
@@ -247,33 +283,47 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try 
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } 
+        catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } 
+        catch (InstantiationException ex) 
+        {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } 
+        catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } 
+        catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run() 
+            {
                 new MainWindow().setVisible(true);
             }
         });
