@@ -6,6 +6,7 @@
 //import org.jsom2.input.SAXBuilder;
 //import java.io.IOException;
 import java.util.*;
+import java.util.Date;
 import java.time.LocalDateTime;
 import javax.swing.*;
 //import java.awt.*;
@@ -30,6 +31,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.Day;
+import org.jfree.data.time.Minute;
 
 //import org.jfree.ui.*;
 import org.jfree.ui.ApplicationFrame;
@@ -42,14 +44,11 @@ public class WeatherGraph extends ApplicationFrame
     public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints )
     {
         super( applicationTitle );
-        ///JFreeChart weatherGraph = ChartFactory.createXYLinePlot(
-        //JFreeChart weatherGraph = ChartFactory.createScatterPlot(
         JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart( 
             chartTitle, // title of chart
-            "Humidity", // x axis label
+            "Time", // x axis label
             "Temperature",  // y axis label
             graphPoints( weatherPoints ), // data
-            //PlotOrientation.VERTICAL,
             true,   // create legend?
             true,   // generate tooltips?
             false   // generate urls?
@@ -78,52 +77,31 @@ public class WeatherGraph extends ApplicationFrame
 
     private XYDataset graphPoints( List<WeatherPoint> weatherPoints )
     {
-        TimeSeries pop = new TimeSeries( "Population", Day.class );
-
-        Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
-        WeatherPoint toGraph;
-
-        while( pointsIterator.hasNext() )
-        {
-            toGraph = pointsIterator.next();
-            pop.add( new Day( toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear() ), toGraph.temperature );
-
-        }
-
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries( pop );
-
-
-/*
-//        final XYSeries temperature = new XYSeries( "Temperature" );    
+        TimeSeries temperature = new TimeSeries( "Temperature" );
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.setDomainIsPointsInTime( true );
 
-        final TimeSeries temperature = new TimeSeries( "Srius", Day.class );
-
-        //final TimeSeriesCollection temperature = new TimeSeries( "Series1", Day.class );
+        // to iterate through the list of weather points
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
         WeatherPoint toGraph;
 
-        // add points
+
+        // go through each point
         while( pointsIterator.hasNext() )
         {
+            // weather point to graph
             toGraph = pointsIterator.next();
- 
-            //temperature.add( toGraph.date, toGraph.temperature );
-            //temperature.add( toGraph.temperature, toGraph.humidity );
-            //new Day( day, month, year)
-            
 
-            temperature.add( new Day( toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear() ), toGraph.temperature );
+             // get the value to graph
+            Minute now = new Minute( toGraph.date.getMinute(), toGraph.date.getHour(), toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear());
+
+            // add graphing point
+            temperature.add( now, toGraph.temperature );
 
         }
 
-        ///final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries( temperature );
-*/
 
-        System.out.println( "I'm going to skin people." );
+        //System.out.println( "I'm going to skin people." );
         return dataset;
     }
 
