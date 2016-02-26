@@ -1,0 +1,13 @@
+JAVAC=javac
+JFLAGS= -g -cp 
+sources = $(wildcard *.java)
+classes = $(sources:.java=.class)
+jarfiles = .:jcommon.jar:jdom.jar:jfreechart.jar
+
+all: $(classes)
+
+clean :
+	rm -f *.class
+
+%.class : %.java
+	$(JAVAC) $(JFLAGS) $(jarfiles) $(sources) 
