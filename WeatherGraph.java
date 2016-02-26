@@ -47,7 +47,7 @@ public class WeatherGraph extends ApplicationFrame
 
         //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 
-        System.out.println( graphType )
+        System.out.println( graphType );
 
 
         if( graphType.equals( "temperature" ) )

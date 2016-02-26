@@ -36,10 +36,10 @@ public class ParseXML
 
         System.out.println( "Got any grapes?" );
     
-        /*
+        
         List<WeatherPoint> weatherPoints = parseWeather( args[0] );
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
-    
+   /* 
         WeatherPoint toPrint;
     
         // print out the weather points
