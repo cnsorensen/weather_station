@@ -1,3 +1,7 @@
 # Compiled Source #
 ###################
 *.class
+
+# Temporary Files #
+###################
+*~
