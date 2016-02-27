@@ -41,6 +41,8 @@ import org.jfree.ui.RefineryUtilities;
 
 public class WeatherGraph extends ApplicationFrame
 {
+    public JFreeChart weatherGraph;
+    
     public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints, String graphType )
     {
         super( applicationTitle );
@@ -52,7 +54,7 @@ public class WeatherGraph extends ApplicationFrame
 
         if( graphType.equals( "temperature" ) )
         {
-            JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart( 
+            weatherGraph = ChartFactory.createTimeSeriesChart( 
                 chartTitle, // title of chart
                 "Time", // x axis label
                 "Temperature",  // y axis label
@@ -62,14 +64,14 @@ public class WeatherGraph extends ApplicationFrame
                 false   // generate urls?
             );
 
-            ChartPanel chartPanel = new ChartPanel( weatherGraph );
-            chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+            //ChartPanel weatherGraph1 = new ChartPanel( weatherGraph );
+            //weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
             final XYPlot plot = weatherGraph.getXYPlot();
-            setContentPane( chartPanel );
+            //setContentPane( weatherGraph1 );
             ///renderer.setSeriesPaint( 0, Color.RED );
             ///plot.setRenderer( renderer );
         }
-
+/*
         if( graphType.equals( "humidityGraph" ) )
         {
             JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart(
@@ -90,29 +92,12 @@ public class WeatherGraph extends ApplicationFrame
             setContentPane( chartPanel );
             //renderer.setSeriesPaint( 0, Color.GREEN );
             //plot.setRenderer( renderer );
-        }
-
-
-
-///        ChartPanel chartPanel = new ChartPanel( weatherGraph );
-  ///      chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-     ///   final XYPlot plot = weatherGraph.getXYPlot();
-       
-        //use to make  line graph
-        ///XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        
-        // set the color
-        ///renderer.setSeriesPaint( 0, Color.RED );
-        //renderer.setSeriesPaint( 1, Color.GREEN );
-        //renderer.setSeriesPaint( 2, Color.YELLOW );
-        
-        // set the width of the stroke
-        ///renderer.setSeriesStroke( 0, new BasicStroke( 0.02f ) );
-        ///renderer.setSeriesStroke( 1, new BasicStroke( 3.0f ) );
-        //renderer.setSeriesStroke( 2, new BasicStroke( 2.0f ) );
+        }*/
+    }
     
-  //      plot.setRenderer( renderer );
-//        setContentPane( chartPanel );
+    public JFreeChart getGraph()
+    {
+        return weatherGraph;
     }
 
     private XYDataset graphTemperature( List<WeatherPoint> weatherPoints )

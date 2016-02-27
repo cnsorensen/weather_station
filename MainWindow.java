@@ -1,6 +1,10 @@
 
+import java.awt.BorderLayout;
 import java.io.File;
+import java.util.List;
 import javafx.stage.FileChooser;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartPanel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,9 +35,8 @@ public class MainWindow extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    
-    private void initComponents() 
-    {
+    private void initComponents() {
+        //bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         TimeFrame = new javax.swing.ButtonGroup();
         GraphVariables = new javax.swing.ButtonGroup();
@@ -48,6 +51,7 @@ public class MainWindow extends javax.swing.JFrame
         Weekly = new javax.swing.JRadioButton();
         Monthly = new javax.swing.JRadioButton();
         Yearly = new javax.swing.JRadioButton();
+        jPanel1 = new javax.swing.JPanel();
         MenuBar = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -61,60 +65,52 @@ public class MainWindow extends javax.swing.JFrame
 
         GraphVariables.add(MeanTemperature);
         MeanTemperature.setText("Mean Temperature");
-        MeanTemperature.addActionListener(new java.awt.event.ActionListener() 
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt) 
-            {
+        MeanTemperature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MeanTemperatureActionPerformed(evt);
             }
         });
 
         GraphVariables.add(HighLowTemperature);
         HighLowTemperature.setText("High/Low Temperature");
-        HighLowTemperature.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt) 
-            {
+
+        //org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jPanel1, org.jdesktop.beansbinding.ObjectProperty.create(), HighLowTemperature, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        //bindingGroup.addBinding(binding);
+
+        HighLowTemperature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HighLowTemperatureActionPerformed(evt);
             }
         });
 
         GraphVariables.add(MeanWindSpeed);
         MeanWindSpeed.setText("Mean Wind Speed");
-        MeanWindSpeed.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        MeanWindSpeed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MeanWindSpeedActionPerformed(evt);
             }
         });
 
         GraphVariables.add(MaximumWindSpeed);
         MaximumWindSpeed.setText("Maximum Wind Speed");
-        MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MaximumWindSpeedActionPerformed(evt);
             }
         });
 
         GraphVariables.add(PrevailingWindDirection);
         PrevailingWindDirection.setText("Prevailing Wind Direction");
-        PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt) 
-            {
+        PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PrevailingWindDirectionActionPerformed(evt);
             }
         });
 
         GraphVariables.add(Rainfall);
         Rainfall.setText("Rainfall");
-        Rainfall.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        Rainfall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RainfallActionPerformed(evt);
             }
         });
@@ -131,13 +127,22 @@ public class MainWindow extends javax.swing.JFrame
         TimeFrame.add(Yearly);
         Yearly.setText("Yearly");
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 587, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 308, Short.MAX_VALUE)
+        );
+
         File.setText("File");
 
         Open.setText("Open");
-        Open.addActionListener(new java.awt.event.ActionListener() 
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        Open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenActionPerformed(evt);
             }
         });
@@ -145,10 +150,8 @@ public class MainWindow extends javax.swing.JFrame
         File.add(Seperator);
 
         Exit.setText("Exit");
-        Exit.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ExitActionPerformed(evt);
             }
         });
@@ -169,10 +172,11 @@ public class MainWindow extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Daily)
                     .addComponent(Weekly)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Monthly)
-                        .addComponent(Yearly)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 611, Short.MAX_VALUE)
+                    .addComponent(Monthly)
+                    .addComponent(Yearly))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(MeanTemperature)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,9 +210,12 @@ public class MainWindow extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Monthly)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Yearly)))
-                .addGap(298, 298, 298))
+                        .addComponent(Yearly))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(158, 158, 158))
         );
+
+        //bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -219,8 +226,19 @@ public class MainWindow extends javax.swing.JFrame
        
         String args2[] = { "2010-01.xml", "temperature" };
          
-        ParseXML.main( args2 );
-
+        /*List<WeatherPoint> weatherPoints = ParseXML.parseWeather( args2[0] );
+        
+        WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args2[1] );
+        JPanel graph = new JPanel();
+        graph.setLayout(new java.awt.BorderLayout());
+        
+        ChartPanel CP = new ChartPanel(chart.getGraph());
+        CP.setPreferredSize(new java.awt.Dimension(560, 367));
+        //final XYPlot plot = graph.getXYPlot();
+        //setContentPane(CP);
+        
+        graph.add(CP, BorderLayout.CENTER);
+        graph.validate();*/
     }//GEN-LAST:event_HighLowTemperatureActionPerformed
     
     private void MeanTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
@@ -349,5 +367,7 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.ButtonGroup TimeFrame;
     private javax.swing.JRadioButton Weekly;
     private javax.swing.JRadioButton Yearly;
+    private javax.swing.JPanel jPanel1;
+    //private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

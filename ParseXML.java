@@ -16,23 +16,27 @@ JMW 160205
 */
 
 
+import java.awt.BorderLayout;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import java.io.IOException;
 import java.util.*;
 import java.time.LocalDateTime;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.plot.XYPlot;
 
 import org.jfree.ui.RefineryUtilities;
 
 public class ParseXML 
 {
 
-    public static void main( String[] args )
+    /*public static void main( String[] args )
     {
         /*if( args.length != 1 )
         {
             System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );     
-        }*/
+        }
 
         System.out.println( "Got any grapes?" );
     
@@ -49,14 +53,15 @@ public class ParseXML
             toPrint = pointsIterator.next();
             System.out.println( toPrint );
         }
-        */
+        
 
-        WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args[1] );
-        chart.pack();
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
+        //WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args[1] );
+        
+        //chart.pack();
+        //RefineryUtilities.centerFrameOnScreen( chart );
+        //chart.setVisible( true );
 
-    }
+    }*/
     
     public static List<WeatherPoint> parseWeather( String file )
     {
