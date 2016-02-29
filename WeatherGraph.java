@@ -65,6 +65,7 @@ public class WeatherGraph extends ApplicationFrame
             weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
             final XYPlot plot = weatherGraph.getXYPlot();
             setContentPane( weatherGraph1 );
+            System.out.println( "End of Weathergraoh" );
     }
     
     public JFreeChart getGraph()

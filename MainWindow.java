@@ -2,13 +2,14 @@
 import java.awt.BorderLayout;
 import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
 import javafx.stage.FileChooser;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jfree.chart.JFreeChart;
-
+import java.lang.Boolean;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -63,6 +64,10 @@ public class MainWindow extends javax.swing.JFrame
         Seperator = new javax.swing.JPopupMenu.Separator();
         Exit = new javax.swing.JMenuItem();
         Edit = new javax.swing.JMenu();
+        GraphPanel = new javax.swing.JPanel();
+        XMLLoaded = false;
+        XMLFileName = "";
+        weatherPoints = new ArrayList<WeatherPoint>();
         //Graph = sldkfj;asdk
         ///panel to the frame and then the chart to the panel
 
@@ -157,6 +162,35 @@ public class MainWindow extends javax.swing.JFrame
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 308, Short.MAX_VALUE)
         );
+
+        // sample I found online
+        /*
+        JFreeChart chart = new JFreeChart(slkdfjs_
+        ChartPanel myChart = new ChartPanel(chart);
+        myChart.setMouseWheelEnabled(true);
+        GraphPanel.setLayout( new java.awt.BorderLayout() );
+        GraphPanel.add( myChart, BorderLayout.CENTER );
+        GraphPanel.validate();
+        */
+        ///
+        //if xml is loaded
+        //draw graph
+        System.out.println( "Before printing graph" );
+        System.out.println( XMLLoaded );
+        GraphPanel.setLayout( new java.awt.BorderLayout() );
+        GraphPanel.validate();
+        if( XMLLoaded == true )
+        {
+            System.out.println( "XML is loaded in more places than you would know." );
+            weatherGraph = new WeatherGraph( "apptit", "charttit", weatherPoints, "graphtytpe");   
+            Graph = weatherGraph.getGraph();
+            ChartPanel myChart = new ChartPanel( Graph );
+            myChart.setMouseWheelEnabled( true );
+            //GraphPanel.setLayout( new java.awt.BorderLayout() );
+            GraphPanel.add( myChart, BorderLayout.CENTER );
+            GraphPanel.revalidate();    
+        }
+
 
         File.setText("File");
 
@@ -346,14 +380,22 @@ public class MainWindow extends javax.swing.JFrame
         if( returnVal == JFileChooser.APPROVE_OPTION )
         {
             System.out.println( "You chose to open this file: " + FileChooser.getSelectedFile().getName() );
+        XMLLoaded = true;
+        XMLFileName = FileChooser.getSelectedFile().getName();
         }
         
         //File weatherFile = fileChooser.getSelectedFile();    
         
         // pass in the name of the file to get parsed
         String[] args = new String[1];
-        args[0] = FileChooser.getSelectedFile().getName();
-        ParseXML.main( args );
+        args[0] = XMLFileName;
+        weatherPoints = ParseXML.parseWeather( XMLFileName );
+        GraphPanel.revalidate();
+        
+        //ParseXML.main( args );
+        
+
+
     }//GEN-LAST:event_OpenActionPerformed
 
     /**
@@ -426,8 +468,12 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.JRadioButton Weekly;
     private javax.swing.JRadioButton Yearly;
     private javax.swing.JPanel jPanel1;
+    private WeatherGraph weatherGraph;
     private JFreeChart Graph;
     private javax.swing.JPanel GraphPanel;
+    private java.lang.Boolean XMLLoaded;
+    private String XMLFileName;
+    private List<WeatherPoint> weatherPoints;
     // add the panel to the window and add the graph to the panel
 
     //private org.jdesktop.beansbinding.BindingGroup bindingGroup;

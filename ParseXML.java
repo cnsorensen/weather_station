@@ -70,7 +70,7 @@ public class ParseXML
         List<WeatherPoint> toReturn = new ArrayList<WeatherPoint>();
         builder = new SAXBuilder();
    
-        //System.out.println( "Green" );
+        System.out.println( "In ParseXML parseWeather" );
  
         try
         {
@@ -101,8 +101,9 @@ public class ParseXML
         {
             System.out.println( e );
         }
-        
-       return toReturn;
+     
+        System.out.println( "Am I returning from ParseXML?" );   
+        return toReturn;
     }
     
     public static WeatherPoint addWeatherPoint( Element current )
