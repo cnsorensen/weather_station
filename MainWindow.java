@@ -5,6 +5,10 @@ import java.util.List;
 import javafx.stage.FileChooser;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.JFreeChart;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,7 +39,8 @@ public class MainWindow extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         //bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         TimeFrame = new javax.swing.ButtonGroup();
@@ -58,15 +63,20 @@ public class MainWindow extends javax.swing.JFrame
         Seperator = new javax.swing.JPopupMenu.Separator();
         Exit = new javax.swing.JMenuItem();
         Edit = new javax.swing.JMenu();
+        //Graph = sldkfj;asdk
+        ///panel to the frame and then the chart to the panel
 
-        FileChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+        //FileChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         GraphVariables.add(MeanTemperature);
         MeanTemperature.setText("Mean Temperature");
-        MeanTemperature.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MeanTemperature.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 MeanTemperatureActionPerformed(evt);
             }
         });
@@ -77,40 +87,50 @@ public class MainWindow extends javax.swing.JFrame
         //org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jPanel1, org.jdesktop.beansbinding.ObjectProperty.create(), HighLowTemperature, org.jdesktop.beansbinding.BeanProperty.create("selected"));
         //bindingGroup.addBinding(binding);
 
-        HighLowTemperature.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        HighLowTemperature.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 HighLowTemperatureActionPerformed(evt);
             }
         });
 
         GraphVariables.add(MeanWindSpeed);
         MeanWindSpeed.setText("Mean Wind Speed");
-        MeanWindSpeed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MeanWindSpeed.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 MeanWindSpeedActionPerformed(evt);
             }
         });
 
         GraphVariables.add(MaximumWindSpeed);
         MaximumWindSpeed.setText("Maximum Wind Speed");
-        MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MaximumWindSpeed.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 MaximumWindSpeedActionPerformed(evt);
             }
         });
 
         GraphVariables.add(PrevailingWindDirection);
         PrevailingWindDirection.setText("Prevailing Wind Direction");
-        PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        PrevailingWindDirection.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 PrevailingWindDirectionActionPerformed(evt);
             }
         });
 
         GraphVariables.add(Rainfall);
         Rainfall.setText("Rainfall");
-        Rainfall.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Rainfall.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 RainfallActionPerformed(evt);
             }
         });
@@ -141,8 +161,10 @@ public class MainWindow extends javax.swing.JFrame
         File.setText("File");
 
         Open.setText("Open");
-        Open.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Open.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 OpenActionPerformed(evt);
             }
         });
@@ -150,8 +172,10 @@ public class MainWindow extends javax.swing.JFrame
         File.add(Seperator);
 
         Exit.setText("Exit");
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Exit.addActionListener(new java.awt.event.ActionListener() 
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {
                 ExitActionPerformed(evt);
             }
         });
@@ -218,84 +242,118 @@ public class MainWindow extends javax.swing.JFrame
         //bindingGroup.bind();
 
         pack();
+    
     }// </editor-fold>//GEN-END:initComponents
 
     private void HighLowTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_HighLowTemperatureActionPerformed
+    
         System.out.println("High/Low Temperature chosen.");
        
+        ///hard coding this for right now
         String args2[] = { "2010-01.xml", "temperature" };
          
-        /*List<WeatherPoint> weatherPoints = ParseXML.parseWeather( args2[0] );
+        List<WeatherPoint> weatherPoints = ParseXML.parseWeather( args2[0] );
         
         WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args2[1] );
-        JPanel graph = new JPanel();
-        graph.setLayout(new java.awt.BorderLayout());
-        
-        ChartPanel CP = new ChartPanel(chart.getGraph());
-        CP.setPreferredSize(new java.awt.Dimension(560, 367));
-        //final XYPlot plot = graph.getXYPlot();
-        //setContentPane(CP);
-        
-        graph.add(CP, BorderLayout.CENTER);
-        graph.validate();*/
+
     }//GEN-LAST:event_HighLowTemperatureActionPerformed
-    
+
+/* *******************************************ACTIONS********************************* */
     private void MeanTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_MeanTemperatureActionPerformed
+    
         System.out.println("Mean Temperature chosen.");
+    
     }//GEN-LAST:event_MeanTemperatureActionPerformed
     
     private void MeanWindSpeedActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_MeanWindSpeedActionPerformed
+    
         System.out.println("Mean Wind Speed chosen.");
+    
     }//GEN-LAST:event_MeanWindSpeedActionPerformed
     
     private void MaximumWindSpeedActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_MaximumWindSpeedActionPerformed
+    
         System.out.println("Maximum Wind Speed chosen.");
+    
     }//GEN-LAST:event_MaximumWindSpeedActionPerformed
     
-    private void PrevailingWindDirectionActionPerformed(java.awt.event.ActionEvent evt)    {//GEN-FIRST:event_PrevailingWindDirectionActionPerformed
+    private void PrevailingWindDirectionActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_PrevailingWindDirectionActionPerformed
+    
         System.out.println("Prevailing Wind Direction chosen.");
+    
     }//GEN-LAST:event_PrevailingWindDirectionActionPerformed
     
     private void RainfallActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_RainfallActionPerformed
+    
         System.out.println("Rainfall chosen.");
+    
     }//GEN-LAST:event_RainfallActionPerformed
 
     private void DailyActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_DailyActionPerformed
+    
         System.out.println("Daily chosen.");
+    
     }//GEN-LAST:event_DailyActionPerformed
 
     private void WeeklyActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_WeeklyActionPerformed
+    
         System.out.println("Weekly chosen.");
+    
     }//GEN-LAST:event_WeeklyActionPerformed
 
     private void MonthlyActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_MonthlyActionPerformed
+    
         System.out.println("Monthly chosen.");
+    
     }//GEN-LAST:event_MonthlyActionPerformed
 
     private void YearlyActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_YearlyActionPerformed
+    
         System.out.println("Yearly chosen.");
+    
     }//GEN-LAST:event_YearlyActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_ExitActionPerformed
+        
         System.exit(0);
+    
     }//GEN-LAST:event_ExitActionPerformed
 
     private void OpenActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_OpenActionPerformed
+        
         System.out.println("Open chosen.");
-        //FileChooser fileChooser = new FileChooser();
-        FileChooser.showOpenDialog(this);
-        //File file = fileChooser.showOpenDialog(null);
+        
+        // filter to only xml files
+        FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter( null, "xml" );
+        FileChooser.setFileFilter( xmlFilter );
+        
+        // show the dialog box to select a file from
+        int returnVal = FileChooser.showOpenDialog( null );
+        
+        // if file selection was a success
+        if( returnVal == JFileChooser.APPROVE_OPTION )
+        {
+            System.out.println( "You chose to open this file: " + FileChooser.getSelectedFile().getName() );
+        }
+        
+        //File weatherFile = fileChooser.getSelectedFile();    
+        
+        // pass in the name of the file to get parsed
+        String[] args = new String[1];
+        args[0] = FileChooser.getSelectedFile().getName();
+        ParseXML.main( args );
     }//GEN-LAST:event_OpenActionPerformed
 
     /**
@@ -368,6 +426,11 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.JRadioButton Weekly;
     private javax.swing.JRadioButton Yearly;
     private javax.swing.JPanel jPanel1;
+    private JFreeChart Graph;
+    private javax.swing.JPanel GraphPanel;
+    // add the panel to the window and add the graph to the panel
+
     //private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
 }

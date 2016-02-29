@@ -31,37 +31,36 @@ import org.jfree.ui.RefineryUtilities;
 public class ParseXML 
 {
 
-    /*public static void main( String[] args )
+    public static void main( String[] args )
     {
-        /*if( args.length != 1 )
+        if( args.length != 1 )
         {
             System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );     
         }
-
-        System.out.println( "Got any grapes?" );
-    
         
         List<WeatherPoint> weatherPoints = parseWeather( args[0] );
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
-   /* 
+
         WeatherPoint toPrint;
     
         // print out the weather points
-       
+/*      
         while( pointsIterator.hasNext() )
         {
             toPrint = pointsIterator.next();
             System.out.println( toPrint );
         }
         
+*/
 
-        //WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args[1] );
-        
-        //chart.pack();
-        //RefineryUtilities.centerFrameOnScreen( chart );
-        //chart.setVisible( true );
+        System.out.println( "let it snow" );
 
-    }*/
+        WeatherGraph weatherGraph = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, "temp" );
+      
+        weatherGraph.pack();
+        RefineryUtilities.centerFrameOnScreen( weatherGraph );
+        weatherGraph.setVisible( true );
+    }
     
     public static List<WeatherPoint> parseWeather( String file )
     {

@@ -42,57 +42,29 @@ import org.jfree.ui.RefineryUtilities;
 public class WeatherGraph extends ApplicationFrame
 {
     public JFreeChart weatherGraph;
+    public XYDataset graphData;
     
     public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints, String graphType )
     {
+        ///it needs this for some reason?
         super( applicationTitle );
 
-        //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        graphData = createGraphData( weatherPoints );
 
-        System.out.println( graphType );
+        weatherGraph = ChartFactory.createTimeSeriesChart( 
+            chartTitle, // title of chart
+            "Time", // x axis label
+            "Temperature",  // y axis label
+            graphData, // data
+            true,   // create legend?
+            true,   // generate tooltips?
+            false   // generate urls?
+        );
 
-
-        if( graphType.equals( "temperature" ) )
-        {
-            weatherGraph = ChartFactory.createTimeSeriesChart( 
-                chartTitle, // title of chart
-                "Time", // x axis label
-                "Temperature",  // y axis label
-                graphTemperature( weatherPoints ), // data
-                true,   // create legend?
-                true,   // generate tooltips?
-                false   // generate urls?
-            );
-
-            //ChartPanel weatherGraph1 = new ChartPanel( weatherGraph );
-            //weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+            ChartPanel weatherGraph1 = new ChartPanel( weatherGraph );
+            weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
             final XYPlot plot = weatherGraph.getXYPlot();
-            //setContentPane( weatherGraph1 );
-            ///renderer.setSeriesPaint( 0, Color.RED );
-            ///plot.setRenderer( renderer );
-        }
-/*
-        if( graphType.equals( "humidityGraph" ) )
-        {
-            JFreeChart weatherGraph = ChartFactory.createTimeSeriesChart(
-                chartTitle, // title of chart
-                "Time", // x axis label
-                "Humidity",  // y axis label
-                graphHumidity( weatherPoints ), // data
-                true,   // create legend?
-                true,   // generate tooltips?
-                false   // generate urls?
-            );
-            
-            
-
-            ChartPanel chartPanel = new ChartPanel( weatherGraph );
-            chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-            final XYPlot plot = weatherGraph.getXYPlot();
-            setContentPane( chartPanel );
-            //renderer.setSeriesPaint( 0, Color.GREEN );
-            //plot.setRenderer( renderer );
-        }*/
+            setContentPane( weatherGraph1 );
     }
     
     public JFreeChart getGraph()
@@ -100,7 +72,7 @@ public class WeatherGraph extends ApplicationFrame
         return weatherGraph;
     }
 
-    private XYDataset graphTemperature( List<WeatherPoint> weatherPoints )
+    private XYDataset createGraphData( List<WeatherPoint> weatherPoints )
     {
         TimeSeries temperatureGraph = new TimeSeries( "Temperature" );
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
@@ -125,35 +97,6 @@ public class WeatherGraph extends ApplicationFrame
         }
 
         dataset.addSeries( temperatureGraph );
-
-        //System.out.println( "I'm going to skin people." );
-        return dataset;
-    }
-
-    private XYDataset graphHumidity( List<WeatherPoint> weatherPoints )
-    {
-        TimeSeries humidityGraph = new TimeSeries( "Humidity" );
-        final TimeSeriesCollection dataset = new TimeSeriesCollection();
-
-        // to iterate through the list of weather points
-        Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
-        WeatherPoint toGraph;
-
-
-        // go through each point
-        while( pointsIterator.hasNext() )
-        {
-            // weather point to graph
-            toGraph = pointsIterator.next();
-
-             // get the value to graph
-            Minute now = new Minute( toGraph.date.getMinute(), toGraph.date.getHour(), toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear());
-
-            // add graphing point
-            humidityGraph.add( now, toGraph.temperature );
-        }
-
-        dataset.addSeries( humidityGraph );
 
         //System.out.println( "I'm going to skin people." );
         return dataset;
