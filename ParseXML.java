@@ -31,7 +31,7 @@ import org.jfree.ui.RefineryUtilities;
 public class ParseXML 
 {
 
-    public static void main( String[] args )
+/*    public static void main( String[] args )
     {
         if( args.length != 1 )
         {
@@ -51,7 +51,7 @@ public class ParseXML
             System.out.println( toPrint );
         }
         
-*/
+
 
         System.out.println( "let it snow" );
 
@@ -61,7 +61,8 @@ public class ParseXML
         RefineryUtilities.centerFrameOnScreen( weatherGraph );
         weatherGraph.setVisible( true );
     }
-    
+
+*/    
     public static List<WeatherPoint> parseWeather( String file )
     {
         SAXBuilder builder;

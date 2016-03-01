@@ -1,3 +1,4 @@
+JAVA=java
 JAVAC=javac
 JFLAGS= -g -cp 
 sources = $(wildcard *.java)
@@ -13,5 +14,8 @@ clean :
 	$(JAVAC) $(JFLAGS) $(jarfiles) $(sources) 
 
 remake : clean all
+
+run :
+	java
 
 

@@ -39,18 +39,17 @@ import org.jfree.ui.RefineryUtilities;
 
 
 
-public class WeatherGraph extends ApplicationFrame
+public class WeatherGraph
 {
     public JFreeChart weatherGraph;
     public XYDataset graphData;
-    
+    public ChartPanel chartPanel;
     public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints, String graphType )
     {
         ///it needs this for some reason?
-        super( applicationTitle );
+        //super( applicationTitle );
 
         graphData = createGraphData( weatherPoints );
-
         weatherGraph = ChartFactory.createTimeSeriesChart( 
             chartTitle, // title of chart
             "Time", // x axis label
@@ -61,16 +60,20 @@ public class WeatherGraph extends ApplicationFrame
             false   // generate urls?
         );
 
-            ChartPanel weatherGraph1 = new ChartPanel( weatherGraph );
-            weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-            final XYPlot plot = weatherGraph.getXYPlot();
-            setContentPane( weatherGraph1 );
-            System.out.println( "End of Weathergraoh" );
+        chartPanel = new ChartPanel(weatherGraph);
+
+        XYPlot plot = weatherGraph.getXYPlot();
+        System.out.println( "I'm Justin Bieber" );
     }
     
     public JFreeChart getGraph()
     {
         return weatherGraph;
+    }
+
+    public ChartPanel getChartPanel()
+    {
+        return chartPanel;
     }
 
     private XYDataset createGraphData( List<WeatherPoint> weatherPoints )
@@ -103,14 +106,10 @@ public class WeatherGraph extends ApplicationFrame
         return dataset;
     }
     
-/*
+
     public static void main( String[] args )
     {
         System.out.println( "I'm Marcus!" );
-        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature" );
-        chart.pack();
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
     }   
-*/
+
 }

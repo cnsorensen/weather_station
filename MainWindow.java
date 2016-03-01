@@ -67,6 +67,7 @@ public class MainWindow extends javax.swing.JFrame
         GraphPanel = new javax.swing.JPanel();
         XMLLoaded = false;
         XMLFileName = "";
+
         weatherPoints = new ArrayList<WeatherPoint>();
         //Graph = sldkfj;asdk
         ///panel to the frame and then the chart to the panel
@@ -175,6 +176,7 @@ public class MainWindow extends javax.swing.JFrame
         ///
         //if xml is loaded
         //draw graph
+        /*        
         System.out.println( "Before printing graph" );
         System.out.println( XMLLoaded );
         GraphPanel.setLayout( new java.awt.BorderLayout() );
@@ -189,7 +191,7 @@ public class MainWindow extends javax.swing.JFrame
             //GraphPanel.setLayout( new java.awt.BorderLayout() );
             GraphPanel.add( myChart, BorderLayout.CENTER );
             GraphPanel.revalidate();    
-        }
+        }*/
 
 
         File.setText("File");
@@ -393,6 +395,23 @@ public class MainWindow extends javax.swing.JFrame
         GraphPanel.revalidate();
         
         //ParseXML.main( args );
+	if( XMLLoaded == true )
+        {
+            System.out.println( "XML is loaded in more places than you would know." );
+            WeatherGraph toAdd = new WeatherGraph("An Application", "The Graph of no name", weatherPoints, "Type");
+            System.out.println( "You're a flaming lezzzs" );                      
+            toAdd.getChartPanel().add();            
+            //jPanel1.add(toAdd.getChartPanel());         
+            System.out.println( "Fuckin cock sucker" );            
+            //pack();
+		    Graph = toAdd.getGraph();
+            pack();            
+            //jPanel1.setVisible( true );
+            System.out.println( "Suck my dick" );            
+            //ChartPanel myChart = new ChartPanel( Graph );
+            //myChart.setMouseWheelEnabled( true );
+        }
+	System.out.println( "Exiting Open Event Handler" );
         
 
 
