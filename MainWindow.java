@@ -232,13 +232,15 @@ public class MainWindow extends javax.swing.JFrame
         System.out.println("High/Low Temperature chosen.");
         if( HighLowTemperature.isSelected() )
         {
-            System.out.println( "is selected" );
-            weatherGraph.showLine( 0 );
-        }
-        else
-        {
-            System.out.println( "It aint no selected" );
+            System.out.println( "is unselected" );
+            HighLowTemperature.setSelected( false );
             weatherGraph.hideLine( 0 );
+        }
+        else()
+        {
+            System.out.println( "It selected" );
+            HighLowTemperature.setSelected( true );
+            weatherGraph.showLine( 0 );
         }        
         update( GraphPanel, weatherGraph.getGraph() );
 

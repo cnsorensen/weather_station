@@ -85,10 +85,12 @@ public class WeatherGraph extends ApplicationFrame
         renderer = new XYLineAndShapeRenderer( true, false );
 
         // inital all of the lines to be hidden
-        for( int i = 0; i < seriesCount; i++ )
+        for( int i = 0; i < 9; i++ )
         {
             renderer.setSeriesLinesVisible( i, false );
         }
+
+        //renderer.setSeriesLinesVisible( 9, true );
 
         //renderer.setSeriesPaint( 0, Color.RED );
         //renderer.setSeriesLinesVisible( 0, false );
