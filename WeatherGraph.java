@@ -28,6 +28,10 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.chart.axis.DateAxis;
@@ -89,11 +93,16 @@ public class WeatherGraph extends ApplicationFrame
         // inital all of the lines to be hidden
         for( int i = 0; i < seriesCount; i++ )
         {
-            renderer.setSeriesLinesVisible( i, true );
+            renderer.setSeriesLinesVisible( i, false );
         }
 
-        toolTip = new WeatherToolTip();
-        renderer.setBaseToolTipGenerator( toolTip );
+        StandardXYToolTipGenerator g = new StandardXYToolTipGenerator(
+            StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
+            new SimpleDateFormat("d-MMM-YYY"), new DecimalFormat("0.00") );
+        renderer.setToolTipGenerator(g);
+
+        ///toolTip = new WeatherToolTip();
+        ///renderer.setBaseToolTipGenerator( toolTip );
         
         // rainfall isn't graphing
         //renderer.setSeriesLinesVisible( 9, true );
@@ -102,9 +111,7 @@ public class WeatherGraph extends ApplicationFrame
  
         ///Take this out when putting into real code/////
 
-        setContentPane( chartPanel );  
-
-        //setContentPane( chartPanel );  
+        setContentPane( chartPanel );    
     }
 
     // toggle the view of the line
@@ -130,7 +137,6 @@ public class WeatherGraph extends ApplicationFrame
     // creates the xy data to graph
     private XYDataset createGraphData( List<WeatherPoint> weatherPoints )
     {
-        ///TimeSeries temperatureGraph = new TimeSeries( "Temperature" );
         TimeSeriesCollection dataset = new TimeSeriesCollection();
 
         // to iterate through the list of weather points
@@ -169,6 +175,8 @@ public class WeatherGraph extends ApplicationFrame
             heatIndex.add( now, toGraph.heatindex );
             uvindex.add( now, toGraph.uvindex );
             rainfall.add( now, toGraph.rainfall );
+            
+            System.out.println( now.getSerialIndex() );
         }
 
         // Add these to dataset
