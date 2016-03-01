@@ -37,7 +37,6 @@ public class ParseXML
         System.out.println(list.size());
     }
 
-
   	public static List<WeatherPoint> parseDirectory( String directory )
 	{
 		ArrayList<WeatherPoint> toReturn = new ArrayList<WeatherPoint>();

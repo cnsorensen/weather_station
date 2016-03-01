@@ -101,7 +101,10 @@ public class WeatherGraph extends ApplicationFrame
         plot.setRenderer( renderer );
  
         ///Take this out when putting into real code/////
+
         setContentPane( chartPanel );  
+
+        //setContentPane( chartPanel );  
     }
 
     // toggle the view of the line
@@ -189,6 +192,6 @@ public class WeatherGraph extends ApplicationFrame
         chart.pack();
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );
-    }   
+    }
 
 }
