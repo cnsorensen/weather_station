@@ -12,6 +12,7 @@ import javax.swing.*;
 //import java.awt.*;
 import java.awt.Color;
 import java.awt.BasicStroke;
+import javax.swing.JFrame;
 
 //import org.jfree.chart.*;
 import org.jfree.chart.ChartPanel;
@@ -19,8 +20,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 //import org.jfree.data.xy.*;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
@@ -39,49 +41,97 @@ import org.jfree.ui.RefineryUtilities;
 
 
 
-public class WeatherGraph
+public class WeatherGraph extends ApplicationFrame
 {
-    public JFreeChart weatherGraph;
-    public XYDataset graphData;
-    
-    public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints, String graphType )
-    {
-        ///it needs this for some reason?
-        //super( applicationTitle );
+    private JFreeChart weatherGraph;
+    private XYDataset graphData;
+    //private int datasetIndex = 0;
 
+    // The constructor for the graph    
+    // Takes in the data to graph
+    public WeatherGraph( List<WeatherPoint> weatherPoints )
+    {
+        ///it needs this if you are solely running this file
+        super( "eatshit" );
+
+        // the data to be plotted on the graph
         graphData = createGraphData( weatherPoints );
 
+        // create the graph with the data
         weatherGraph = ChartFactory.createTimeSeriesChart( 
-            chartTitle, // title of chart
-            "Time", // x axis label
-            "Temperature",  // y axis label
+            "", // title of chart
+            "", // x axis label
+            "",  // y axis label
             graphData, // data
             true,   // create legend?
             true,   // generate tooltips?
             false   // generate urls?
         );
-/*
-            ChartPanel weatherGraph1 = new ChartPanel( weatherGraph );
-            weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-            final XYPlot plot = weatherGraph.getXYPlot();
-            setContentPane( weatherGraph1 );
-*/
+
+        ////FOR ME SELFISH PLEASURES///////
+        ChartPanel chartPanel = new ChartPanel( weatherGraph );
+        chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+
+        weatherGraph.setBackgroundPaint( Color.BLUE );
+        XYPlot plot = (XYPlot) weatherGraph.getPlot();
+        plot.setBackgroundPaint( Color.BLACK );
+
+        // ( bool-lines visible?, bool-shapes on points visible?)
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( true, false );
+
+
+        //renderer.setSeriesPaint( 0, Color.RED );
+        renderer.setSeriesLinesVisible( 0, true );
+        //renderer.setSeriesPaint( 1, Color.RED );
+        renderer.setSeriesLinesVisible( 1, true );
+        //renderer.setSeriesPaint( 2, Color.RED );
+        renderer.setSeriesLinesVisible( 2, true );
+        plot.setRenderer( renderer );
+
+        ///Take this out when putting into real code/////
+        setContentPane( chartPanel );  
+
     }
-    
+/*
+    // toggle the view of the line
+    public void showLine( int series )
+    {
+        renderer.setSeriesLinesVisible( series, true );   
+    }
+
+    // hide the line
+    public void hideLine( int series )
+    {
+        renderer.setSeriesLineVisible( series, false );
+    }
+*/
+    // return the graph
     public JFreeChart getGraph()
     {
         return weatherGraph;
     }
 
+    // creates the xy data to graph
     private XYDataset createGraphData( List<WeatherPoint> weatherPoints )
     {
-        TimeSeries temperatureGraph = new TimeSeries( "Temperature" );
-        final TimeSeriesCollection dataset = new TimeSeriesCollection();
+        ///TimeSeries temperatureGraph = new TimeSeries( "Temperature" );
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
 
         // to iterate through the list of weather points
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
         WeatherPoint toGraph;
 
+        // xyseries
+        TimeSeries temperature = new TimeSeries( "Temperature" );
+        //TimeSeries avgTemperature = new XYSeries( "Average Temperature" );
+        TimeSeries humidity = new TimeSeries( "Humidity" );
+        TimeSeries windSpeed = new TimeSeries( "Wind Speed" );
+        //TimeSeries windDirection = new TimeSeries( "Wind Direction" ); //Don't know how??
+        TimeSeries windGust = new TimeSeries( "Wind Gust" );
+        TimeSeries windChill = new TimeSeries( "Wind Chill" );
+        TimeSeries heatIndex = new TimeSeries( "Heat Index" );
+        TimeSeries uvindex = new TimeSeries( "UV Index" );
+        TimeSeries rainfall = new TimeSeries( "Rainfall" );
 
         // go through each point
         while( pointsIterator.hasNext() )
@@ -93,24 +143,39 @@ public class WeatherGraph
             Minute now = new Minute( toGraph.date.getMinute(), toGraph.date.getHour(), toGraph.date.getDayOfMonth(), toGraph.date.getMonthValue(), toGraph.date.getYear());
 
             // add graphing point
-            temperatureGraph.add( now, toGraph.temperature );
-
+            temperature.add( now, toGraph.temperature );
+            ///avgtemp here
+            humidity.add( now, toGraph.humidity );
+            windSpeed.add( now, toGraph.windspeed );
+            ///wind direction here
+            windGust.add( now, toGraph.windgust );
+            windChill.add( now, toGraph.windchill );
+            heatIndex.add( now, toGraph.heatindex );
+            uvindex.add( now, toGraph.uvindex );
+            rainfall.add( now, toGraph.rainfall );
         }
 
-        dataset.addSeries( temperatureGraph );
+        // Add these to dataset
+        dataset.addSeries( temperature );
+        ///dataset.addSeries( avgTemperature );
+        dataset.addSeries( humidity );
+        dataset.addSeries( windSpeed );
+        ///dataset.addSeries( windDirection );
+        dataset.addSeries( windGust );
+        dataset.addSeries( windChill );
+        dataset.addSeries( heatIndex );
+        dataset.addSeries( uvindex );
+        dataset.addSeries( rainfall );
 
-        //System.out.println( "I'm going to skin people." );
         return dataset;
     }
-    
-/*
+
     public static void main( String[] args )
     {
-        System.out.println( "I'm Marcus!" );
-        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature", ParseXML.parseWeather("./2010-01.xml"), "Yep" );
+        WeatherGraph chart = new WeatherGraph( ParseXML.parseWeather("./2010-01.xml") );
         chart.pack();
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );
     }   
-*/
+
 }
