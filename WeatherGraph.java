@@ -79,6 +79,7 @@ public class WeatherGraph extends ApplicationFrame
         // ( bool-lines visible?, bool-shapes on points visible?)
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( true, false );
 
+
         //renderer.setSeriesPaint( 0, Color.RED );
         renderer.setSeriesLinesVisible( 0, true );
         //renderer.setSeriesPaint( 1, Color.RED );
