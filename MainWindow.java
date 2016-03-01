@@ -61,7 +61,7 @@ public class MainWindow extends javax.swing.JFrame
         Weekly = new javax.swing.JRadioButton();
         Monthly = new javax.swing.JRadioButton();
         Yearly = new javax.swing.JRadioButton();
-        weatherGraph = new WeatherGraph( "shit", "fuck", new ArrayList<WeatherPoint>(), "bitch" );       
+        weatherGraph = new WeatherGraph( new ArrayList<WeatherPoint>() );       
         GraphPanel = new ChartPanel( weatherGraph.getGraph() );        
         MenuBar = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
@@ -71,9 +71,9 @@ public class MainWindow extends javax.swing.JFrame
         Edit = new javax.swing.JMenu();
         XMLLoaded = false;
         XMLFileName = "";
-	Panel = new javax.swing.JPanel();
-	TimePanel = new javax.swing.JPanel();
-	GraphOptionPanel = new javax.swing.JPanel();
+	    Panel = new javax.swing.JPanel();
+	    TimePanel = new javax.swing.JPanel();
+	    GraphOptionPanel = new javax.swing.JPanel();
         weatherPoints = new ArrayList<WeatherPoint>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -228,34 +228,53 @@ public class MainWindow extends javax.swing.JFrame
 
     private void HighLowTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_HighLowTemperatureActionPerformed
-    
-        System.out.println("High/Low Temperature chosen.");
-       
         
+        System.out.println("High/Low Temperature chosen.");
+        if( HighLowTemperature.isSelected() )
+        {
+            System.out.println( "is selected" );
+            weatherGraph.showLine( 0 );
+        }
+        else
+        {
+            System.out.println( "It aint no selected" );
+            weatherGraph.hideLine( 0 );
+        }        
+        update( GraphPanel, weatherGraph.getGraph() );
 
     }//GEN-LAST:event_HighLowTemperatureActionPerformed
 
-/* *******************************************ACTIONS********************************* */
+/* **************************************ACTIONS********************************* */
     private void MeanTemperatureActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_MeanTemperatureActionPerformed
     
         System.out.println("Mean Temperature chosen.");
-		weatherPoints = ParseXML.parseWeather( "2010-01.xml" );
-		weatherGraph = new WeatherGraph( "All Data?", "WHHATTT", weatherPoints, "bitch" );
-		update(GraphPanel, weatherGraph.getGraph());
+		//update(GraphPanel, weatherGraph.getGraph());
     
     }//GEN-LAST:event_MeanTemperatureActionPerformed
     
     private void MeanWindSpeedActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_MeanWindSpeedActionPerformed
-    
+        weatherGraph.showLine( 0 );
         System.out.println("Mean Wind Speed chosen.");
+        update( GraphPanel, weatherGraph.getGraph() );
     
     }//GEN-LAST:event_MeanWindSpeedActionPerformed
     
     private void MaximumWindSpeedActionPerformed(java.awt.event.ActionEvent evt) 
     {//GEN-FIRST:event_MaximumWindSpeedActionPerformed
-    
+
+        if( MaximumWindSpeed.isSelected() )
+        {
+            System.out.println( "is selected" );
+            weatherGraph.showLine( 3 );
+        }
+        else
+        {
+            System.out.println( "It aint no selected" );
+            weatherGraph.hideLine( 3 );
+        }
+
         System.out.println("Maximum Wind Speed chosen.");
     
     }//GEN-LAST:event_MaximumWindSpeedActionPerformed
@@ -271,7 +290,17 @@ public class MainWindow extends javax.swing.JFrame
     {//GEN-FIRST:event_RainfallActionPerformed
     
         System.out.println("Rainfall chosen.");
-    
+        if( Rainfall.isSelected() )
+        {
+            System.out.println( "is selected" );
+            weatherGraph.showLine( 9 );
+        }
+        else
+        {
+            System.out.println( "It aint no selected" );
+            weatherGraph.hideLine( 9 );
+        }
+
     }//GEN-LAST:event_RainfallActionPerformed
 
     private void DailyActionPerformed(java.awt.event.ActionEvent evt)
@@ -330,7 +359,7 @@ public class MainWindow extends javax.swing.JFrame
         }
 
         weatherPoints = ParseXML.parseWeather( XMLFileName );
-	weatherGraph = new WeatherGraph( "All Data?", "WHHATTT", weatherPoints, "Chump" );
+	weatherGraph = new WeatherGraph( weatherPoints );
 	update(GraphPanel, weatherGraph.getGraph());
 
     	System.out.println( "Exiting Open Event Handler" );

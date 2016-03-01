@@ -45,7 +45,8 @@ public class WeatherGraph extends ApplicationFrame
 {
     private JFreeChart weatherGraph;
     private XYDataset graphData;
-    //private int datasetIndex = 0;
+    private XYLineAndShapeRenderer renderer;
+    private int seriesCount = 10;
 
     // The constructor for the graph    
     // Takes in the data to graph
@@ -75,36 +76,47 @@ public class WeatherGraph extends ApplicationFrame
         weatherGraph.setBackgroundPaint( Color.BLUE );
         XYPlot plot = (XYPlot) weatherGraph.getPlot();
         plot.setBackgroundPaint( Color.BLACK );
+        
+        // set the bounds of the graph
+        plot.getRangeAxis().setLowerBound( -30 );
+        plot.getRangeAxis().setUpperBound( 120 );
 
         // ( bool-lines visible?, bool-shapes on points visible?)
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( true, false );
+        renderer = new XYLineAndShapeRenderer( true, false );
 
+        // inital all of the lines to be hidden
+        for( int i = 0; i < seriesCount; i++ )
+        {
+            renderer.setSeriesLinesVisible( i, false );
+        }
 
         //renderer.setSeriesPaint( 0, Color.RED );
-        renderer.setSeriesLinesVisible( 0, true );
+        //renderer.setSeriesLinesVisible( 0, false );
         //renderer.setSeriesPaint( 1, Color.RED );
-        renderer.setSeriesLinesVisible( 1, true );
+        //renderer.setSeriesLinesVisible( 1, false );
         //renderer.setSeriesPaint( 2, Color.RED );
-        renderer.setSeriesLinesVisible( 2, true );
+        //renderer.setSeriesLinesVisible( 2, false );
         plot.setRenderer( renderer );
-
+ 
         ///Take this out when putting into real code/////
         setContentPane( chartPanel );  
 
     }
-/*
+
     // toggle the view of the line
     public void showLine( int series )
     {
+        System.out.println( "showing this line" );
+        //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( true, false );
         renderer.setSeriesLinesVisible( series, true );   
     }
 
     // hide the line
     public void hideLine( int series )
     {
-        renderer.setSeriesLineVisible( series, false );
+        renderer.setSeriesLinesVisible( series, false );
     }
-*/
+
     // return the graph
     public JFreeChart getGraph()
     {
@@ -156,16 +168,16 @@ public class WeatherGraph extends ApplicationFrame
         }
 
         // Add these to dataset
-        dataset.addSeries( temperature );
-        ///dataset.addSeries( avgTemperature );
-        dataset.addSeries( humidity );
-        dataset.addSeries( windSpeed );
-        ///dataset.addSeries( windDirection );
-        dataset.addSeries( windGust );
-        dataset.addSeries( windChill );
-        dataset.addSeries( heatIndex );
-        dataset.addSeries( uvindex );
-        dataset.addSeries( rainfall );
+        dataset.addSeries( temperature );   //0
+        ///dataset.addSeries( avgTemperature ); //1
+        dataset.addSeries( humidity );  //2
+        dataset.addSeries( windSpeed ); //3
+        ///dataset.addSeries( windDirection );  //4
+        dataset.addSeries( windGust );  //5
+        dataset.addSeries( windChill ); //6
+        dataset.addSeries( heatIndex ); //7
+        dataset.addSeries( uvindex );   //8
+        dataset.addSeries( rainfall );  //9
 
         return dataset;
     }
