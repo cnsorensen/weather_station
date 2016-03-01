@@ -39,7 +39,7 @@ import org.jfree.ui.RefineryUtilities;
 
 
 
-public class WeatherGraph
+public class WeatherGraph extends ApplicationFrame
 {
     public JFreeChart weatherGraph;
     public XYDataset graphData;
@@ -47,7 +47,7 @@ public class WeatherGraph
     public WeatherGraph( String applicationTitle, String chartTitle, List<WeatherPoint> weatherPoints, String graphType )
     {
         ///it needs this for some reason?
-        //super( applicationTitle );
+        super( applicationTitle );
 
         graphData = createGraphData( weatherPoints );
 
@@ -60,12 +60,11 @@ public class WeatherGraph
             true,   // generate tooltips?
             false   // generate urls?
         );
-/*
+
             ChartPanel weatherGraph1 = new ChartPanel( weatherGraph );
             weatherGraph1.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
             final XYPlot plot = weatherGraph.getXYPlot();
             setContentPane( weatherGraph1 );
-*/
     }
     
     public JFreeChart getGraph()
@@ -107,7 +106,7 @@ public class WeatherGraph
     public static void main( String[] args )
     {
         System.out.println( "I'm Marcus!" );
-        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature", ParseXML.parseWeather("./2010-01.xml"), "Yep" );
+        WeatherGraph chart = new WeatherGraph( "Weather Station", "Temperature" );
         chart.pack();
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );

@@ -57,14 +57,15 @@ public class MainWindow extends javax.swing.JFrame
         Weekly = new javax.swing.JRadioButton();
         Monthly = new javax.swing.JRadioButton();
         Yearly = new javax.swing.JRadioButton();
-        jPanel1 = new javax.swing.JPanel();
+        weatherGraph = new WeatherGraph( "shit", "fuck", new ArrayList<WeatherPoint>(), "bitch" );       
+        GraphPanel = new ChartPanel( weatherGraph.getGraph() );        
         MenuBar = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
         Seperator = new javax.swing.JPopupMenu.Separator();
         Exit = new javax.swing.JMenuItem();
         Edit = new javax.swing.JMenu();
-        GraphPanel = new javax.swing.JPanel();
+        //GraphPanel = new javax.swing.JPanel();
         XMLLoaded = false;
         XMLFileName = "";
 
@@ -90,7 +91,7 @@ public class MainWindow extends javax.swing.JFrame
         GraphVariables.add(HighLowTemperature);
         HighLowTemperature.setText("High/Low Temperature");
 
-        //org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jPanel1, org.jdesktop.beansbinding.ObjectProperty.create(), HighLowTemperature, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        //org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, GraphPanel, org.jdesktop.beansbinding.ObjectProperty.create(), HighLowTemperature, org.jdesktop.beansbinding.BeanProperty.create("selected"));
         //bindingGroup.addBinding(binding);
 
         HighLowTemperature.addActionListener(new java.awt.event.ActionListener() 
@@ -153,14 +154,14 @@ public class MainWindow extends javax.swing.JFrame
         TimeFrame.add(Yearly);
         Yearly.setText("Yearly");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout GraphPanelLayout = new javax.swing.GroupLayout(GraphPanel);
+        GraphPanel.setLayout(GraphPanelLayout);
+        GraphPanelLayout.setHorizontalGroup(
+            GraphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 587, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        GraphPanelLayout.setVerticalGroup(
+            GraphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 308, Short.MAX_VALUE)
         );
 
@@ -235,7 +236,7 @@ public class MainWindow extends javax.swing.JFrame
                     .addComponent(Monthly)
                     .addComponent(Yearly))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(GraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(MeanTemperature)
@@ -271,7 +272,7 @@ public class MainWindow extends javax.swing.JFrame
                         .addComponent(Monthly)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Yearly))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(GraphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(158, 158, 158))
         );
 
@@ -291,7 +292,7 @@ public class MainWindow extends javax.swing.JFrame
          
         List<WeatherPoint> weatherPoints = ParseXML.parseWeather( args2[0] );
         
-        WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args2[1] );
+        //WeatherGraph chart = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, args2[1] );
 
     }//GEN-LAST:event_HighLowTemperatureActionPerformed
 
@@ -389,29 +390,15 @@ public class MainWindow extends javax.swing.JFrame
         //File weatherFile = fileChooser.getSelectedFile();    
         
         // pass in the name of the file to get parsed
-        String[] args = new String[1];
-        args[0] = XMLFileName;
+        //String[] args = new String[1];
+        //args[0] = XMLFileName;
         weatherPoints = ParseXML.parseWeather( XMLFileName );
         GraphPanel.revalidate();
         
-        //ParseXML.main( args );
-	if( XMLLoaded == true )
-        {
-            System.out.println( "XML is loaded in more places than you would know." );
-            WeatherGraph toAdd = new WeatherGraph("An Application", "The Graph of no name", weatherPoints, "Type");
-            System.out.println( "You're a flaming lezzzs" );                      
-            toAdd.getChartPanel().add();            
-            //jPanel1.add(toAdd.getChartPanel());         
-            System.out.println( "Fuckin cock sucker" );            
-            //pack();
-		    Graph = toAdd.getGraph();
-            pack();            
-            //jPanel1.setVisible( true );
-            System.out.println( "Suck my dick" );            
-            //ChartPanel myChart = new ChartPanel( Graph );
-            //myChart.setMouseWheelEnabled( true );
-        }
-	System.out.println( "Exiting Open Event Handler" );
+        GraphPanel = new ChartPanel (new WeatherGraph( "Weather Station", "Temperature", ParseXML.parseWeather("./2010-01.xml"), "Yep" ).weatherGraph);
+
+        pack();
+    	System.out.println( "Exiting Open Event Handler" );
         
 
 
@@ -486,10 +473,10 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.ButtonGroup TimeFrame;
     private javax.swing.JRadioButton Weekly;
     private javax.swing.JRadioButton Yearly;
-    private javax.swing.JPanel jPanel1;
+    //private javax.swing.JPanel GraphPanel;
     private WeatherGraph weatherGraph;
     private JFreeChart Graph;
-    private javax.swing.JPanel GraphPanel;
+    private ChartPanel GraphPanel;
     private java.lang.Boolean XMLLoaded;
     private String XMLFileName;
     private List<WeatherPoint> weatherPoints;
