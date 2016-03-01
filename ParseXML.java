@@ -25,44 +25,35 @@ import java.time.LocalDateTime;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.XYPlot;
-
+import java.io.File;
 import org.jfree.ui.RefineryUtilities;
 
 public class ParseXML 
 {
 
-/*    public static void main( String[] args )
+    public static void main( String[] args )
     {
-        if( args.length != 1 )
-        {
-            System.out.println( "Usage: java -cp .:jdom.jar ParseXML file.xml" );     
-        }
-        
-        List<WeatherPoint> weatherPoints = parseWeather( args[0] );
-        Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
-
-        WeatherPoint toPrint;
-    
-        // print out the weather points
-/*      
-        while( pointsIterator.hasNext() )
-        {
-            toPrint = pointsIterator.next();
-            System.out.println( toPrint );
-        }
-        
-
-
-        System.out.println( "let it snow" );
-
-        WeatherGraph weatherGraph = new WeatherGraph( "Weather Station", "Graph Title", weatherPoints, "temp" );
-      
-        weatherGraph.pack();
-        RefineryUtilities.centerFrameOnScreen( weatherGraph );
-        weatherGraph.setVisible( true );
+        List<WeatherPoint> list = parseDirectory("./Data");
+        System.out.println(list.size());
     }
 
-*/    
+
+  	public static List<WeatherPoint> parseDirectory( String directory )
+	{
+		ArrayList<WeatherPoint> toReturn = new ArrayList<WeatherPoint>();
+		File folder = new File(directory);
+		File[] listOfFiles = folder.listFiles();
+		for(int i = 0; i < listOfFiles.length; i++)
+		{
+			String filename = listOfFiles[i].getAbsolutePath();
+			if(filename.endsWith(".xml")||filename.endsWith(".XML"))
+			{		
+				toReturn.addAll(parseWeather(filename));
+                System.out.println(filename);
+			}
+   		}
+        return toReturn;
+  	}
     public static List<WeatherPoint> parseWeather( String file )
     {
         SAXBuilder builder;
