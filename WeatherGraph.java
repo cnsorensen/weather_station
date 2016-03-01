@@ -28,7 +28,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-// pending librarys
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -47,6 +47,7 @@ public class WeatherGraph extends ApplicationFrame
     private XYDataset graphData;
     private XYLineAndShapeRenderer renderer;
     private int seriesCount = 10;
+    public WeatherToolTip toolTip;
 
     // The constructor for the graph    
     // Takes in the data to graph
@@ -82,27 +83,25 @@ public class WeatherGraph extends ApplicationFrame
         plot.getRangeAxis().setUpperBound( 120 );
 
         // ( bool-lines visible?, bool-shapes on points visible?)
-        renderer = new XYLineAndShapeRenderer( true, false );
+        //renderer = new XYLineAndShapeRenderer( true, false );
+        renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 
         // inital all of the lines to be hidden
-        for( int i = 0; i < 9; i++ )
+        for( int i = 0; i < seriesCount; i++ )
         {
-            renderer.setSeriesLinesVisible( i, false );
+            renderer.setSeriesLinesVisible( i, true );
         }
 
+        toolTip = new WeatherToolTip();
+        renderer.setBaseToolTipGenerator( toolTip );
+        
+        // rainfall isn't graphing
         //renderer.setSeriesLinesVisible( 9, true );
 
-        //renderer.setSeriesPaint( 0, Color.RED );
-        //renderer.setSeriesLinesVisible( 0, false );
-        //renderer.setSeriesPaint( 1, Color.RED );
-        //renderer.setSeriesLinesVisible( 1, false );
-        //renderer.setSeriesPaint( 2, Color.RED );
-        //renderer.setSeriesLinesVisible( 2, false );
         plot.setRenderer( renderer );
  
         ///Take this out when putting into real code/////
         setContentPane( chartPanel );  
-
     }
 
     // toggle the view of the line
