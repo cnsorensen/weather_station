@@ -187,6 +187,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		if(source == MeanTemperature)
 		{
 			System.out.println("Mean Temperature chosen.");
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        System.out.println( "is selected" );
+		        //weatherGraph.showLine( 0 );
+		    }
+		    else
+		    {
+		        System.out.println( "It aint no selected" );
+		        //weatherGraph.hideLine( 0 );
+		    }        
+		    //update( GraphPanel, weatherGraph.getGraph() );
 		}
 
 		else if(source == HighLowTemperature)
@@ -208,6 +219,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		else if(source == MeanWindSpeed)
 		{
 			System.out.println("Mean Wind Speed chosen.");
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        System.out.println( "is selected" );
+		        //weatherGraph.showLine( 0 );
+		    }
+		    else
+		    {
+		        System.out.println( "It aint no selected" );
+		        //weatherGraph.hideLine( 0 );
+		    }        
+		    //update( GraphPanel, weatherGraph.getGraph() );
 		}
 
 		else if(source == MaximumWindSpeed)
@@ -230,6 +252,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		else if(source == PrevailingWindDirection)
 		{
 			System.out.println("Prevailing Wind Direction chosen.");
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        System.out.println( "is selected" );
+		        //weatherGraph.showLine( 0 );
+		    }
+		    else
+		    {
+		        System.out.println( "It aint no selected" );
+		        //weatherGraph.hideLine( 0 );
+		    }        
+		    //update( GraphPanel, weatherGraph.getGraph() );
 		}
 
 		else if(source == Rainfall)
