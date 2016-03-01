@@ -12,6 +12,8 @@ import org.jfree.chart.JFreeChart;
 import java.lang.Boolean;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.chart.event.ChartChangeEvent;
+import java.awt.Dimension;
+import javax.swing.BoxLayout;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -69,6 +71,9 @@ public class MainWindow extends javax.swing.JFrame
         Edit = new javax.swing.JMenu();
         XMLLoaded = false;
         XMLFileName = "";
+	Panel = new javax.swing.JPanel();
+	TimePanel = new javax.swing.JPanel();
+	GraphOptionPanel = new javax.swing.JPanel();
         weatherPoints = new ArrayList<WeatherPoint>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -325,9 +330,8 @@ public class MainWindow extends javax.swing.JFrame
         }
 
         weatherPoints = ParseXML.parseWeather( XMLFileName );
-		weatherGraph = new WeatherGraph( "All Data?", "WHHATTT", weatherPoints, "bitch" );
-		//GraphPanel.chartChanged(evt);
-		update(GraphPanel, weatherGraph.getGraph());
+	weatherGraph = new WeatherGraph( "All Data?", "WHHATTT", weatherPoints, "Chump" );
+	update(GraphPanel, weatherGraph.getGraph());
 
     	System.out.println( "Exiting Open Event Handler" );
         
@@ -339,19 +343,29 @@ public class MainWindow extends javax.swing.JFrame
     {
 		GraphPanel = new ChartPanel(weatherGraph);
 		GraphPanel.repaint();
-		this.add(GraphPanel, BorderLayout.CENTER);
-		//this.add(GraphVariables, BorderLayout.WEST);
-		//this.add(TimeFrame, BorderLayout.EAST);
+
+		Panel.setLayout(new BorderLayout());
+		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
+		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
+
+		TimePanel.add(Daily);
+		TimePanel.add(Weekly);
+		TimePanel.add(Monthly);
+		TimePanel.add(Yearly);
+		GraphOptionPanel.add(MeanTemperature);
+		GraphOptionPanel.add(HighLowTemperature);
+		GraphOptionPanel.add(MeanWindSpeed);
+		GraphOptionPanel.add(MaximumWindSpeed);
+		GraphOptionPanel.add(PrevailingWindDirection);
+		GraphOptionPanel.add(Rainfall);
+		Panel.add(TimePanel, BorderLayout.WEST);
+		Panel.add(GraphPanel, BorderLayout.CENTER);
+		Panel.add(GraphOptionPanel, BorderLayout.EAST);
+
+		setContentPane(Panel);
 		this.setTitle("WWWWHHHHHYYYYY");
 		this.pack();
 		this.setVisible(true);
-
-		//setContentPane(GraphPanel);
-
-
-		//invalidate();
-		//revalidate();
-		
     }
 
     /**
@@ -394,10 +408,10 @@ public class MainWindow extends javax.swing.JFrame
             public void run() 
             {
                 MainWindow mainWindow = new MainWindow();
-				mainWindow.setTitle("Weather Station");
-				mainWindow.pack();
-				RefineryUtilities.centerFrameOnScreen(mainWindow);
-				mainWindow.setVisible(true);
+		mainWindow.setTitle("Weather Station");
+		mainWindow.pack();
+		RefineryUtilities.centerFrameOnScreen(mainWindow);
+		mainWindow.setVisible(true);
             }
         });
     }
@@ -422,7 +436,9 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.ButtonGroup TimeFrame;
     private javax.swing.JRadioButton Weekly;
     private javax.swing.JRadioButton Yearly;
-    //private javax.swing.JPanel GraphPanel;
+    private javax.swing.JPanel Panel;
+    private javax.swing.JPanel TimePanel;
+    private javax.swing.JPanel GraphOptionPanel;
     private WeatherGraph weatherGraph;
     private JFreeChart Graph;
     private ChartPanel GraphPanel;
