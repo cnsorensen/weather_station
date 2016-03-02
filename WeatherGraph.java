@@ -71,10 +71,10 @@ public class WeatherGraph extends ApplicationFrame
         );
 
         ////FOR ME SELFISH PLEASURES///////
-        ChartPanel chartPanel = new ChartPanel( weatherGraph );
-        chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
+        //ChartPanel chartPanel = new ChartPanel( weatherGraph );
+        //chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
 
-        weatherGraph.setBackgroundPaint( Color.BLUE );
+        weatherGraph.setBackgroundPaint( Color.LIGHT_GRAY );
         XYPlot plot = (XYPlot) weatherGraph.getPlot();
         plot.setBackgroundPaint( Color.BLACK );
         
@@ -102,7 +102,7 @@ public class WeatherGraph extends ApplicationFrame
  
         ///Take this out when putting into real code/////
 
-        setContentPane( chartPanel );  
+        //setContentPane( chartPanel );  
 
         //setContentPane( chartPanel );  
     }
@@ -186,12 +186,12 @@ public class WeatherGraph extends ApplicationFrame
         return dataset;
     }
 
-    public static void main( String[] args )
+   /* public static void main( String[] args )
     {
         WeatherGraph chart = new WeatherGraph( ParseXML.parseWeather("./2010-01.xml") );
         chart.pack();
         RefineryUtilities.centerFrameOnScreen( chart );
         chart.setVisible( true );
-    }
+    }*/
 
 }
