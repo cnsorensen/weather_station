@@ -90,46 +90,46 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         MeanTemperature.setMnemonic(KeyEvent.VK_C);
-		MeanTemperature.setSelected(true);
+		MeanTemperature.setSelected(false);
 
 		HighLowTemperature.setMnemonic(KeyEvent.VK_C);
-		HighLowTemperature.setSelected(true);
+		HighLowTemperature.setSelected(false);
 
 		MeanWindSpeed.setMnemonic(KeyEvent.VK_C);
-		MeanWindSpeed.setSelected(true);
+		MeanWindSpeed.setSelected(false);
 
 		MaximumWindSpeed.setMnemonic(KeyEvent.VK_C);
-		MaximumWindSpeed.setSelected(true);
+		MaximumWindSpeed.setSelected(false);
 
 		PrevailingWindDirection.setMnemonic(KeyEvent.VK_C);
-		PrevailingWindDirection.setSelected(true);
+		PrevailingWindDirection.setSelected(false);
 
 		Rainfall.setMnemonic(KeyEvent.VK_C);
-		Rainfall.setSelected(true);
+		Rainfall.setSelected(false);
 
 		Temperature.setMnemonic(KeyEvent.VK_C);
-		Temperature.setSelected(true);
+		Temperature.setSelected(false);
 
 		Humidity.setMnemonic(KeyEvent.VK_C);
-		Humidity.setSelected(true);
+		Humidity.setSelected(false);
 
 		WindSpeed.setMnemonic(KeyEvent.VK_C);
-		WindSpeed.setSelected(true);
+		WindSpeed.setSelected(false);
 
 		WindGust.setMnemonic(KeyEvent.VK_C);
-		WindGust.setSelected(true);
+		WindGust.setSelected(false);
 
 		WindChill.setMnemonic(KeyEvent.VK_C);
-		WindChill.setSelected(true);
+		WindChill.setSelected(false);
 
 		HeatIndex.setMnemonic(KeyEvent.VK_C);
-		HeatIndex.setSelected(true);
+		HeatIndex.setSelected(false);
 
 		UVIndex.setMnemonic(KeyEvent.VK_C);
-		UVIndex.setSelected(true);
+		UVIndex.setSelected(false);
 
 		Barometer.setMnemonic(KeyEvent.VK_C);
-		Barometer.setSelected(true);
+		Barometer.setSelected(false);
 
 		Temperature.addItemListener(this);
 		Humidity.addItemListener(this);
