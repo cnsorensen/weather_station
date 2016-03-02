@@ -12,7 +12,8 @@ You will see a blank graph upon opening the program.
 
 Go to File -> Open
 Select the *directory* containing all of the data xmls.
-All of the data will be read in. This may take a few seconds.
+All of the data will be read in. This may take a few seconds. The titlebar on the graph
+    will be updated from "NULL to NULL" and that way you know it has loaded.
 
 The right hand checkboxes allow you to select multiple stats to be graphed. They can 
     be selected and unselected.
