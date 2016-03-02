@@ -59,13 +59,19 @@ public class WeatherGraph extends ApplicationFrame
     {
         ///it needs this if you are solely running this file
         super( "eatshit" );
-
+        String startDate = "NULL";
+        String endDate = "NULL";
+        if( weatherPoints.size() > 0)
+        {
+            startDate = weatherPoints.get(0).date.toLocalDate().toString();
+            endDate = weatherPoints.get(weatherPoints.size()-1).date.toLocalDate().toString();
+        }
         // the data to be plotted on the graph
         graphData = createGraphData( weatherPoints );
 
         // create the graph with the data
         weatherGraph = ChartFactory.createTimeSeriesChart( 
-            "", // title of chart
+            ("From: " + startDate + " to " + endDate), // title of chart
             "", // x axis label
             "",  // y axis label
             graphData, // data
