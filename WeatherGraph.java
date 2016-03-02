@@ -5,7 +5,6 @@
  * set of weather points it's passed in. It also holds the renderer for graph, this
  * includes the tooltip. It also shows and hides series lines.
  *
- *
  */
 
 import java.util.*;

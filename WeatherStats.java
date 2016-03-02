@@ -1,6 +1,8 @@
 /*
  * WeatherStat.java
- *
+ * 
+ * Calculates the statistics of the graph based on the given set
+ * of weather points.
  *
  */
 
@@ -25,6 +27,7 @@ public class WeatherStats
         GenerateStats( weatherPoints );   
     }
 
+    // generate the statistics here
     private void GenerateStats( List<WeatherPoint> weatherPoints )
     {
         // initialize values
@@ -143,9 +146,7 @@ public class WeatherStats
             else if( toRead.winddirection.equals( "NNW" ) )
             {
                 countNNW++;
-            }
-
-            
+            } 
         }
  
         // calcluate the averages   
