@@ -1,4 +1,12 @@
-/* WeatherGraph.java */
+/*
+ * WeatherGraph.java
+ *
+ * This is the graph for the program. It creates a weather graph for the
+ * set of weather points it's passed in. It also holds the renderer for graph, this
+ * includes the tooltip. It also shows and hides series lines.
+ *
+ *
+ */
 
 import java.util.*;
 import java.util.Date;
@@ -41,22 +49,26 @@ public class WeatherGraph extends ApplicationFrame
     private JFreeChart weatherGraph;
     private XYDataset graphData;
     private XYLineAndShapeRenderer renderer;
-    private int seriesCount = 10;
-    public WeatherToolTip toolTip;
+    private int seriesCount;
+    private WeatherToolTip toolTip;
 
     // The constructor for the graph    
     // Takes in the data to graph
     public WeatherGraph( List<WeatherPoint> weatherPoints )
     {
-        ///it needs this if you are solely running this file
-        super( "eatshit" );
+        super( "" );
+        
+        // for the header of the graph
         String startDate = "NULL";
         String endDate = "NULL";
+
+        // this retrieves time range for the data to be placed as the graph title        
         if( weatherPoints.size() > 0)
         {
             startDate = weatherPoints.get(0).date.toLocalDate().toString();
             endDate = weatherPoints.get(weatherPoints.size()-1).date.toLocalDate().toString();
         }
+
         // the data to be plotted on the graph
         graphData = createGraphData( weatherPoints );
 
@@ -71,6 +83,7 @@ public class WeatherGraph extends ApplicationFrame
             false   // generate urls?
         );
 
+        // make the graph look purrrrtttyyyyy
         weatherGraph.setBackgroundPaint( Color.LIGHT_GRAY );
         XYPlot plot = (XYPlot) weatherGraph.getPlot();
         plot.setBackgroundPaint( Color.BLACK );
@@ -87,13 +100,14 @@ public class WeatherGraph extends ApplicationFrame
             renderer.setSeriesLinesVisible( i, false );
         }
 
+        // the weather tool tip is generated
         toolTip = new WeatherToolTip();
         renderer.setBaseToolTipGenerator( toolTip );
         
         plot.setRenderer( renderer ); 
     }
 
-    // toggle the view of the line
+    // show the view of the line
     public void showLine( int series )
     {
         renderer.setSeriesLinesVisible( series, true );   
@@ -120,7 +134,7 @@ public class WeatherGraph extends ApplicationFrame
         Iterator<WeatherPoint> pointsIterator = weatherPoints.iterator();
         WeatherPoint toGraph;
 
-        // xyseries
+        // all the 'lines' being graphed
         TimeSeries temperature = new TimeSeries( "Temperature(F)" );
         TimeSeries humidity = new TimeSeries( "Humidity(%)" );
         TimeSeries windSpeed = new TimeSeries( "Wind Speed(mph)" );
@@ -131,8 +145,6 @@ public class WeatherGraph extends ApplicationFrame
         TimeSeries uvindex = new TimeSeries( "UV Index" );
         TimeSeries rainfall = new TimeSeries( "Rainfall(inches)" );
         
-  //      TimeSeries winddirection = new timeSeries( "Wind Direction" );
-
         // go through each point
         while( pointsIterator.hasNext() )
         {
@@ -152,7 +164,6 @@ public class WeatherGraph extends ApplicationFrame
             uvindex.add( now, toGraph.uvindex );
             barometer.add( now, toGraph.barometer );
             rainfall.add( now, toGraph.rainfall );
-  //          winddirection.add( now, toGraph.winddirection );
         }
 
         // Add these to dataset
@@ -164,8 +175,7 @@ public class WeatherGraph extends ApplicationFrame
         dataset.addSeries( heatIndex );
         dataset.addSeries( uvindex );  
         dataset.addSeries( barometer );
-        dataset.addSeries( rainfall ); 
-//        dataset.addSeries( winddirection );
+        dataset.addSeries( rainfall );
 
         return dataset;
     }

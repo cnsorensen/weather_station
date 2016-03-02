@@ -1,4 +1,8 @@
-/* WeatherStats.java */
+/*
+ * WeatherStat.java
+ *
+ *
+ */
 
 import java.time.LocalDateTime;
 import java.util.*;
