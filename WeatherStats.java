@@ -54,6 +54,7 @@ public class WeatherStats
             // weather to grab info from
             toRead = pointsIterator.next();
             
+
             // check temperatures
             if( toRead.temperature > HighTemperature )
             {
@@ -74,7 +75,6 @@ public class WeatherStats
                 dateMaxWindGust = toRead.date;
             }
             windSpeedSum += toRead.windspeed;
-
             // add the count of the wind direction
             if( toRead.winddirection.equals( "N" ) )
             {
@@ -140,10 +140,8 @@ public class WeatherStats
             {
                 countNNW++;
             }
-
             
         }
- 
         // calcluate the averages   
         MeanTemperature = temperatureSum / numPoints;
         MeanWindSpeed = windSpeedSum / numPoints;   

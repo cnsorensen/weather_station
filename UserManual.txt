@@ -5,6 +5,11 @@ Compile weather station:
     or use the make file
     > make 
 
+MakeFile functionality:
+	> make //Compiles the program
+	> make clean //Removes the compiled files
+	> make remake //Runs make clean and then make
+
 Run weather station:
     > java -cp .:jdom.jar:jcommon.jar:jfreechart.jar MainWindow
 
@@ -15,8 +20,9 @@ Select the *directory* containing all of the data xmls.
 All of the data will be read in. This may take a few seconds. The titlebar on the graph
     will be updated from "NULL to NULL" and that way you know it has loaded.
 
-The right hand checkboxes allow you to select multiple stats to be graphed. They can 
-    be selected and unselected.
+The right hand checkboxes allow you to select either a single stat or multiple stats to be 
+	graphed. They can be selected and unselected.  This will allow the user to see multiple 
+	stats at once.
 
 The radio buttons on the left hand allow the user to view the graph in different ranges:
     By years, months, weeks, or days.

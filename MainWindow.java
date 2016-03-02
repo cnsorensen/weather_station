@@ -52,6 +52,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         initComponents();
     }
 
+/*
+* Function: initComponents
+*
+* Description: Initializes the GUI components on opening of the program.
+*/
+
     private void initComponents()
     {
 		TimeFrame = new ButtonGroup();
@@ -100,7 +106,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		PrevailingWindDirectionInfo = new javax.swing.JLabel();
 		Left = new BasicArrowButton(BasicArrowButton.WEST);
 		Right = new BasicArrowButton(BasicArrowButton.EAST);
-        weatherPoints = new ArrayList<WeatherPoint>();
+		    weatherPoints = new ArrayList<WeatherPoint>();
 		weatherStats = new WeatherStats( weatherPoints );
 
 	 	MeanTemperature.setText("Mean Temperature");
@@ -113,6 +119,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		//Initialize the key event for the checkboxes
 		Rainfall.setMnemonic(KeyEvent.VK_C);
 		Temperature.setMnemonic(KeyEvent.VK_C);
 		Humidity.setMnemonic(KeyEvent.VK_C);
@@ -125,6 +132,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
 		setCheckBoxDefault();
 
+		//Give the checkboxes item listeners
 		Temperature.addItemListener(this);
 		Humidity.addItemListener(this);
 		WindSpeed.addItemListener(this);
@@ -135,13 +143,14 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Barometer.addItemListener(this);
 		Rainfall.addItemListener(this);
 
+		//Initialize the radio buttons
 		Daily.setMnemonic(KeyEvent.VK_C);
 		Daily.setActionCommand("Daily");
 		Daily.setSelected(true);
-		
+	
 		Weekly.setMnemonic(KeyEvent.VK_C);
 		Weekly.setActionCommand("Weekly");
-	
+
 		Monthly.setMnemonic(KeyEvent.VK_C);
 		Monthly.setActionCommand("Monthly");
 
@@ -154,11 +163,13 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Right.setMnemonic(KeyEvent.VK_C);
 		Right.setActionCommand("Right");
 
+		//Add the radio buttons to the TimeFrame button group
 		TimeFrame.add(Daily);
 		TimeFrame.add(Weekly);
 		TimeFrame.add(Monthly);
 		TimeFrame.add(Yearly);
 
+		//Give the radio buttons action listeners
 		Daily.addActionListener(this);
 		Weekly.addActionListener(this);
 		Monthly.addActionListener(this);
@@ -167,37 +178,24 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Left.addActionListener(this);
 		Right.addActionListener(this);
 
+		//Initialize the menu bar items
         File.setText("File");
 
         Open.setText("Open");
-        /*Open.addActionListener(new java.awt.event.ActionListener() 
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt) 
-            {
-                OpenActionPerformed(evt);
-            }
-        });*/
-		Open.addActionListener(this);
-        File.add(Open);
+        Open.addActionListener(this);
+        
+		File.add(Open);
         File.add(Seperator);
 
         Exit.setText("Exit");
-        /*Exit.addActionListener(new java.awt.event.ActionListener() 
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt) 
-            {
-                ExitActionPerformed(evt);
-            }
-        });*/
 		Exit.addActionListener(this);
-        File.add(Exit);
-
+		    
+		File.add(Exit);
         MenuBar.add(File);
-
         Edit.setText("Edit");
-        MenuBar.add(Edit);
         setJMenuBar(MenuBar);
 
+		//Layouts for the page
 		Panel.setLayout(new BorderLayout());
 		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
 		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
@@ -206,10 +204,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		StatsType.setLayout(new BoxLayout(StatsType, BoxLayout.Y_AXIS));
 		Stats.setLayout(new BoxLayout(Stats, BoxLayout.X_AXIS));
 
+		//Add radio buttons to Time Panel
 		TimePanel.add(Daily);
 		TimePanel.add(Weekly);
 		TimePanel.add(Monthly);
 		TimePanel.add(Yearly);
+		//Add checkboxes to Graph Option Panel
 		GraphOptionPanel.add(Temperature);
 		GraphOptionPanel.add(Humidity);
 		GraphOptionPanel.add(WindSpeed);
@@ -219,28 +219,35 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		GraphOptionPanel.add(UVIndex);
 		GraphOptionPanel.add(Barometer);
 		GraphOptionPanel.add(Rainfall);
+		//Add basic arrow buttons to the Arrows panel	
 		Arrows.add(Left);
 		Arrows.add(Right);
+		//Arrange the Graph stat types  together
 		StatsType.add(MeanTemperature);
 		StatsType.add(HighLowTemperature);
 		StatsType.add(MeanWindSpeed);
 		StatsType.add(MaxWindSpeed);
 		StatsType.add(PrevailingWindDirection);
+		//Add the StatsType and the StatsInfo to Stats, StatsInfo gets set in update()
 		Stats.add(StatsType);
 		Stats.add(StatsInfo);
+		//Arrange the Arrows and Stats panels below the chart, radio and checkboxes
 		StatsPanel.add(Arrows);
 		StatsPanel.add(Stats);
+		//Add all the various panels onto one panel
 		Panel.add(StatsPanel, BorderLayout.SOUTH);
 		Panel.add(TimePanel, BorderLayout.WEST);
 		Panel.add(GraphPanel, BorderLayout.CENTER);
 		Panel.add(GraphOptionPanel, BorderLayout.EAST);
-
+	
+		//Set the content pane to the panel that holds everything
 		setContentPane(Panel);
 		this.setTitle("Weather Station");
 		this.pack();
 		this.setVisible(true);   
     }
 
+	//Sets the default for the checkboxes
 	public void setCheckBoxDefault()
 	{
 		Rainfall.setSelected(false);
@@ -254,6 +261,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Barometer.setSelected(false);
 	}
 
+	//Action event handler for the checkboxes
 	public void itemStateChanged(ItemEvent e)
 	{
 		Object source = e.getItemSelectable();
@@ -262,11 +270,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.TEMPERATURE );
+			weatherGraph.showLine( SeriesList.TEMPERATURE );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.TEMPERATURE );
+			weatherGraph.hideLine( SeriesList.TEMPERATURE );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -275,11 +283,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.HUMIDITY  );
+			weatherGraph.showLine( SeriesList.HUMIDITY  );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.HUMIDITY  );
+			weatherGraph.hideLine( SeriesList.HUMIDITY  );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -288,11 +296,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.WINDSPEED  );
+			weatherGraph.showLine( SeriesList.WINDSPEED  );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.WINDSPEED );
+			weatherGraph.hideLine( SeriesList.WINDSPEED );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -301,11 +309,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.WINDGUST );
+			weatherGraph.showLine( SeriesList.WINDGUST );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.WINDGUST );
+			weatherGraph.hideLine( SeriesList.WINDGUST );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -314,11 +322,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.WINDCHILL );
+			weatherGraph.showLine( SeriesList.WINDCHILL );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.WINDCHILL );
+			weatherGraph.hideLine( SeriesList.WINDCHILL );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -327,11 +335,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.HEATINDEX );
+			weatherGraph.showLine( SeriesList.HEATINDEX );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.HEATINDEX );
+			weatherGraph.hideLine( SeriesList.HEATINDEX );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -340,11 +348,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.UVINDEX );
+			weatherGraph.showLine( SeriesList.UVINDEX );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.UVINDEX );
+			weatherGraph.hideLine( SeriesList.UVINDEX );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -353,11 +361,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
-		        weatherGraph.showLine( SeriesList.BAROMETER );
+			weatherGraph.showLine( SeriesList.BAROMETER );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.BAROMETER );
+			weatherGraph.hideLine( SeriesList.BAROMETER );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -365,49 +373,50 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 		    if( Rainfall.isSelected() )
 		    {
-		        weatherGraph.showLine( SeriesList.RAINFALL );
+			weatherGraph.showLine( SeriesList.RAINFALL );
 		    }
 		    else
 		    {
-		        weatherGraph.hideLine( SeriesList.RAINFALL );
+			weatherGraph.hideLine( SeriesList.RAINFALL );
 		    }
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
 	}
 
+	//Action event handler for radio buttons, arrows, and Open/Exit.
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getActionCommand();
 
 		if(source == "Daily")
 		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	changeDateRange();
+	    	weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 
 		}
-		
+	
 		else if(source == "Weekly")
 		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	changeDateRange();
+	    	weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
-	
+
 		else if(source == "Monthly")
 		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	changeDateRange();
+	    	weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
-	
+
 		else if(source == "Yearly")
 		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	changeDateRange();
+	    	weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -415,9 +424,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		else if(source == "Left")
 		{
 			moveDateBackward();
-
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-            weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 			setCheckBoxDefault();
 		}
@@ -425,8 +433,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		else if(source == "Right")
 		{
 			moveDateForward();
-
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+	    	weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			setCheckBoxDefault();
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
 		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);          
@@ -447,22 +454,22 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    	XMLLoaded = true;
 		    	XMLFileName = FileChooser.getSelectedFile().getAbsolutePath();
 		    }
-		
+	
 			GraphPanel.removeAll();
-		            weatherPoints = ParseXML.parseDirectory( XMLFileName );
+			    weatherPoints = ParseXML.parseDirectory( XMLFileName );
 		    Collections.sort(weatherPoints);
 		    graphStartPoint = 0;
 		    int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
 		    for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
 		    {
-		        graphEndPoint = x;
-		        if( weatherPoints.get(x).date.getYear() > targetYear )
-		        {
-		            x = weatherPoints.size();
-		        }
+			graphEndPoint = x;
+			if( weatherPoints.get(x).date.getYear() > targetYear )
+			{
+			    x = weatherPoints.size();
+			}
 		    }
 		    if( graphEndPoint >= weatherPoints.size() )
-		        graphEndPoint = weatherPoints.size() -1;
+			graphEndPoint = weatherPoints.size() -1;
 			weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			update( GraphPanel, weatherGraph.getGraph(), weatherStats);
 		}
@@ -472,14 +479,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		}
 	}
 
+	//Updates the graph when a checkbox, radio button, or arrow button
     public void update(ChartPanel GraphPanel, JFreeChart weatherGraph, WeatherStats weatherStats)
     {
+		//Updates and or sets the text for the statistics below the graph
 		MeanTemperatureInfo.setText(Double.toString(weatherStats.MeanTemperature));
 		HighLowTemperatureInfo.setText(Double.toString(weatherStats.HighTemperature) + " | " + Double.toString(weatherStats.LowTemperature));
 		MeanWindSpeedInfo.setText(Double.toString(weatherStats.MeanWindSpeed));
 		MaxWindSpeedInfo.setText(Double.toString(weatherStats.MaxWindGust));
 		PrevailingWindDirectionInfo.setText(weatherStats.PrevailingWind);
 
+		//Add the new info to the StatsInfo panel
 		StatsInfo.setLayout(new BoxLayout(StatsInfo, BoxLayout.Y_AXIS));
 		StatsInfo.add(MeanTemperatureInfo);
 		StatsInfo.add(HighLowTemperatureInfo);
@@ -487,11 +497,15 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		StatsInfo.add(MaxWindSpeedInfo);
 		StatsInfo.add(PrevailingWindDirectionInfo);
 		
+		//remove the old information from the panels, repaints the graph with the new data
 		Panel.removeAll();
 		Arrows.removeAll();
 		GraphPanel = new ChartPanel(weatherGraph);
 		GraphPanel.repaint();
 
+		//This to the end of the function was supposed to be in a different function,
+		//but there was a bug where the data was not updating. 
+		//(same code that is in initcomponents())
 		Panel.setLayout(new BorderLayout());
 		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
 		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
@@ -784,7 +798,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         return;
     }
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton Daily;
     private javax.swing.JMenu Edit;
     private javax.swing.JMenuItem Exit;
