@@ -589,12 +589,15 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         {
             startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
                                            weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
-                                           1,0,0,0).plusMonths(1);
+                                           1,0,0,0).plusMonths(-1);
             endTarget = startTarget.plusMonths(1);
         }
         else if( Daily.isSelected() )
         {
-            startTarget = weatherPoints.get(graphStartPoint).date.plusDays(1);
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           weatherPoints.get(graphStartPoint).date.getDayOfMonth(),
+                                           0,0,0).plusDays(-1);
             endTarget = startTarget.plusDays(1);
         }
         else
@@ -604,7 +607,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
             startTarget = LocalDateTime.of(year, month, day, 0 ,0 ,0 );
             startTarget = startTarget.plusDays(startTarget.getDayOfWeek().getValue()*-1+1);
-            startTarget = startTarget.plusWeeks(1);
+            startTarget = startTarget.plusWeeks(-1);
             endTarget = startTarget.plusWeeks(1);
         }
 
@@ -663,7 +666,10 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         }
         else if( Daily.isSelected() )
         {
-            startTarget = weatherPoints.get(graphStartPoint).date.plusDays(1);
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           weatherPoints.get(graphStartPoint).date.getDayOfMonth(),
+                                           0,0,0).plusDays(1);
             endTarget = startTarget.plusDays(1);
         }
         else
