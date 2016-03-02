@@ -73,23 +73,23 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 	 	MeanWindSpeed = new javax.swing.JLabel();
 		MaxWindSpeed = new javax.swing.JLabel();
 	 	PrevailingWindDirection = new javax.swing.JLabel();
-	 	RainfallLabel = new javax.swing.JLabel();
-		MeanTemperatureInfo = new javax.swing.JLabel();
+	 	MeanTemperatureInfo = new javax.swing.JLabel();
 		HighLowTemperatureInfo = new javax.swing.JLabel();
 		MeanWindSpeedInfo = new javax.swing.JLabel();
 		MaxWindSpeedInfo = new javax.swing.JLabel();
 		PrevailingWindDirectionInfo = new javax.swing.JLabel();
-		RainfallLabelInfo = new javax.swing.JLabel();
 		Left = new BasicArrowButton(BasicArrowButton.WEST);
 		Right = new BasicArrowButton(BasicArrowButton.EAST);
         weatherPoints = new ArrayList<WeatherPoint>();
+		weatherStats = new WeatherStats( weatherPoints );
 
 	 	MeanTemperature.setText("Mean Temperature");
 	 	HighLowTemperature.setText("High/Low Temperature");
 	 	MeanWindSpeed.setText("Mean Wind Speed");
 		MaxWindSpeed.setText("Max Wind Speed");
 	 	PrevailingWindDirection.setText("Prevailing Wind Direction");
-	 	RainfallLabel.setText("Rainfall");
+
+		
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -150,24 +150,26 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         File.setText("File");
 
         Open.setText("Open");
-        Open.addActionListener(new java.awt.event.ActionListener() 
+        /*Open.addActionListener(new java.awt.event.ActionListener() 
         {
             public void actionPerformed(java.awt.event.ActionEvent evt) 
             {
                 OpenActionPerformed(evt);
             }
-        });
+        });*/
+		Open.addActionListener(this);
         File.add(Open);
         File.add(Seperator);
 
         Exit.setText("Exit");
-        Exit.addActionListener(new java.awt.event.ActionListener() 
+        /*Exit.addActionListener(new java.awt.event.ActionListener() 
         {
             public void actionPerformed(java.awt.event.ActionEvent evt) 
             {
                 ExitActionPerformed(evt);
             }
-        });
+        });*/
+		Exit.addActionListener(this);
         File.add(Exit);
 
         MenuBar.add(File);
@@ -176,317 +178,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         MenuBar.add(Edit);
         setJMenuBar(MenuBar);
 
-		//table = new JTable(new GraphStatsTableModel());
-		PageLayout();   
-    }// </editor-fold>//GEN-END:initComponents
-
-	public void setCheckBoxDefault()
-	{
-		Rainfall.setSelected(false);
-		Temperature.setSelected(false);
-		Humidity.setSelected(false);
-		WindSpeed.setSelected(false);
-		WindGust.setSelected(false);
-		WindChill.setSelected(false);
-		HeatIndex.setSelected(false);
-		UVIndex.setSelected(false);
-		Barometer.setSelected(false);
-	}
-
-	public void itemStateChanged(ItemEvent e)
-	{
-		Object source = e.getItemSelectable();
-
-		if(source == Temperature)
-		{
-			System.out.println("Temperature chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.TEMPERATURE );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.TEMPERATURE );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == Humidity)
-		{
-			System.out.println("Humidity chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.HUMIDITY  );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.HUMIDITY  );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == WindSpeed)
-		{
-			System.out.println("Wind Speed chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.WINDSPEED  );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.WINDSPEED );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == WindGust)
-		{
-			System.out.println("Wind Gust chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.WINDGUST );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.WINDGUST );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == WindChill)
-		{
-			System.out.println("Wind Chill chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.WINDCHILL );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.WINDCHILL );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == HeatIndex)
-		{
-			System.out.println("Heat Index chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.HEATINDEX );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.HEATINDEX );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == UVIndex)
-		{
-			System.out.println("UV Index chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.UVINDEX );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.UVINDEX );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-
-		else if(source == Barometer)
-		{
-			System.out.println("Barometer chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.BAROMETER );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.BAROMETER );
-		    }        
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-		else if(source == Rainfall)
-		{
-			System.out.println("Rainfall chosen.");
-		    if( Rainfall.isSelected() )
-		    {
-		        System.out.println( "is selected" );
-		        weatherGraph.showLine( SeriesList.RAINFALL );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( SeriesList.RAINFALL );
-		    }
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-		}
-	}
-
-	public void actionPerformed(ActionEvent e)
-	{
-		Object source = e.getActionCommand();
-
-		if(source == "Daily")
-		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-			System.out.println("Daily chosen.");
-		}
-		
-		else if(source == "Weekly")
-		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-			System.out.println("Weekly chosen.");
-		}
-	
-		else if(source == "Monthly")
-		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-			System.out.println("Monthly chosen.");
-		}
-	
-		else if(source == "Yearly")
-		{
-            changeDateRange();
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-			System.out.println("Yearly chosen.");
-		}
-
-		else if(source == "Left")
-		{
-			moveDateBackward();
-
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-            
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-			System.out.println("Left chosen.");
-			setCheckBoxDefault();
-		}
-
-		else if(source == "Right")
-		{
-			moveDateForward();
-
-            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-			setCheckBoxDefault();
-		    update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-			System.out.println("Right chosen.");
-            System.out.println( "Start: " + graphStartPoint + "\tEnd: " + graphEndPoint + "\tTotal: " + weatherPoints.size() );            
-		}
-	}
-
-    private void ExitActionPerformed(java.awt.event.ActionEvent evt)
-    {//GEN-FIRST:event_ExitActionPerformed
-        
-        System.exit(0);
-    
-    }//GEN-LAST:event_ExitActionPerformed
-
-    private void OpenActionPerformed(java.awt.event.ActionEvent evt)
-    {//GEN-FIRST:event_OpenActionPerformed
-        
-        System.out.println("Open chosen.");
-        
-        // filter to only xml files
-     
-        FileChooser.setCurrentDirectory(new java.io.File("."));
-        FileChooser.setDialogTitle("Select Data Folder");
-        FileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  
-        // show the dialog box to select a file from
-        int returnVal = FileChooser.showOpenDialog( null );
-        
-        // if file selection was a success
-        
-        if( returnVal == JFileChooser.APPROVE_OPTION )
-        {
-            System.out.println( "You chose to open this file: " + FileChooser.getSelectedFile().getName() );
-        	XMLLoaded = true;
-        	XMLFileName = FileChooser.getSelectedFile().getAbsolutePath();
-        }
-		
-		GraphPanel.removeAll();
-                weatherPoints = ParseXML.parseDirectory( XMLFileName );
-        Collections.sort(weatherPoints);
-        graphStartPoint = 0;
-        int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
-        System.out.println( targetYear );
-        for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
-        {
-            graphEndPoint = x;
-            System.out.println( weatherPoints.get(x).date.getYear() );
-            if( weatherPoints.get(x).date.getYear() > targetYear )
-            {
-                x = weatherPoints.size();
-            }
-        }
-        if( graphEndPoint >= weatherPoints.size() )
-            graphEndPoint = weatherPoints.size() -1;
-		weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-		update( GraphPanel, weatherGraph.getGraph(), GraphStats);
-
-    	System.out.println( "Exiting Open Event Handler" );
-        
-    }//GEN-LAST:event_OpenActionPerformed
-
-    public void update(ChartPanel GraphPanel, JFreeChart weatherGraph, ArrayList<String> GraphStats)
-    {
-		/*MeanTemperatureInfo.setText(GraphStats.get(0));
-		HighLowTemperatureInfo.setText(GraphStats.get(1));
-		MeanWindSpeedInfo.setText(GraphStats.get(2));
-		MaxWindSpeedInfo.setText(GraphStats.get(3));
-		PrevailingWindDirectionInfo.setText(GraphStats.get(4));
-		RainfallLabelInfo.setText(GraphStats.get(5));*/
-
-		MeanTemperatureInfo.setText("??");
-		HighLowTemperatureInfo.setText("??");
-		MeanWindSpeedInfo.setText("??");
-		MaxWindSpeedInfo.setText("??");
-		PrevailingWindDirectionInfo.setText("??");
-		RainfallLabelInfo.setText("??");
-
-		StatsInfo.setLayout(new BoxLayout(StatsInfo, BoxLayout.Y_AXIS));
-		StatsInfo.add(MeanTemperatureInfo);
-		StatsInfo.add(HighLowTemperatureInfo);
-		StatsInfo.add(MeanWindSpeedInfo);
-		StatsInfo.add(MaxWindSpeedInfo);
-		StatsInfo.add(PrevailingWindDirectionInfo);
-		StatsInfo.add(RainfallLabelInfo);
-		
-		Panel.removeAll();
-		Arrows.removeAll();
-		GraphPanel = new ChartPanel(weatherGraph);
-		GraphPanel.repaint();
-
-		PageLayout();
-    }
-
-	public void PageLayout()
-	{
 		Panel.setLayout(new BorderLayout());
 		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
 		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
@@ -515,12 +206,304 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		StatsType.add(MeanWindSpeed);
 		StatsType.add(MaxWindSpeed);
 		StatsType.add(PrevailingWindDirection);
-		StatsType.add(RainfallLabel);
 		Stats.add(StatsType);
 		Stats.add(StatsInfo);
 		StatsPanel.add(Arrows);
 		StatsPanel.add(Stats);
-		//StatsPanel.add(table);
+		Panel.add(StatsPanel, BorderLayout.SOUTH);
+		Panel.add(TimePanel, BorderLayout.WEST);
+		Panel.add(GraphPanel, BorderLayout.CENTER);
+		Panel.add(GraphOptionPanel, BorderLayout.EAST);
+
+		setContentPane(Panel);
+		this.setTitle("Weather Station");
+		this.pack();
+		this.setVisible(true);   
+    }
+
+	public void setCheckBoxDefault()
+	{
+		Rainfall.setSelected(false);
+		Temperature.setSelected(true);
+		Humidity.setSelected(false);
+		WindSpeed.setSelected(false);
+		WindGust.setSelected(false);
+		WindChill.setSelected(false);
+		HeatIndex.setSelected(false);
+		UVIndex.setSelected(false);
+		Barometer.setSelected(false);
+	}
+
+	public void itemStateChanged(ItemEvent e)
+	{
+		Object source = e.getItemSelectable();
+
+		if(source == Temperature)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.TEMPERATURE );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.TEMPERATURE );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == Humidity)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.HUMIDITY  );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.HUMIDITY  );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == WindSpeed)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.WINDSPEED  );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.WINDSPEED );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == WindGust)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.WINDGUST );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.WINDGUST );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == WindChill)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.WINDCHILL );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.WINDCHILL );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == HeatIndex)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.HEATINDEX );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.HEATINDEX );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == UVIndex)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.UVINDEX );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.UVINDEX );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == Barometer)
+		{
+		    if(e.getStateChange() == ItemEvent.SELECTED )
+		    {
+		        weatherGraph.showLine( SeriesList.BAROMETER );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.BAROMETER );
+		    }        
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+		else if(source == Rainfall)
+		{
+		    if( Rainfall.isSelected() )
+		    {
+		        weatherGraph.showLine( SeriesList.RAINFALL );
+		    }
+		    else
+		    {
+		        weatherGraph.hideLine( SeriesList.RAINFALL );
+		    }
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		Object source = e.getActionCommand();
+
+		if(source == "Daily")
+		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+
+		}
+		
+		else if(source == "Weekly")
+		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+	
+		else if(source == "Monthly")
+		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+	
+		else if(source == "Yearly")
+		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+
+		else if(source == "Left")
+		{
+			moveDateBackward();
+
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+            weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+			setCheckBoxDefault();
+		}
+
+		else if(source == "Right")
+		{
+			moveDateForward();
+
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+			setCheckBoxDefault();
+			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);          
+		}
+
+		else if(source == "Open")
+		{
+		    // filter to only xml files		 
+		    FileChooser.setCurrentDirectory(new java.io.File("."));
+		    FileChooser.setDialogTitle("Select Data Folder");
+		    FileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  
+		    // show the dialog box to select a file from
+		    int returnVal = FileChooser.showOpenDialog( null );
+		    
+		    // if file selection was a success		    
+		    if( returnVal == JFileChooser.APPROVE_OPTION )
+		    {
+		    	XMLLoaded = true;
+		    	XMLFileName = FileChooser.getSelectedFile().getAbsolutePath();
+		    }
+		
+			GraphPanel.removeAll();
+		            weatherPoints = ParseXML.parseDirectory( XMLFileName );
+		    Collections.sort(weatherPoints);
+		    graphStartPoint = 0;
+		    int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
+		    for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+		    {
+		        graphEndPoint = x;
+		        if( weatherPoints.get(x).date.getYear() > targetYear )
+		        {
+		            x = weatherPoints.size();
+		        }
+		    }
+		    if( graphEndPoint >= weatherPoints.size() )
+		        graphEndPoint = weatherPoints.size() -1;
+			weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+			update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		}
+		else if(source == "Exit")
+		{
+			System.exit(0);
+		}
+	}
+
+    public void update(ChartPanel GraphPanel, JFreeChart weatherGraph, WeatherStats weatherStats)
+    {
+		MeanTemperatureInfo.setText(Double.toString(weatherStats.MeanTemperature));
+		HighLowTemperatureInfo.setText(Double.toString(weatherStats.HighTemperature) + " | " + Double.toString(weatherStats.LowTemperature));
+		MeanWindSpeedInfo.setText(Double.toString(weatherStats.MeanWindSpeed));
+		MaxWindSpeedInfo.setText(Double.toString(weatherStats.MaxWindGust));
+		PrevailingWindDirectionInfo.setText(weatherStats.PrevailingWind);
+
+		StatsInfo.setLayout(new BoxLayout(StatsInfo, BoxLayout.Y_AXIS));
+		StatsInfo.add(MeanTemperatureInfo);
+		StatsInfo.add(HighLowTemperatureInfo);
+		StatsInfo.add(MeanWindSpeedInfo);
+		StatsInfo.add(MaxWindSpeedInfo);
+		StatsInfo.add(PrevailingWindDirectionInfo);
+		
+		Panel.removeAll();
+		Arrows.removeAll();
+		GraphPanel = new ChartPanel(weatherGraph);
+		GraphPanel.repaint();
+
+		Panel.setLayout(new BorderLayout());
+		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
+		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
+		Arrows.setLayout(new FlowLayout());
+		StatsPanel.setLayout(new BoxLayout(StatsPanel, BoxLayout.Y_AXIS));
+		StatsType.setLayout(new BoxLayout(StatsType, BoxLayout.Y_AXIS));
+		Stats.setLayout(new BoxLayout(Stats, BoxLayout.X_AXIS));
+
+		TimePanel.add(Daily);
+		TimePanel.add(Weekly);
+		TimePanel.add(Monthly);
+		TimePanel.add(Yearly);
+		GraphOptionPanel.add(Temperature);
+		GraphOptionPanel.add(Humidity);
+		GraphOptionPanel.add(WindSpeed);
+		GraphOptionPanel.add(WindGust);
+		GraphOptionPanel.add(WindChill);
+		GraphOptionPanel.add(HeatIndex);
+		GraphOptionPanel.add(UVIndex);
+		GraphOptionPanel.add(Barometer);
+		GraphOptionPanel.add(Rainfall);
+		Arrows.add(Left);
+		Arrows.add(Right);
+		StatsType.add(MeanTemperature);
+		StatsType.add(HighLowTemperature);
+		StatsType.add(MeanWindSpeed);
+		StatsType.add(MaxWindSpeed);
+		StatsType.add(PrevailingWindDirection);
+		Stats.add(StatsType);
+		Stats.add(StatsInfo);
+		StatsPanel.add(Arrows);
+		StatsPanel.add(Stats);
 		Panel.add(StatsPanel, BorderLayout.SOUTH);
 		Panel.add(TimePanel, BorderLayout.WEST);
 		Panel.add(GraphPanel, BorderLayout.CENTER);
@@ -530,7 +513,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		this.setTitle("Weather Station");
 		this.pack();
 		this.setVisible(true);
-	}    
+    }
 
     public static void main(String args[]) 
     {
@@ -560,8 +543,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+        }//</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable()
@@ -591,8 +573,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         }
         else if( Monthly.isSelected() )
         {
-            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
-                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(), 
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(), 
                                            1,0,0,0);
             endTarget = startTarget.plusMonths(1);
         }
@@ -638,10 +620,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         if( graphEndPoint >= weatherPoints.size() )
             graphEndPoint = weatherPoints.size() - 1;
 
-        
         return;
-
-
     }
 
     private void moveDateBackward()
@@ -653,9 +632,9 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         if( Yearly.isSelected() )
         {   
             startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),1,1,0,0,0).plusYears(-1);
-            endTarget = startTarget.plusYears(1);
-            
+            endTarget = startTarget.plusYears(1);  
         }
+
         else if( Monthly.isSelected() )
         {
             startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
@@ -663,6 +642,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
                                            1,0,0,0).plusMonths(-1);
             endTarget = startTarget.plusMonths(1);
         }
+
         else if( Daily.isSelected() )
         {
             startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
@@ -671,6 +651,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
                                            0,0,0).plusDays(-1);
             endTarget = startTarget.plusDays(1);
         }
+
         else
         {
             int year = weatherPoints.get(graphStartPoint).date.getYear();
@@ -705,10 +686,10 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
                 break;
             }
         }
+
         if( graphEndPoint >= weatherPoints.size() )
             graphEndPoint = weatherPoints.size() - 1;
 
-        
         return;
     }
 
@@ -789,7 +770,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenu File;
     private javax.swing.JFileChooser FileChooser;
-    //private javax.swing.ButtonGroup GraphVariables;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JRadioButton Monthly;
     private javax.swing.JMenuItem Open;
@@ -819,17 +799,14 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 	private javax.swing.JLabel MeanWindSpeed;
 	private javax.swing.JLabel MaxWindSpeed;
 	private javax.swing.JLabel PrevailingWindDirection;
-	private javax.swing.JLabel RainfallLabel;
 	private javax.swing.JLabel MeanTemperatureInfo;
 	private javax.swing.JLabel HighLowTemperatureInfo;
 	private javax.swing.JLabel MeanWindSpeedInfo;
 	private javax.swing.JLabel MaxWindSpeedInfo;
 	private javax.swing.JLabel PrevailingWindDirectionInfo;
-	private javax.swing.JLabel RainfallLabelInfo;
 	private BasicArrowButton Left;
 	private BasicArrowButton Right;
 	private ArrayList<String> GraphStats;
-	//private JTable table;
     private WeatherGraph weatherGraph;
     private int graphStartPoint;
     private int graphEndPoint;
@@ -838,4 +815,5 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
     private java.lang.Boolean XMLLoaded;
     private String XMLFileName;
     private List<WeatherPoint> weatherPoints;
+	private WeatherStats weatherStats;
 }

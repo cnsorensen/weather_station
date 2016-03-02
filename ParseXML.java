@@ -34,7 +34,6 @@ public class ParseXML
     public static void main( String[] args )
     {
         List<WeatherPoint> list = parseDirectory("./Data");
-        System.out.println(list.size());
     }
 
   	public static List<WeatherPoint> parseDirectory( String directory )
@@ -48,7 +47,6 @@ public class ParseXML
 			if(filename.endsWith(".xml")||filename.endsWith(".XML"))
 			{		
 				toReturn.addAll(parseWeather(filename));
-                System.out.println(filename);
 			}
    		}
         return toReturn;
@@ -60,9 +58,7 @@ public class ParseXML
         Element root;
         List<WeatherPoint> toReturn = new ArrayList<WeatherPoint>();
         builder = new SAXBuilder();
-   
-        System.out.println( "In ParseXML parseWeather" );
- 
+    
         try
         {
 
@@ -92,8 +88,7 @@ public class ParseXML
         {
             System.out.println( e );
         }
-     
-        System.out.println( "Am I returning from ParseXML?" );   
+      
         return toReturn;
     }
     
@@ -108,7 +103,7 @@ public class ParseXML
         while( attributeIterator.hasNext() )
         {
             Element attribute = (Element) attributeIterator.next();
-            //System.out.println( attribute.getQualifiedName() + "\t: " + attribute.getValue() );
+            
             String name = attribute.getQualifiedName();
             
             if( name.equals( "temperature" ) )
@@ -177,10 +172,7 @@ public class ParseXML
         int month = Integer.parseInt( dateTokens[0] );
         int day = Integer.parseInt( dateTokens[1] );
         int hour = Integer.parseInt( timeTokens[0] ) % 12;
-        
-        // this is printing out a's and p's
-        //System.out.println( timeTokens[1].substring( 2, 3 ) );
-        
+                
         int minute = Integer.parseInt( timeTokens[1].substring(0,2) );
         if( timeTokens[1].contains( "P" ) )
         {
@@ -188,33 +180,5 @@ public class ParseXML
         }
         
         return LocalDateTime.of( year, month, day, hour, minute, 0 );
-    }
-    
-    public static void listChildren( Element current, int depth )
-    {
-        List children = current.getChildren();
-        Iterator iterator = children.iterator();
-        
-        printSpaces( depth );
-        System.out.print( current.getName() );
-        if( !iterator.hasNext() )
-        {
-            System.out.print( " = " + current.getValue() );
-        }
-        System.out.println();
-    
-        while( iterator.hasNext() )
-        {
-            Element child = (Element) iterator.next();
-            listChildren( child, depth + 1 );
-        }
-    }
-    
-    private static void printSpaces( int n )
-    {
-        for( int i = 0; i < n; i++ )
-        {
-            System.out.print( " " );
-        }
-    }
+    }   
 }

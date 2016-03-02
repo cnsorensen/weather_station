@@ -74,10 +74,6 @@ public class WeatherGraph extends ApplicationFrame
             false   // generate urls?
         );
 
-        ////FOR ME SELFISH PLEASURES///////
-        //ChartPanel chartPanel = new ChartPanel( weatherGraph );
-        //chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-
         weatherGraph.setBackgroundPaint( Color.LIGHT_GRAY );
         XYPlot plot = (XYPlot) weatherGraph.getPlot();
         plot.setBackgroundPaint( Color.BLACK );
@@ -86,8 +82,6 @@ public class WeatherGraph extends ApplicationFrame
         plot.getRangeAxis().setLowerBound( -30 );
         plot.getRangeAxis().setUpperBound( 120 );
 
-        // ( bool-lines visible?, bool-shapes on points visible?)
-        //renderer = new XYLineAndShapeRenderer( true, false );
         renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 
         // inital all of the lines to be hidden
@@ -101,23 +95,13 @@ public class WeatherGraph extends ApplicationFrame
             new SimpleDateFormat("d-MMM-YYY"), new DecimalFormat("0.00") );
         renderer.setToolTipGenerator(g);
 
-        ///toolTip = new WeatherToolTip();
-        ///renderer.setBaseToolTipGenerator( toolTip );
-        
-        // rainfall isn't graphing
-        //renderer.setSeriesLinesVisible( 9, true );
-
         plot.setRenderer( renderer );
  
-        ///Take this out when putting into real code/////
-        //setContentPane( chartPanel );  
     }
 
     // toggle the view of the line
     public void showLine( int series )
     {
-        System.out.println( "showing this line" );
-        //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( true, false );
         renderer.setSeriesLinesVisible( series, true );   
     }
 
@@ -187,13 +171,4 @@ public class WeatherGraph extends ApplicationFrame
 
         return dataset;
     }
-
-   /* public static void main( String[] args )
-    {
-        WeatherGraph chart = new WeatherGraph( ParseXML.parseWeather("./2010-01.xml") );
-        chart.pack();
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
-    }*/
-
 }
