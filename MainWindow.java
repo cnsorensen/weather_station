@@ -85,6 +85,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		TimePanel = new javax.swing.JPanel();
 		GraphOptionPanel = new javax.swing.JPanel();
 		Arrows = new javax.swing.JPanel();
+		Left = new BasicArrowButton(BasicArrowButton.WEST);
+		Right = new BasicArrowButton(BasicArrowButton.EAST);
         weatherPoints = new ArrayList<WeatherPoint>();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,6 +161,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Yearly.setMnemonic(KeyEvent.VK_C);
 		Yearly.setActionCommand("Yearly");
 
+		Left.setMnemonic(KeyEvent.VK_C);
+		Left.setActionCommand("Left");
+
+		Right.setMnemonic(KeyEvent.VK_C);
+		Right.setActionCommand("Right");
+
 		TimeFrame.add(Daily);
 		TimeFrame.add(Weekly);
 		TimeFrame.add(Monthly);
@@ -168,6 +176,9 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Weekly.addActionListener(this);
 		Monthly.addActionListener(this);
 		Yearly.addActionListener(this);
+
+		Left.addActionListener(this);
+		Right.addActionListener(this);
 
         File.setText("File");
 
@@ -221,8 +232,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		GraphOptionPanel.add(MaximumWindSpeed);
 		GraphOptionPanel.add(PrevailingWindDirection);
 		GraphOptionPanel.add(Rainfall);
-		Arrows.add(new BasicArrowButton(BasicArrowButton.WEST));
-		Arrows.add(new BasicArrowButton(BasicArrowButton.EAST));
+		Arrows.add(Left);
+		Arrows.add(Right);
 		Panel.add(Arrows, BorderLayout.SOUTH);
 		Panel.add(TimePanel, BorderLayout.WEST);
 		Panel.add(GraphPanel, BorderLayout.CENTER);
@@ -487,6 +498,16 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		{
 			System.out.println("Yearly chosen.");
 		}
+
+		else if(source == "Left")
+		{
+			System.out.println("Left chosen.");
+		}
+
+		else if(source == "Right")
+		{
+			System.out.println("Right chosen.");
+		}
 	}
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt)
@@ -747,6 +768,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
     private javax.swing.JPanel TimePanel;
     private javax.swing.JPanel GraphOptionPanel;
 	private javax.swing.JPanel Arrows;
+	private BasicArrowButton Left;
+	private BasicArrowButton Right;
     private WeatherGraph weatherGraph;
     private int graphStartPoint;
     private int graphEndPoint;
