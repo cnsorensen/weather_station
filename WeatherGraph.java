@@ -91,7 +91,7 @@ public class WeatherGraph extends ApplicationFrame
         renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 
         // inital all of the lines to be hidden
-        for( int i = 0; i < seriesCount; i++ )
+        for( int i = 0; i < graphData.getSeriesCount(); i++ )
         {
             renderer.setSeriesLinesVisible( i, false );
         }
@@ -144,13 +144,12 @@ public class WeatherGraph extends ApplicationFrame
 
         // xyseries
         TimeSeries temperature = new TimeSeries( "Temperature" );
-        //TimeSeries avgTemperature = new XYSeries( "Average Temperature" );
         TimeSeries humidity = new TimeSeries( "Humidity" );
         TimeSeries windSpeed = new TimeSeries( "Wind Speed" );
-        //TimeSeries windDirection = new TimeSeries( "Wind Direction" ); //Don't know how??
         TimeSeries windGust = new TimeSeries( "Wind Gust" );
         TimeSeries windChill = new TimeSeries( "Wind Chill" );
         TimeSeries heatIndex = new TimeSeries( "Heat Index" );
+        TimeSeries barometer = new TimeSeries( "Barometer" );
         TimeSeries uvindex = new TimeSeries( "UV Index" );
         TimeSeries rainfall = new TimeSeries( "Rainfall" );
 
@@ -165,30 +164,26 @@ public class WeatherGraph extends ApplicationFrame
 
             // add graphing point
             temperature.add( now, toGraph.temperature );
-            ///avgtemp here
             humidity.add( now, toGraph.humidity );
             windSpeed.add( now, toGraph.windspeed );
-            ///wind direction here
             windGust.add( now, toGraph.windgust );
             windChill.add( now, toGraph.windchill );
             heatIndex.add( now, toGraph.heatindex );
             uvindex.add( now, toGraph.uvindex );
+            barometer.add( now, toGraph.barometer );
             rainfall.add( now, toGraph.rainfall );
-            
-            System.out.println( now.getSerialIndex() );
         }
 
         // Add these to dataset
-        dataset.addSeries( temperature );   //0
-        ///dataset.addSeries( avgTemperature ); //1
-        dataset.addSeries( humidity );  //2
-        dataset.addSeries( windSpeed ); //3
-        ///dataset.addSeries( windDirection );  //4
-        dataset.addSeries( windGust );  //5
-        dataset.addSeries( windChill ); //6
-        dataset.addSeries( heatIndex ); //7
-        dataset.addSeries( uvindex );   //8
-        dataset.addSeries( rainfall );  //9
+        dataset.addSeries( temperature );
+        dataset.addSeries( humidity );
+        dataset.addSeries( windSpeed );
+        dataset.addSeries( windGust ); 
+        dataset.addSeries( windChill );
+        dataset.addSeries( heatIndex );
+        dataset.addSeries( uvindex );  
+        dataset.addSeries( barometer );
+        dataset.addSeries( rainfall ); 
 
         return dataset;
     }
