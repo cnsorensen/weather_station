@@ -1,3 +1,10 @@
+/*
+ * SeriesList.java
+ *
+ * This holds the "enums" for the series on the time series chart.
+ *
+ */
+
 public class SeriesList
 {
     public static int TEMPERATURE = 0;
@@ -9,10 +16,5 @@ public class SeriesList
     public static int HEATINDEX = 6;
     public static int BAROMETER = 7;
     public static int RAINFALL = 8;
-
-    /*static public void main( String args[] )
-    {
-        System.out.println( "Hello motherfuckin world." );
-    }*/
 }
 

@@ -1,4 +1,11 @@
-/* WeatherToolTip.java */
+/*
+ * WeatherToolTip.java
+ *
+ * WeatherToolTip is the tool tip for the Weather Station program. When the user
+ * hovers over a point in the graph, this tool tip appears and provides all of
+ * the values for that point.
+ *
+ */
 
 import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.data.xy.XYDataset;
@@ -10,7 +17,7 @@ public class WeatherToolTip implements XYToolTipGenerator
     @Override
     public String generateToolTip(XYDataset dataset, int series, int item )
     {
-        String windDir;
+        // get all of the values to be displayed in the tool tip
         Number time = dataset.getX( series, item );
         Number temperatureNum = dataset.getY( SeriesList.TEMPERATURE, item );
         Number humidityNum = dataset.getY( SeriesList.HUMIDITY, item );
@@ -22,11 +29,15 @@ public class WeatherToolTip implements XYToolTipGenerator
         Number barometerNum = dataset.getY( SeriesList.BAROMETER, item );
         Number rainfallNum = dataset.getY( SeriesList.RAINFALL, item );
 
+        // the format for the date to appear in the tool tip
         SimpleDateFormat dateFormat = new SimpleDateFormat( "MM/dd/yy HH:mm" );
 
+        // holds the string to be printed
         StringBuilder stringBuilder = new StringBuilder();
         
-        //still need one for wind direction
+        // the string is formated in html because the world isn't easy on you
+        // and apparently \n isn't good enought for the java-ites.
+        // the string is returned to be printed in the tool tip
         stringBuilder.append( "<html><p style='color:#000044;'>" );
         stringBuilder.append( dateFormat.format( time ) );
         stringBuilder.append( "</p>" );
