@@ -451,16 +451,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    {
 		    	XMLLoaded = true;
 		    	XMLFileName = FileChooser.getSelectedFile().getAbsolutePath();
-		    }
-	
-			GraphPanel.removeAll();
-			    weatherPoints = ParseXML.parseDirectory( XMLFileName );
-		    Collections.sort(weatherPoints);
-		    graphStartPoint = 0;
-		    graphEndPoint = 0;
-            changeDateRange();
-			weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-			persistGraphLines();
+            	        
+		        GraphPanel.removeAll();
+		        weatherPoints = ParseXML.parseDirectory( XMLFileName ); //get files
+	            Collections.sort(weatherPoints);
+	            graphStartPoint = 0;
+	            graphEndPoint = 0;
+                changeDateRange(); //change to selected date range then display
+		        weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		        persistGraphLines();		    
+            }
+
 		}
 		else if(source == "Exit")
 		{
@@ -472,11 +473,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
     public void update(ChartPanel GraphPanel, JFreeChart weatherGraph, WeatherStats weatherStats)
     {
 		//Updates and or sets the text for the statistics below the graph
-		MeanTemperatureInfo.setText(Double.toString(weatherStats.MeanTemperature));
-		HighLowTemperatureInfo.setText(Double.toString(weatherStats.HighTemperature) + " | " + Double.toString(weatherStats.LowTemperature));
-		MeanWindSpeedInfo.setText(Double.toString(weatherStats.MeanWindSpeed));
-		MaxWindSpeedInfo.setText(Double.toString(weatherStats.MaxWindGust));
-		PrevailingWindDirectionInfo.setText(weatherStats.PrevailingWind);
+		MeanTemperatureInfo.setText("  " + Double.toString(weatherStats.MeanTemperature));
+		HighLowTemperatureInfo.setText("  " + Double.toString(weatherStats.HighTemperature) + " | " + Double.toString(weatherStats.LowTemperature));
+		MeanWindSpeedInfo.setText("  " + Double.toString(weatherStats.MeanWindSpeed));
+		MaxWindSpeedInfo.setText("  " + Double.toString(weatherStats.MaxWindGust));
+		PrevailingWindDirectionInfo.setText("  " + weatherStats.PrevailingWind);
 
 		//Add the new info to the StatsInfo panel
 		StatsInfo.setLayout(new BoxLayout(StatsInfo, BoxLayout.Y_AXIS));
@@ -582,6 +583,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         });
     }
 
+    /*
+    * Function: generateDate
+    * Author: Marcus Haberling
+    * Changes the date range base on which radial button is selected
+    */
     private void changeDateRange()
     {
         if(weatherPoints.size() == 0)
@@ -612,6 +618,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         
         else
         {
+            //if weekly we need to move to the front of the week
             int year = weatherPoints.get(graphStartPoint).date.getYear();
             int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
             int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
@@ -619,6 +626,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             startTarget = startTarget.plusDays(startTarget.getDayOfWeek().getValue()*-1+1);
             endTarget = startTarget.plusWeeks(1);
         }
+
+        //loop for starting pointer
         for ( int x = 0; x < weatherPoints.size(); x = x + 1)
         {
             graphStartPoint = x;//isAfter(ChronoLocalDateTime<?> other)
@@ -632,7 +641,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
         if( graphStartPoint >= weatherPoints.size())
             graphStartPoint = 0;
-        
+        //loop for ending pointer
         for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
         {
             graphEndPoint = x;
@@ -647,12 +656,19 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         return;
     }
 
+    /*
+    * Function: moveDateBackward
+    * Author: Marcus Haberling
+    * Sets the graphStartPoint and graphEndPoint variables to the next range
+    * of data to display. This is dependant on weather viewing by year month week or day
+    */
     private void moveDateBackward()
     {
         if(weatherPoints.size() == 0)
             return;
         LocalDateTime startTarget;
         LocalDateTime endTarget;
+        //Set the target start and end dates for the loop
         if( Yearly.isSelected() )
         {   
             startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),1,1,0,0,0).plusYears(-1);
@@ -678,6 +694,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
         else
         {
+            //need to get to the front of the week before decrementing to the last week.
             int year = weatherPoints.get(graphStartPoint).date.getYear();
             int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
             int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
@@ -686,7 +703,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             startTarget = startTarget.plusWeeks(-1);
             endTarget = startTarget.plusWeeks(1);
         }
-
+        //loop for start date
         for ( int x = graphStartPoint; x >= 0; x = x - 1)
         {
                 //isAfter(ChronoLocalDateTime<?> other)
@@ -701,7 +718,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
         if( graphStartPoint >= weatherPoints.size())
             graphStartPoint = 0;
-        
+        //loop for end date.
         for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
         {
             graphEndPoint = x;
@@ -717,14 +734,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         return;
     }
 
-
+    /*
+    * Function: moveDateForward
+    * Author: Marcus Haberling
+    * Sets the graphStartPoint and graphEndPoint variables to the next range
+    * of data to display. This is dependant on weather viewing by year month week or day
+    */
     private void moveDateForward()
     {
         if(weatherPoints.size() == 0)
             return;
-        int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
-        int targetMonth = ( weatherPoints.get(graphStartPoint).date.getMonth().getValue() + 1 );
-        int targetDayOfYear = weatherPoints.get(graphStartPoint).date.getDayOfYear() + 1;
+        //Create targets to dearch for in coming loops
         LocalDateTime startTarget;
         LocalDateTime endTarget;
         if( Yearly.isSelected() )
@@ -750,6 +770,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         }
         else
         {
+            //Need to subtract days so we are at befining of the week before moving
+            // ont to the next week.
             int year = weatherPoints.get(graphStartPoint).date.getYear();
             int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
             int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
@@ -759,9 +781,10 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             endTarget = startTarget.plusWeeks(1);
         }
 
+        //Loop looking for the start date
         for ( int x = graphStartPoint; x < weatherPoints.size(); x = x + 1)
         {
-            graphStartPoint = x;//isAfter(ChronoLocalDateTime<?> other)
+            graphStartPoint = x;
 
             if( weatherPoints.get(x).date.isAfter(startTarget) )
             {                
@@ -769,10 +792,10 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
                 break;
             }
         }
-
+        //NO reference exceptions
         if( graphStartPoint >= weatherPoints.size())
             graphStartPoint = 0;
-        
+        //loop for the end date
         for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
         {
             graphEndPoint = x;
@@ -788,6 +811,13 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         return;
     }
 
+    /*
+    * Function: persistsGraphLines
+    * Author: Marcus Haberling
+    * Sets all graphlines to display when the graph is redrawn
+    * if their corresponding checkbox is selected then
+    * calls update to redraw them. 
+    */
     private void persistGraphLines()
     {
         if(Temperature.isSelected())
@@ -808,6 +838,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             weatherGraph.showLine( SeriesList.BAROMETER );
         if(Rainfall.isSelected())
             weatherGraph.showLine( SeriesList.RAINFALL );
+        //redraw
         update( GraphPanel, weatherGraph.getGraph(), weatherStats );
     }
     
