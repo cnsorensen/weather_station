@@ -2,9 +2,6 @@
 // run: java -cp .:jcommon.jar:jfreechart.jar WeatherGraph
 
 
-//import org.jdom2.*;
-//import org.jsom2.input.SAXBuilder;
-//import java.io.IOException;
 import java.util.*;
 import java.util.Date;
 import java.time.LocalDateTime;
