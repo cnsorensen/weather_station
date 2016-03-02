@@ -1,3 +1,23 @@
+/* MainWindow.java */
+/*
+ * Program 1: Weather Station
+ * South Dakota School of Mines and Technology
+ * CSC 468 Graphic User Interface
+ * Spring 2016
+ * Dr. John Weiss
+ * Jason Anderson, Marcus Haberling, Chrissy Sorensen
+ *
+ * Compilation: javac -cp .:jdom.jar:jcommon.jar:jfreechart.jar MainWindow.java
+ *              or use the makefile
+ *
+ * Usage: java -cp .:jdom.jar:jcommon.jar:jfreechart.jar MainWindow 
+ *
+ * MainWindow is the main component of this project. It is the user interface for the
+ * program. It holds all of the components and their handlers. It shows a graph with
+ * checkboxes, radio buttons, and statistics. The graph and statistics get updated 
+ * from the user's input through the components.
+ *
+ */
 
 import java.awt.BorderLayout;
 import java.io.File;

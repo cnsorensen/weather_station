@@ -14,7 +14,21 @@ For more info, see e.g. https://docs.oracle.com/javase/tutorial/jaxp/dom/reading
 JMW 160205
 
 */
-
+/*
+ * ParseXML.java
+ *
+ * This code was based on the Java example in Processing XML with Java (Elliotte Harold).
+ * More information on this, see:
+ *      https://docs.oracle.com/javase/tutorial/jaxp/dom/readingXML.html
+ * 
+ * The code was provided to the students of CSC 468: GUI Spring 2016 by Dr. John Weiss. 
+ * It has been tailored for this project.
+ *
+ * ParseXML takes in an xml and parses the data. The data stored into a data structure
+ * WeatherPoint for each entry. The points are then collected into a list.
+ * ParseXML also can be given a directory. 
+ *
+ */
 
 import java.awt.BorderLayout;
 import org.jdom2.*;
