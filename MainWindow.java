@@ -19,6 +19,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.JTable;
+import java.time.LocalDateTime;
 
 public class MainWindow extends JFrame implements ItemListener, ActionListener
 {
@@ -344,28 +345,49 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
 		if(source == "Daily")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Daily chosen.");
 		}
 		
 		else if(source == "Weekly")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Weekly chosen.");
 		}
 	
 		else if(source == "Monthly")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Monthly chosen.");
 		}
 	
 		else if(source == "Yearly")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Yearly chosen.");
 		}
 
 		else if(source == "Left")
 		{
+			moveDateBackward();
+
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+            
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Left chosen.");
+<<<<<<< HEAD
 			setCheckBoxDefault();
+=======
+            System.out.println( "Start: " + graphStartPoint + "\tEnd: " + graphEndPoint + "\tTotal: " + weatherPoints.size() );     
+>>>>>>> 4474b0a97c2cdbbdc7549c8384b922e2d088fb44
 		}
 
 		else if(source == "Right")
@@ -536,93 +558,212 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         });
     }
 
+    private void changeDateRange()
+    {
+        if(weatherPoints.size() == 0)
+            return;
+        LocalDateTime startTarget;
+        LocalDateTime endTarget;
+        if( Yearly.isSelected() )
+        {   
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),1,1,0,0,0);
+            endTarget = startTarget.plusYears(1);
+            
+        }
+        else if( Monthly.isSelected() )
+        {
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           1,0,0,0);
+            endTarget = startTarget.plusMonths(1);
+        }
+        else if( Daily.isSelected() )
+        {
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           weatherPoints.get(graphStartPoint).date.getDayOfMonth(),
+                                           0,0,0);
+            endTarget = startTarget.plusDays(1);
+        }
+        else
+        {
+            int year = weatherPoints.get(graphStartPoint).date.getYear();
+            int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
+            int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
+            startTarget = LocalDateTime.of(year, month, day, 0 ,0 ,0 );
+            startTarget = startTarget.plusDays(startTarget.getDayOfWeek().getValue()*-1+1);
+            endTarget = startTarget.plusWeeks(1);
+        }
+        for ( int x = 0; x < weatherPoints.size(); x = x + 1)
+        {
+            graphStartPoint = x;//isAfter(ChronoLocalDateTime<?> other)
+
+            if( weatherPoints.get(x).date.isAfter(startTarget) )
+            {                
+                //graphStartPoint = x -1;
+                break;
+            }
+        }
+
+        if( graphStartPoint >= weatherPoints.size())
+            graphStartPoint = 0;
+        
+        for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+        {
+            graphEndPoint = x;
+            if(weatherPoints.get(x).date.isAfter(endTarget) )
+            {                                    
+                break;
+            }
+        }
+        if( graphEndPoint >= weatherPoints.size() )
+            graphEndPoint = weatherPoints.size() - 1;
+
+        
+        return;
+
+
+    }
+
+    private void moveDateBackward()
+    {
+        if(weatherPoints.size() == 0)
+            return;
+        LocalDateTime startTarget;
+        LocalDateTime endTarget;
+        if( Yearly.isSelected() )
+        {   
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),1,1,0,0,0).plusYears(-1);
+            endTarget = startTarget.plusYears(1);
+            
+        }
+        else if( Monthly.isSelected() )
+        {
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           1,0,0,0).plusMonths(-1);
+            endTarget = startTarget.plusMonths(1);
+        }
+        else if( Daily.isSelected() )
+        {
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           weatherPoints.get(graphStartPoint).date.getDayOfMonth(),
+                                           0,0,0).plusDays(-1);
+            endTarget = startTarget.plusDays(1);
+        }
+        else
+        {
+            int year = weatherPoints.get(graphStartPoint).date.getYear();
+            int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
+            int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
+            startTarget = LocalDateTime.of(year, month, day, 0 ,0 ,0 );
+            startTarget = startTarget.plusDays(startTarget.getDayOfWeek().getValue()*-1+1);
+            startTarget = startTarget.plusWeeks(-1);
+            endTarget = startTarget.plusWeeks(1);
+        }
+
+        for ( int x = graphStartPoint; x >= 0; x = x - 1)
+        {
+                //isAfter(ChronoLocalDateTime<?> other)
+
+            if( weatherPoints.get(x).date.isBefore(startTarget) )
+            {                
+                graphStartPoint = x;
+                break;
+            }
+            graphStartPoint = x;
+        }
+
+        if( graphStartPoint >= weatherPoints.size())
+            graphStartPoint = 0;
+        
+        for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+        {
+            graphEndPoint = x;
+            if(weatherPoints.get(x).date.isAfter(endTarget) )
+            {                                    
+                break;
+            }
+        }
+        if( graphEndPoint >= weatherPoints.size() )
+            graphEndPoint = weatherPoints.size() - 1;
+
+        
+        return;
+    }
+
+
     private void moveDateForward()
     {
         if(weatherPoints.size() == 0)
             return;
-        int targetYear = weatherPoints.get(graphStartPoint).date.getYear() + 1;
-        int targetMonth = weatherPoints.get(graphStartPoint).date.getMonth().getValue() + 1;
-        int targetDayOfYear = weatherPoints.get(graphStartPoint).date.getDayOfYear() + 1; 
+        int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
+        int targetMonth = ( weatherPoints.get(graphStartPoint).date.getMonth().getValue() + 1 );
+        int targetDayOfYear = weatherPoints.get(graphStartPoint).date.getDayOfYear() + 1;
+        LocalDateTime startTarget;
+        LocalDateTime endTarget;
         if( Yearly.isSelected() )
-        {
-            System.out.println( "WE HAVE ENTERED YEARLY" );
-            for ( int x = graphStartPoint; x < weatherPoints.size(); x = x + 1)
-            {
-                graphStartPoint = x;
-                if( weatherPoints.get(x).date.getYear() >= targetYear )
-                {                
-                    graphStartPoint = x + 1;
-                    break;
-                }
-            }
-            System.out.println("Target Year: " + targetYear);
-            if( graphStartPoint >= weatherPoints.size())
-                graphStartPoint = 0;
-            for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
-            {
-                graphEndPoint = x;
-                if( weatherPoints.get(x).date.getYear() > targetYear )
-                {                                    
-                    break;
-                }
-            }
-            if( graphEndPoint >= weatherPoints.size() )
-                graphEndPoint = weatherPoints.size() - 1;
-            System.out.println("FUCK YOU TOO BUDDY");
-
+        {   
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),1,1,0,0,0).plusYears(1);
+            endTarget = startTarget.plusYears(1);
+            
         }
-        if( Monthly.isSelected() )
+        else if( Monthly.isSelected() )
         {
-            for ( int x = graphStartPoint; x > -1; x = x - 1)
-            {
-                graphStartPoint = x;
-                if( weatherPoints.get(x).date.getMonth().getValue() != targetMonth )
-                {                
-                    graphStartPoint = x + 1;
-                    break;
-                }
-            }
-            if( graphStartPoint >= weatherPoints.size())
-                graphStartPoint = 0;
-            for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
-            {
-                graphStartPoint = x;
-                if( weatherPoints.get(x).date.getMonth().getValue() != targetMonth )
-                {                                    
-                    break;
-                }
-            }
-            if( graphEndPoint >= weatherPoints.size() )
-                graphEndPoint = weatherPoints.size() - 1;
-
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           1,0,0,0).plusMonths(1);
+            endTarget = startTarget.plusMonths(1);
         }
-        if( Daily.isSelected() )
+        else if( Daily.isSelected() )
         {
-            for ( int x = graphStartPoint; x > -1; x = x - 1)
-            {
-                graphStartPoint = x;
-                if( weatherPoints.get(x).date.getDayOfYear() != targetDayOfYear)
-                {                
-                    graphStartPoint = x + 1;
-                    break;
-                }
-            }
-            if( graphStartPoint >= weatherPoints.size())
-                graphStartPoint = 0;
-            for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
-            {
-                graphStartPoint = x;
-                if( weatherPoints.get(x).date.getDayOfYear() != targetDayOfYear )
-                {                                    
-                    break;
-                }
-            }
-            if( graphEndPoint >= weatherPoints.size() )
-                graphEndPoint = weatherPoints.size() - 1;
-
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           weatherPoints.get(graphStartPoint).date.getDayOfMonth(),
+                                           0,0,0).plusDays(1);
+            endTarget = startTarget.plusDays(1);
         }
+        else
+        {
+            int year = weatherPoints.get(graphStartPoint).date.getYear();
+            int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
+            int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
+            startTarget = LocalDateTime.of(year, month, day, 0 ,0 ,0 );
+            startTarget = startTarget.plusDays(startTarget.getDayOfWeek().getValue()*-1+1);
+            startTarget = startTarget.plusWeeks(1);
+            endTarget = startTarget.plusWeeks(1);
+        }
+
+        for ( int x = graphStartPoint; x < weatherPoints.size(); x = x + 1)
+        {
+            graphStartPoint = x;//isAfter(ChronoLocalDateTime<?> other)
+
+            if( weatherPoints.get(x).date.isAfter(startTarget) )
+            {                
+                //graphStartPoint = x -1;
+                break;
+            }
+        }
+
+        if( graphStartPoint >= weatherPoints.size())
+            graphStartPoint = 0;
+        
+        for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+        {
+            graphEndPoint = x;
+            if(weatherPoints.get(x).date.isAfter(endTarget) )
+            {                                    
+                break;
+            }
+        }
+        if( graphEndPoint >= weatherPoints.size() )
+            graphEndPoint = weatherPoints.size() - 1;
+
+        
         return;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton Daily;
     private javax.swing.JMenu Edit;
