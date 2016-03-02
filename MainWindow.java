@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import javafx.stage.FileChooser;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
@@ -69,8 +70,9 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         Weekly = new javax.swing.JRadioButton("Weekly");
         Monthly = new javax.swing.JRadioButton("Monthly");
         Yearly = new javax.swing.JRadioButton("Yearly");
-        weatherGraph = new WeatherGraph( new ArrayList<WeatherPoint>() );       
-        GraphPanel = new ChartPanel( weatherGraph.getGraph() );        
+        weatherPoints = new ArrayList<WeatherPoint>();
+        weatherGraph = new WeatherGraph( weatherPoints );       
+        GraphPanel = new ChartPanel( weatherGraph.getGraph() );           
         MenuBar = new javax.swing.JMenuBar();
         File = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -227,7 +229,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		Panel.add(GraphOptionPanel, BorderLayout.EAST);
 
 		setContentPane(Panel);
-		this.setTitle("WWWWHHHHHYYYYY");
+		this.setTitle("Weather Station");
 		this.pack();
 		this.setVisible(true);
    
@@ -500,23 +502,40 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         System.out.println("Open chosen.");
         
         // filter to only xml files
-        FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter( null, "xml" );
-        FileChooser.setFileFilter( xmlFilter );
-        
+     
+        FileChooser.setCurrentDirectory(new java.io.File("."));
+        FileChooser.setDialogTitle("Select Data Folder");
+        FileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  
         // show the dialog box to select a file from
         int returnVal = FileChooser.showOpenDialog( null );
         
         // if file selection was a success
+        
         if( returnVal == JFileChooser.APPROVE_OPTION )
         {
             System.out.println( "You chose to open this file: " + FileChooser.getSelectedFile().getName() );
         	XMLLoaded = true;
-        	XMLFileName = FileChooser.getSelectedFile().getName();
+        	XMLFileName = FileChooser.getSelectedFile().getAbsolutePath();
         }
 		
 		GraphPanel.removeAll();
-        weatherPoints = ParseXML.parseWeather( XMLFileName );
-		weatherGraph = new WeatherGraph( weatherPoints );
+                weatherPoints = ParseXML.parseDirectory( XMLFileName );
+        Collections.sort(weatherPoints);
+        graphStartPoint = 0;
+        int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
+        System.out.println( targetYear );
+        for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+        {
+            graphEndPoint = x;
+            System.out.println( weatherPoints.get(x).date.getYear() );
+            if( weatherPoints.get(x).date.getYear() > targetYear )
+            {
+                x = weatherPoints.size();
+            }
+        }
+        if( graphEndPoint >= weatherPoints.size() )
+            graphEndPoint = weatherPoints.size() -1;
+		weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 		update(GraphPanel, weatherGraph.getGraph());
 
     	System.out.println( "Exiting Open Event Handler" );
@@ -614,6 +633,88 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         });
     }
 
+    private void moveDateForward()
+    {
+        int targetYear = weatherPoints.get(graphStartPoint).date.getYear() + 1;
+        int targetMonth = weatherPoints.get(graphStartPoint).date.getMonth().getValue() + 1;
+        int targetDayOfYear = weatherPoints.get(graphStartPoint).date.getDayOfYear() + 1; 
+        if( Yearly.isSelected() )
+        {
+            for ( int x = graphStartPoint; x > -1; x = x - 1)
+            {
+                graphStartPoint = x;
+                if( weatherPoints.get(x).date.getYear() < targetYear )
+                {                
+                    graphStartPoint = x + 1;
+                    break;
+                }
+            }
+            if( graphStartPoint >= weatherPoints.size())
+                graphStartPoint = 0;
+            for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+            {
+                graphStartPoint = x;
+                if( weatherPoints.get(x).date.getYear() > targetYear )
+                {                                    
+                    break;
+                }
+            }
+            if( graphEndPoint >= weatherPoints.size() )
+                graphEndPoint = weatherPoints.size() - 1;
+
+        }
+        if( Monthly.isSelected() )
+        {
+            for ( int x = graphStartPoint; x > -1; x = x - 1)
+            {
+                graphStartPoint = x;
+                if( weatherPoints.get(x).date.getMonth().getValue() != targetMonth )
+                {                
+                    graphStartPoint = x + 1;
+                    break;
+                }
+            }
+            if( graphStartPoint >= weatherPoints.size())
+                graphStartPoint = 0;
+            for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+            {
+                graphStartPoint = x;
+                if( weatherPoints.get(x).date.getMonth().getValue() != targetMonth )
+                {                                    
+                    break;
+                }
+            }
+            if( graphEndPoint >= weatherPoints.size() )
+                graphEndPoint = weatherPoints.size() - 1;
+
+        }
+        if( Daily.isSelected() )
+        {
+            for ( int x = graphStartPoint; x > -1; x = x - 1)
+            {
+                graphStartPoint = x;
+                if( weatherPoints.get(x).date.getDayOfYear() != targetDayOfYear)
+                {                
+                    graphStartPoint = x + 1;
+                    break;
+                }
+            }
+            if( graphStartPoint >= weatherPoints.size())
+                graphStartPoint = 0;
+            for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+            {
+                graphStartPoint = x;
+                if( weatherPoints.get(x).date.getDayOfYear() != targetDayOfYear )
+                {                                    
+                    break;
+                }
+            }
+            if( graphEndPoint >= weatherPoints.size() )
+                graphEndPoint = weatherPoints.size() - 1;
+
+        }
+        return;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton Daily;
     private javax.swing.JMenu Edit;
@@ -647,6 +748,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
     private javax.swing.JPanel GraphOptionPanel;
 	private javax.swing.JPanel Arrows;
     private WeatherGraph weatherGraph;
+    private int graphStartPoint;
+    private int graphEndPoint;
     private JFreeChart Graph;
     private ChartPanel GraphPanel;
     private java.lang.Boolean XMLLoaded;

@@ -2,7 +2,7 @@
 import java.util.*;
 import java.time.LocalDateTime;
 
-public class WeatherPoint 
+public class WeatherPoint implements Comparable<WeatherPoint> 
 {
     public String dateString;
     public LocalDateTime date;
@@ -31,4 +31,15 @@ public class WeatherPoint
                 "\nUV Index:\t" + uvindex +
                 "\nRainfall:\t" + rainfall;
     }
+
+    @Override public int compareTo(WeatherPoint o)
+    {
+        if( date.isBefore(o.date))
+            return -1;
+        else if (date.isAfter(o.date))
+            return 1;
+        else return 0;
+    }
+
+
 }
