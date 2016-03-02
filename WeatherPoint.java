@@ -6,16 +6,16 @@ public class WeatherPoint implements Comparable<WeatherPoint>
 {
     public String dateString;
     public LocalDateTime date;
-    public double temperature;
-    public double humidity;
-    public double barometer;
-    public double windspeed;
-    public String winddirection;
-    public double windgust;
-    public double windchill;
-    public double heatindex;
-    public double uvindex;
-    public double rainfall;
+    public double temperature = 0;
+    public double humidity = 0;
+    public double barometer = 0;
+    public double windspeed = 0;
+    public String winddirection = "";
+    public double windgust = 0;
+    public double windchill = 0;
+    public double heatindex = 0;
+    public double uvindex = 0;
+    public double rainfall = 0;
     
     public String toString()
     {

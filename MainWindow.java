@@ -384,7 +384,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             changeDateRange();
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		    persistGraphLines();
 
 		}
 		
@@ -393,7 +393,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             changeDateRange();
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		    persistGraphLines();
 		}
 	
 		else if(source == "Monthly")
@@ -401,7 +401,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             changeDateRange();
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		    persistGraphLines();
 		}
 	
 		else if(source == "Yearly")
@@ -409,7 +409,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             changeDateRange();
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+		    persistGraphLines();
 		}
 
 		else if(source == "Left")
@@ -418,8 +418,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
             weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);
-			setCheckBoxDefault();
+		    persistGraphLines();
+			
 		}
 
 		else if(source == "Right")
@@ -427,9 +427,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 			moveDateForward();
 
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-			setCheckBoxDefault();
 			weatherStats = new WeatherStats(weatherPoints.subList(graphStartPoint, graphEndPoint));
-		    update( GraphPanel, weatherGraph.getGraph(), weatherStats);          
+		    persistGraphLines();        
 		}
 
 		else if(source == "Open")
@@ -452,19 +451,10 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		            weatherPoints = ParseXML.parseDirectory( XMLFileName );
 		    Collections.sort(weatherPoints);
 		    graphStartPoint = 0;
-		    int targetYear = weatherPoints.get(graphStartPoint).date.getYear();
-		    for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
-		    {
-		        graphEndPoint = x;
-		        if( weatherPoints.get(x).date.getYear() > targetYear )
-		        {
-		            x = weatherPoints.size();
-		        }
-		    }
-		    if( graphEndPoint >= weatherPoints.size() )
-		        graphEndPoint = weatherPoints.size() -1;
+		    graphEndPoint = 0;
+            changeDateRange();
 			weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-			update( GraphPanel, weatherGraph.getGraph(), weatherStats);
+			persistGraphLines();
 		}
 		else if(source == "Exit")
 		{
@@ -474,11 +464,11 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
     public void update(ChartPanel GraphPanel, JFreeChart weatherGraph, WeatherStats weatherStats)
     {
-		MeanTemperatureInfo.setText(Double.toString(weatherStats.MeanTemperature));
-		HighLowTemperatureInfo.setText(Double.toString(weatherStats.HighTemperature) + " | " + Double.toString(weatherStats.LowTemperature));
-		MeanWindSpeedInfo.setText(Double.toString(weatherStats.MeanWindSpeed));
-		MaxWindSpeedInfo.setText(Double.toString(weatherStats.MaxWindGust));
-		PrevailingWindDirectionInfo.setText(weatherStats.PrevailingWind);
+		MeanTemperatureInfo.setText("  " + Double.toString(weatherStats.MeanTemperature));
+		HighLowTemperatureInfo.setText("  " + Double.toString(weatherStats.HighTemperature) + " | " + Double.toString(weatherStats.LowTemperature));
+		MeanWindSpeedInfo.setText("  " + Double.toString(weatherStats.MeanWindSpeed));
+		MaxWindSpeedInfo.setText("  " + Double.toString(weatherStats.MaxWindGust));
+		PrevailingWindDirectionInfo.setText("  " + weatherStats.PrevailingWind);
 
 		StatsInfo.setLayout(new BoxLayout(StatsInfo, BoxLayout.Y_AXIS));
 		StatsInfo.add(MeanTemperatureInfo);
@@ -606,6 +596,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
                                            0,0,0);
             endTarget = startTarget.plusDays(1);
         }
+        
         else
         {
             int year = weatherPoints.get(graphStartPoint).date.getYear();
@@ -782,6 +773,29 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
         
         return;
+    }
+
+    private void persistGraphLines()
+    {
+        if(Temperature.isSelected())
+            weatherGraph.showLine( SeriesList.TEMPERATURE );
+        if(Humidity.isSelected())
+            weatherGraph.showLine( SeriesList.HUMIDITY );
+        if(WindSpeed.isSelected())
+            weatherGraph.showLine( SeriesList.WINDSPEED );
+        if(WindGust.isSelected())
+            weatherGraph.showLine( SeriesList.WINDGUST );
+        if(WindChill.isSelected())
+            weatherGraph.showLine( SeriesList.WINDCHILL );
+        if(HeatIndex.isSelected())
+            weatherGraph.showLine( SeriesList.HEATINDEX );
+        if(UVIndex.isSelected())
+            weatherGraph.showLine( SeriesList.UVINDEX );
+        if(Barometer.isSelected())
+            weatherGraph.showLine( SeriesList.BAROMETER );
+        if(Rainfall.isSelected())
+            weatherGraph.showLine( SeriesList.RAINFALL );
+        update( GraphPanel, weatherGraph.getGraph(), weatherStats );
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
