@@ -60,11 +60,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         HeatIndex = new javax.swing.JCheckBox("Heat Index");
         UVIndex = new javax.swing.JCheckBox("UV Index");
         Barometer = new javax.swing.JCheckBox("Barometer");
-        MeanTemperature = new javax.swing.JCheckBox("Mean Temperature");
-        HighLowTemperature = new javax.swing.JCheckBox("High/Low Temperature");
-        MeanWindSpeed = new javax.swing.JCheckBox("Mean Wind Speed");
-        MaximumWindSpeed = new javax.swing.JCheckBox("Maximum Wind Speed");
-        PrevailingWindDirection = new javax.swing.JCheckBox("Prevailing Wind Direction");
         Rainfall = new javax.swing.JCheckBox("Rainfall");
         Daily = new javax.swing.JRadioButton("Daily");
         Weekly = new javax.swing.JRadioButton("Weekly");
@@ -90,21 +85,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         weatherPoints = new ArrayList<WeatherPoint>();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        MeanTemperature.setMnemonic(KeyEvent.VK_C);
-		MeanTemperature.setSelected(false);
-
-		HighLowTemperature.setMnemonic(KeyEvent.VK_C);
-		HighLowTemperature.setSelected(false);
-
-		MeanWindSpeed.setMnemonic(KeyEvent.VK_C);
-		MeanWindSpeed.setSelected(false);
-
-		MaximumWindSpeed.setMnemonic(KeyEvent.VK_C);
-		MaximumWindSpeed.setSelected(false);
-
-		PrevailingWindDirection.setMnemonic(KeyEvent.VK_C);
-		PrevailingWindDirection.setSelected(false);
 
 		Rainfall.setMnemonic(KeyEvent.VK_C);
 		Rainfall.setSelected(false);
@@ -141,11 +121,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		HeatIndex.addItemListener(this);
 		UVIndex.addItemListener(this);
 		Barometer.addItemListener(this);
-		MeanTemperature.addItemListener(this);
-		HighLowTemperature.addItemListener(this);
-		MeanWindSpeed.addItemListener(this);
-		MaximumWindSpeed.addItemListener(this);
-		PrevailingWindDirection.addItemListener(this);
 		Rainfall.addItemListener(this);
 
 		Daily.setMnemonic(KeyEvent.VK_C);
@@ -226,11 +201,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		GraphOptionPanel.add(HeatIndex);
 		GraphOptionPanel.add(UVIndex);
 		GraphOptionPanel.add(Barometer);
-		GraphOptionPanel.add(MeanTemperature);
-		GraphOptionPanel.add(HighLowTemperature);
-		GraphOptionPanel.add(MeanWindSpeed);
-		GraphOptionPanel.add(MaximumWindSpeed);
-		GraphOptionPanel.add(PrevailingWindDirection);
 		GraphOptionPanel.add(Rainfall);
 		Arrows.add(Left);
 		Arrows.add(Right);
@@ -256,12 +226,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 0 );
+		        weatherGraph.showLine( SeriesList.TEMPERATURE );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 0 );
+		        weatherGraph.hideLine( SeriesList.TEMPERATURE );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -272,12 +242,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 1 );
+		        weatherGraph.showLine( SeriesList.HUMIDITY  );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 1 );
+		        weatherGraph.hideLine( SeriesList.HUMIDITY  );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -288,12 +258,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 2 );
+		        weatherGraph.showLine( SeriesList.WINDSPEED  );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 2 );
+		        weatherGraph.hideLine( SeriesList.WINDSPEED );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -304,12 +274,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 3 );
+		        weatherGraph.showLine( SeriesList.WINDGUST );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 3 );
+		        weatherGraph.hideLine( SeriesList.WINDGUST );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -320,12 +290,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 4 );
+		        weatherGraph.showLine( SeriesList.WINDCHILL );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 4 );
+		        weatherGraph.hideLine( SeriesList.WINDCHILL );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -336,12 +306,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 5 );
+		        weatherGraph.showLine( SeriesList.HEATINDEX );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 5 );
+		        weatherGraph.hideLine( SeriesList.HEATINDEX );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -352,12 +322,12 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 6 );
+		        weatherGraph.showLine( SeriesList.UVINDEX );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 6 );
+		        weatherGraph.hideLine( SeriesList.UVINDEX );
 		    }        
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -368,108 +338,27 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		    if(e.getStateChange() == ItemEvent.SELECTED )
 		    {
 		        System.out.println( "is selected" );
-		        //weatherGraph.showLine( 0 );
+		        weatherGraph.showLine( SeriesList.BAROMETER );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        //weatherGraph.hideLine( 0 );
+		        weatherGraph.hideLine( SeriesList.BAROMETER );
 		    }        
-		    //update( GraphPanel, weatherGraph.getGraph() );
+		    update( GraphPanel, weatherGraph.getGraph() );
 		}
-
-		else if(source == MeanTemperature)
-		{
-			System.out.println("Mean Temperature chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        //weatherGraph.showLine( 0 );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        //weatherGraph.hideLine( 0 );
-		    }        
-		    //update( GraphPanel, weatherGraph.getGraph() );
-		}
-
-		else if(source == HighLowTemperature)
-		{
-			System.out.println("High/Low Temperature chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        //weatherGraph.showLine( 0 );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        //weatherGraph.hideLine( 0 );
-		    }        
-		    //update( GraphPanel, weatherGraph.getGraph() );
-		}
-
-		else if(source == MeanWindSpeed)
-		{
-			System.out.println("Mean Wind Speed chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        //weatherGraph.showLine( 0 );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        //weatherGraph.hideLine( 0 );
-		    }        
-		    //update( GraphPanel, weatherGraph.getGraph() );
-		}
-
-		else if(source == MaximumWindSpeed)
-		{
-			System.out.println("MWS chosen.");
-			if( MaximumWindSpeed.isSelected() )
-		    {
-		        System.out.println( "is selected" );
-		        //weatherGraph.showLine( 3 );
-		    }
-		    else
-		    {
-		        System.out.println( "MWS: It aint no selected" );
-		        //weatherGraph.hideLine( 3 );
-		    }
-		    //update( GraphPanel, weatherGraph.getGraph() );
-		}
-
-		else if(source == PrevailingWindDirection)
-		{
-			System.out.println("Prevailing Wind Direction chosen.");
-		    if(e.getStateChange() == ItemEvent.SELECTED )
-		    {
-		        System.out.println( "is selected" );
-		        //weatherGraph.showLine( 0 );
-		    }
-		    else
-		    {
-		        System.out.println( "It aint no selected" );
-		        //weatherGraph.hideLine( 0 );
-		    }        
-		    //update( GraphPanel, weatherGraph.getGraph() );
-		}
-
 		else if(source == Rainfall)
 		{
 			System.out.println("Rainfall chosen.");
 		    if( Rainfall.isSelected() )
 		    {
 		        System.out.println( "is selected" );
-		        weatherGraph.showLine( 9 );
+		        weatherGraph.showLine( SeriesList.RAINFALL );
 		    }
 		    else
 		    {
 		        System.out.println( "It aint no selected" );
-		        weatherGraph.hideLine( 9 );
+		        weatherGraph.hideLine( SeriesList.RAINFALL );
 		    }
 		    update( GraphPanel, weatherGraph.getGraph() );
 		}
@@ -593,11 +482,6 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		GraphOptionPanel.add(HeatIndex);
 		GraphOptionPanel.add(UVIndex);
 		GraphOptionPanel.add(Barometer);
-		GraphOptionPanel.add(MeanTemperature);
-		GraphOptionPanel.add(HighLowTemperature);
-		GraphOptionPanel.add(MeanWindSpeed);
-		GraphOptionPanel.add(MaximumWindSpeed);
-		GraphOptionPanel.add(PrevailingWindDirection);
 		GraphOptionPanel.add(Rainfall);
 		Arrows.add(Left);
 		Arrows.add(Right);
@@ -754,14 +638,9 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
     private javax.swing.JMenu File;
     private javax.swing.JFileChooser FileChooser;
     //private javax.swing.ButtonGroup GraphVariables;
-    private javax.swing.JCheckBox HighLowTemperature;
-    private javax.swing.JCheckBox MaximumWindSpeed;
-    private javax.swing.JCheckBox MeanTemperature;
-    private javax.swing.JCheckBox MeanWindSpeed;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JRadioButton Monthly;
     private javax.swing.JMenuItem Open;
-    private javax.swing.JCheckBox PrevailingWindDirection;
     private javax.swing.JCheckBox Rainfall;
     private javax.swing.JCheckBox Temperature;
     private javax.swing.JCheckBox Humidity;
