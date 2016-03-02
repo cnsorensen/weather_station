@@ -506,7 +506,13 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
 		else if(source == "Right")
 		{
+			moveDateForward();
+
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+
+		    update(GraphPanel, weatherGraph.getGraph());
 			System.out.println("Right chosen.");
+            System.out.println( "Start: " + graphStartPoint + "\tEnd: " + graphEndPoint + "\tTotal: " + weatherPoints.size() );            
 		}
 	}
 
@@ -593,8 +599,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		GraphOptionPanel.add(MaximumWindSpeed);
 		GraphOptionPanel.add(PrevailingWindDirection);
 		GraphOptionPanel.add(Rainfall);
-		Arrows.add(new BasicArrowButton(BasicArrowButton.WEST));
-		Arrows.add(new BasicArrowButton(BasicArrowButton.EAST));
+		Arrows.add(Left);
+		Arrows.add(Right);
 		Panel.add(Arrows, BorderLayout.SOUTH);
 		Panel.add(TimePanel, BorderLayout.WEST);
 		Panel.add(GraphPanel, BorderLayout.CENTER);
@@ -656,25 +662,29 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
     private void moveDateForward()
     {
+        if(weatherPoints.size() == 0)
+            return;
         int targetYear = weatherPoints.get(graphStartPoint).date.getYear() + 1;
         int targetMonth = weatherPoints.get(graphStartPoint).date.getMonth().getValue() + 1;
         int targetDayOfYear = weatherPoints.get(graphStartPoint).date.getDayOfYear() + 1; 
         if( Yearly.isSelected() )
         {
-            for ( int x = graphStartPoint; x > -1; x = x - 1)
+            System.out.println( "WE HAVE ENTERED YEARLY" );
+            for ( int x = graphStartPoint; x < weatherPoints.size(); x = x + 1)
             {
                 graphStartPoint = x;
-                if( weatherPoints.get(x).date.getYear() < targetYear )
+                if( weatherPoints.get(x).date.getYear() >= targetYear )
                 {                
                     graphStartPoint = x + 1;
                     break;
                 }
             }
+            System.out.println("Target Year: " + targetYear);
             if( graphStartPoint >= weatherPoints.size())
                 graphStartPoint = 0;
             for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
             {
-                graphStartPoint = x;
+                graphEndPoint = x;
                 if( weatherPoints.get(x).date.getYear() > targetYear )
                 {                                    
                     break;
@@ -682,6 +692,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
             }
             if( graphEndPoint >= weatherPoints.size() )
                 graphEndPoint = weatherPoints.size() - 1;
+            System.out.println("FUCK YOU TOO BUDDY");
 
         }
         if( Monthly.isSelected() )
