@@ -1,0 +1,37 @@
+***WEATHER STATION!***
+
+Compile weather station:
+    > javac -cp .:jdom.jar:jcommon.jar:jfreechart.jar MainWindow.java
+    or use the make file
+    > make 
+
+Run weather station:
+    > java -cp .:jdom.jar:jcommon.jar:jfreechart.jar MainWindow
+
+You will see a blank graph upon opening the program.
+
+Go to File -> Open
+Select the *directory* containing all of the data xmls.
+All of the data will be read in. This may take a few seconds.
+
+The right hand checkboxes allow you to select multiple stats to be graphed. They can 
+    be selected and unselected.
+
+The radio buttons on the left hand allow the user to view the graph in different ranges:
+    By years, months, weeks, or days.
+
+The arrows below the graph allow the user to pan through the data. Depending on the
+    left hand selection of the view, the graph will pan by year, month, week, and
+    day respectively.
+
+Stats about the data in view to the user is shown in the table below. For example, if
+    the year radio button is chosen and the view is of 2010, the stats will reflect the
+    year 2010. This applies to the other combinations as well.
+
+The user can hover their mouse over the data in the graph. After a moment, a tool tip will
+    appear and reveal statistics about that point in the graph:
+        Temperature, Humidity, Windspeed, Windgust, Windchill, 
+        UV Index, Heat Index, Barometer, and Rainfall.
+
+The user can close the program by selecting File -> Exit, or by pressing the 'x' in the 
+    upper right corner of the window.

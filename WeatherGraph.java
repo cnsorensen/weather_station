@@ -1,20 +1,17 @@
-// compile: javac -cp .:jcommon.jar:jfreechart.jar WeatherGraph.java
-// run: java -cp .:jcommon.jar:jfreechart.jar WeatherGraph
+/* WeatherGraph.java */
 
-
-//import org.jdom2.*;
-//import org.jsom2.input.SAXBuilder;
-//import java.io.IOException;
 import java.util.*;
 import java.util.Date;
 import java.time.LocalDateTime;
-import javax.swing.*;
-//import java.awt.*;
+
 import java.awt.Color;
 import java.awt.BasicStroke;
 import javax.swing.JFrame;
+import javax.swing.*;
 
-//import org.jfree.chart.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartFactory;
@@ -23,27 +20,21 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-//import org.jfree.data.xy.*;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.axis.DateAxis;
+
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-
-import org.jfree.chart.labels.XYToolTipGenerator;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.chart.axis.DateAxis;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Minute;
+import org.jfree.data.time.TimeSeries;
 
-//import org.jfree.ui.*;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
-
-
 
 public class WeatherGraph extends ApplicationFrame
 {
@@ -74,14 +65,10 @@ public class WeatherGraph extends ApplicationFrame
             false   // generate urls?
         );
 
-        ////FOR ME SELFISH PLEASURES///////
-        //ChartPanel chartPanel = new ChartPanel( weatherGraph );
-        //chartPanel.setPreferredSize( new java.awt.Dimension( 560, 367 ) );
-
         weatherGraph.setBackgroundPaint( Color.LIGHT_GRAY );
         XYPlot plot = (XYPlot) weatherGraph.getPlot();
         plot.setBackgroundPaint( Color.BLACK );
-        
+       
         // set the bounds of the graph
         plot.getRangeAxis().setLowerBound( -30 );
         plot.getRangeAxis().setUpperBound( 120 );
@@ -96,28 +83,21 @@ public class WeatherGraph extends ApplicationFrame
             renderer.setSeriesLinesVisible( i, false );
         }
 
-        StandardXYToolTipGenerator g = new StandardXYToolTipGenerator(
+        /*StandardXYToolTipGenerator g = new StandardXYToolTipGenerator(
             StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
             new SimpleDateFormat("d-MMM-YYY"), new DecimalFormat("0.00") );
         renderer.setToolTipGenerator(g);
-
-        ///toolTip = new WeatherToolTip();
-        ///renderer.setBaseToolTipGenerator( toolTip );
+*/
+        toolTip = new WeatherToolTip();
+        renderer.setBaseToolTipGenerator( toolTip );
         
-        // rainfall isn't graphing
-        //renderer.setSeriesLinesVisible( 9, true );
-
-        plot.setRenderer( renderer );
- 
-        ///Take this out when putting into real code/////
-        //setContentPane( chartPanel );  
+        plot.setRenderer( renderer ); 
     }
 
     // toggle the view of the line
     public void showLine( int series )
     {
         System.out.println( "showing this line" );
-        //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( true, false );
         renderer.setSeriesLinesVisible( series, true );   
     }
 
@@ -143,15 +123,17 @@ public class WeatherGraph extends ApplicationFrame
         WeatherPoint toGraph;
 
         // xyseries
-        TimeSeries temperature = new TimeSeries( "Temperature" );
-        TimeSeries humidity = new TimeSeries( "Humidity" );
-        TimeSeries windSpeed = new TimeSeries( "Wind Speed" );
-        TimeSeries windGust = new TimeSeries( "Wind Gust" );
+        TimeSeries temperature = new TimeSeries( "Temperature(F)" );
+        TimeSeries humidity = new TimeSeries( "Humidity(%)" );
+        TimeSeries windSpeed = new TimeSeries( "Wind Speed(mph)" );
+        TimeSeries windGust = new TimeSeries( "Wind Gust(mph)" );
         TimeSeries windChill = new TimeSeries( "Wind Chill" );
         TimeSeries heatIndex = new TimeSeries( "Heat Index" );
-        TimeSeries barometer = new TimeSeries( "Barometer" );
+        TimeSeries barometer = new TimeSeries( "Barometer(inches)" );
         TimeSeries uvindex = new TimeSeries( "UV Index" );
-        TimeSeries rainfall = new TimeSeries( "Rainfall" );
+        TimeSeries rainfall = new TimeSeries( "Rainfall(inches)" );
+        
+  //      TimeSeries winddirection = new timeSeries( "Wind Direction" );
 
         // go through each point
         while( pointsIterator.hasNext() )
@@ -172,6 +154,7 @@ public class WeatherGraph extends ApplicationFrame
             uvindex.add( now, toGraph.uvindex );
             barometer.add( now, toGraph.barometer );
             rainfall.add( now, toGraph.rainfall );
+  //          winddirection.add( now, toGraph.winddirection );
         }
 
         // Add these to dataset
@@ -184,16 +167,8 @@ public class WeatherGraph extends ApplicationFrame
         dataset.addSeries( uvindex );  
         dataset.addSeries( barometer );
         dataset.addSeries( rainfall ); 
+//        dataset.addSeries( winddirection );
 
         return dataset;
     }
-
-   /* public static void main( String[] args )
-    {
-        WeatherGraph chart = new WeatherGraph( ParseXML.parseWeather("./2010-01.xml") );
-        chart.pack();
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
-    }*/
-
 }
