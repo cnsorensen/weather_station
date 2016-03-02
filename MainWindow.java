@@ -378,21 +378,33 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
 		if(source == "Daily")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Daily chosen.");
 		}
 		
 		else if(source == "Weekly")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Weekly chosen.");
 		}
 	
 		else if(source == "Monthly")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Monthly chosen.");
 		}
 	
 		else if(source == "Yearly")
 		{
+            changeDateRange();
+            weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
+		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Yearly chosen.");
 		}
 
@@ -401,7 +413,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 			moveDateBackward();
 
             weatherGraph = new WeatherGraph( weatherPoints.subList(graphStartPoint, graphEndPoint));
-
+            
 		    update(GraphPanel, weatherGraph.getGraph(), GraphStats);
 			System.out.println("Left chosen.");
             System.out.println( "Start: " + graphStartPoint + "\tEnd: " + graphEndPoint + "\tTotal: " + weatherPoints.size() );     
@@ -571,6 +583,73 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 				mainWindow.setVisible(true);
             }
         });
+    }
+
+    private void changeDateRange()
+    {
+        if(weatherPoints.size() == 0)
+            return;
+        LocalDateTime startTarget;
+        LocalDateTime endTarget;
+        if( Yearly.isSelected() )
+        {   
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),1,1,0,0,0);
+            endTarget = startTarget.plusYears(1);
+            
+        }
+        else if( Monthly.isSelected() )
+        {
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           1,0,0,0);
+            endTarget = startTarget.plusMonths(1);
+        }
+        else if( Daily.isSelected() )
+        {
+            startTarget = LocalDateTime.of(weatherPoints.get(graphStartPoint).date.getYear(),
+                                           weatherPoints.get(graphStartPoint).date.getMonth().getValue(),
+                                           weatherPoints.get(graphStartPoint).date.getDayOfMonth(),
+                                           0,0,0);
+            endTarget = startTarget.plusDays(1);
+        }
+        else
+        {
+            int year = weatherPoints.get(graphStartPoint).date.getYear();
+            int month = weatherPoints.get(graphStartPoint).date.getMonth().getValue();
+            int day = weatherPoints.get(graphStartPoint).date.getDayOfMonth();
+            startTarget = LocalDateTime.of(year, month, day, 0 ,0 ,0 );
+            startTarget = startTarget.plusDays(startTarget.getDayOfWeek().getValue()*-1+1);
+            endTarget = startTarget.plusWeeks(1);
+        }
+        for ( int x = 0; x < weatherPoints.size(); x = x + 1)
+        {
+            graphStartPoint = x;//isAfter(ChronoLocalDateTime<?> other)
+
+            if( weatherPoints.get(x).date.isAfter(startTarget) )
+            {                
+                //graphStartPoint = x -1;
+                break;
+            }
+        }
+
+        if( graphStartPoint >= weatherPoints.size())
+            graphStartPoint = 0;
+        
+        for ( int x = graphStartPoint; x < weatherPoints.size(); x=x+1)
+        {
+            graphEndPoint = x;
+            if(weatherPoints.get(x).date.isAfter(endTarget) )
+            {                                    
+                break;
+            }
+        }
+        if( graphEndPoint >= weatherPoints.size() )
+            graphEndPoint = weatherPoints.size() - 1;
+
+        
+        return;
+
+
     }
 
     private void moveDateBackward()
