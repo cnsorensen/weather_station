@@ -92,47 +92,17 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        MeanTemperature.setMnemonic(KeyEvent.VK_C);
-		MeanTemperature.setSelected(false);
-
-		HighLowTemperature.setMnemonic(KeyEvent.VK_C);
-		HighLowTemperature.setSelected(false);
-
-		MeanWindSpeed.setMnemonic(KeyEvent.VK_C);
-		MeanWindSpeed.setSelected(false);
-
-		MaximumWindSpeed.setMnemonic(KeyEvent.VK_C);
-		MaximumWindSpeed.setSelected(false);
-
-		PrevailingWindDirection.setMnemonic(KeyEvent.VK_C);
-		PrevailingWindDirection.setSelected(false);
-
 		Rainfall.setMnemonic(KeyEvent.VK_C);
-		Rainfall.setSelected(false);
-
 		Temperature.setMnemonic(KeyEvent.VK_C);
-		Temperature.setSelected(false);
-
 		Humidity.setMnemonic(KeyEvent.VK_C);
-		Humidity.setSelected(false);
-
 		WindSpeed.setMnemonic(KeyEvent.VK_C);
-		WindSpeed.setSelected(false);
-
 		WindGust.setMnemonic(KeyEvent.VK_C);
-		WindGust.setSelected(false);
-
 		WindChill.setMnemonic(KeyEvent.VK_C);
-		WindChill.setSelected(false);
-
 		HeatIndex.setMnemonic(KeyEvent.VK_C);
-		HeatIndex.setSelected(false);
-
 		UVIndex.setMnemonic(KeyEvent.VK_C);
-		UVIndex.setSelected(false);
-
 		Barometer.setMnemonic(KeyEvent.VK_C);
-		Barometer.setSelected(false);
+
+		setCheckBoxDefault();
 
 		Temperature.addItemListener(this);
 		Humidity.addItemListener(this);
@@ -213,45 +183,21 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
         MenuBar.add(Edit);
         setJMenuBar(MenuBar);
 
-		Panel.setLayout(new BorderLayout());
-		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
-		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
-		Arrows.setLayout(new FlowLayout());
-		StatsPanel.setLayout(new BoxLayout(StatsPanel, BoxLayout.Y_AXIS));
-
-		TimePanel.add(Daily);
-		TimePanel.add(Weekly);
-		TimePanel.add(Monthly);
-		TimePanel.add(Yearly);
-		GraphOptionPanel.add(Temperature);
-		GraphOptionPanel.add(Humidity);
-		GraphOptionPanel.add(WindSpeed);
-		GraphOptionPanel.add(WindGust);
-		GraphOptionPanel.add(WindChill);
-		GraphOptionPanel.add(HeatIndex);
-		GraphOptionPanel.add(UVIndex);
-		GraphOptionPanel.add(Barometer);
-		GraphOptionPanel.add(MeanTemperature);
-		GraphOptionPanel.add(HighLowTemperature);
-		GraphOptionPanel.add(MeanWindSpeed);
-		GraphOptionPanel.add(MaximumWindSpeed);
-		GraphOptionPanel.add(PrevailingWindDirection);
-		GraphOptionPanel.add(Rainfall);
-		Arrows.add(Left);
-		Arrows.add(Right);
-		StatsPanel.add(Arrows);
-		StatsPanel.add(table);
-		Panel.add(StatsPanel, BorderLayout.SOUTH);
-		Panel.add(TimePanel, BorderLayout.WEST);
-		Panel.add(GraphPanel, BorderLayout.CENTER);
-		Panel.add(GraphOptionPanel, BorderLayout.EAST);
-
-		setContentPane(Panel);
-		this.setTitle("Weather Station");
-		this.pack();
-		this.setVisible(true);
-   
+		PageLayout();   
     }// </editor-fold>//GEN-END:initComponents
+
+	public void setCheckBoxDefault()
+	{
+		Rainfall.setSelected(false);
+		Temperature.setSelected(false);
+		Humidity.setSelected(false);
+		WindSpeed.setSelected(false);
+		WindGust.setSelected(false);
+		WindChill.setSelected(false);
+		HeatIndex.setSelected(false);
+		UVIndex.setSelected(false);
+		Barometer.setSelected(false);
+	}
 
 	public void itemStateChanged(ItemEvent e)
 	{
@@ -578,7 +524,7 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 
     public void update(ChartPanel GraphPanel, JFreeChart weatherGraph, ArrayList<String> GraphStats)
     {
-		String test = "";
+		String test = "??";
 		String[] columnNames = {"Type","Stat"};
 		Object[][] data = 	{	{"Mean Temperature", test},
 								{"High/Low Temperature", test},
@@ -587,14 +533,21 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 								{"Prevailing Wind Direction", test},
 								{"Rainfall", test}
 							};
+
 		table.setPreferredScrollableViewportSize(new Dimension(250, 70));
 		table.setFillsViewportHeight(true);
 
+		setCheckBoxDefault();
 		Panel.removeAll();
 		Arrows.removeAll();
 		GraphPanel = new ChartPanel(weatherGraph);
 		GraphPanel.repaint();
 
+		PageLayout();
+    }
+
+	public void PageLayout()
+	{
 		Panel.setLayout(new BorderLayout());
 		TimePanel.setLayout(new BoxLayout(TimePanel, BoxLayout.Y_AXIS));
 		GraphOptionPanel.setLayout(new BoxLayout(GraphOptionPanel, BoxLayout.Y_AXIS));
@@ -632,11 +585,8 @@ public class MainWindow extends JFrame implements ItemListener, ActionListener
 		this.setTitle("Weather Station");
 		this.pack();
 		this.setVisible(true);
-    }
+	}    
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) 
     {
         try 
